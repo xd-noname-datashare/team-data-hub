@@ -38,22 +38,7 @@ jobs:
           OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}
           OSS_ENDPOINT: ${{ secrets.OSS_ENDPOINT }}
           OSS_BASE_PATH: ${{ secrets.OSS_BASE_PATH }}
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo ">>> 手动触发，全量同步"
-            python sync_to_oss.py --all
-          else
-            echo ">>> Push 触发，增量同步变更文件"
-            CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
-            echo "本次变更:"
-            echo "$CHANGED"
-            echo ""
-            if [ -n "$CHANGED" ]; then
-              python sync_to_oss.py $CHANGED
-            else
-              echo "无变更，跳过"
-            fi
-          fi
+        run: python sync_to_oss.py --all
 
       - name: 输出结果
         if: always()
