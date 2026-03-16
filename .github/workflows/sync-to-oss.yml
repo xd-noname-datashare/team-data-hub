@@ -1,0 +1,67 @@
+name: 自动同步到阿里云 OSS
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "README.md"
+      - "LICENSE"
+      - ".gitignore"
+      - "_template/**"
+      - ".github/**"
+
+  # 手动触发：全量重新同步
+  workflow_dispatch:
+
+jobs:
+  sync-to-oss:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 安装依赖
+        run: pip install oss2
+
+      - name: 同步到阿里云 OSS
+        env:
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          OSS_BUCKET_NAME: ${{ secrets.OSS_BUCKET_NAME }}
+          OSS_ENDPOINT: ${{ secrets.OSS_ENDPOINT }}
+          OSS_BASE_PATH: ${{ secrets.OSS_BASE_PATH }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo ">>> 手动触发，全量同步"
+            python sync_to_oss.py --all
+          else
+            echo ">>> Push 触发，增量同步变更文件"
+            CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
+            echo "本次变更:"
+            echo "$CHANGED"
+            echo ""
+            if [ -n "$CHANGED" ]; then
+              python sync_to_oss.py $CHANGED
+            else
+              echo "无变更，跳过"
+            fi
+          fi
+
+      - name: 输出结果
+        if: always()
+        run: |
+          echo "推送者: ${{ github.actor }}"
+          echo "提交信息: ${{ github.event.head_commit.message }}"
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✅ 同步成功"
+          else
+            echo "❌ 同步失败，请检查 Actions 日志"
+          fi
