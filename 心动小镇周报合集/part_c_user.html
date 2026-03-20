@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Part C：用户画像</title>
+<style>
+:root {
+  --bg: #f3f1eb; --panel: rgba(255,255,255,.92); --text: #1f2933;
+  --muted: #6b7280; --line: rgba(31,41,51,.12); --accent: #1e4d5c;
+  --accent-soft: #dce9ec; --warn: #b45309;
+}
+* { box-sizing: border-box; margin: 0; padding: 0 }
+body {
+  font-family: "Avenir Next","PingFang SC","Noto Sans SC",system-ui,sans-serif;
+  color: var(--text); line-height: 1.75;
+  background: linear-gradient(180deg,#f7f4ee,#f1ede5);
+  min-height: 100vh;
+}
+a { color: var(--accent); text-decoration: none }
+a:hover { text-decoration: underline }
+.shell { max-width: 960px; margin: 0 auto; padding: 36px 24px 80px }
+
+/* back button */
+.back {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 8px 14px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent);
+  font-size: 13px; font-weight: 600; margin-bottom: 16px;
+  transition: background .16s;
+}
+.back:hover { background: #cde0e5; text-decoration: none }
+
+/* file nav */
+.nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px }
+.nav a {
+  padding: 8px 14px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent);
+  font-size: 13px; font-weight: 600; transition: background .16s;
+}
+.nav a:hover { background: #cde0e5; text-decoration: none }
+.nav a.active { background: var(--accent); color: #fff }
+
+/* section nav (sticky) */
+.sec-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(243,241,235,.95); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 0; margin: 0 -24px 24px; padding-left: 24px; padding-right: 24px;
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.sec-nav a {
+  padding: 6px 14px; border-radius: 12px;
+  background: var(--panel); border: 1px solid var(--line);
+  font-size: 13px; color: var(--text); font-weight: 500;
+  transition: all .16s;
+}
+.sec-nav a:hover { background: var(--accent-soft); border-color: var(--accent); text-decoration: none }
+.sec-nav a.cur { background: var(--accent); color: #fff; border-color: var(--accent) }
+
+/* headings */
+h1 { font-family: "Iowan Old Style","Noto Serif SC","Songti SC",serif;
+     font-size: clamp(26px,4vw,36px); margin: 0 0 8px; line-height: 1.2 }
+h2 { font-family: "Iowan Old Style","Noto Serif SC","Songti SC",serif;
+     font-size: 22px; margin: 40px 0 14px; padding-bottom: 8px;
+     border-bottom: 1px solid var(--line) }
+h3 { font-size: 17px; margin: 28px 0 8px; color: var(--accent) }
+h4 { font-size: 15px; margin: 20px 0 6px; color: var(--text) }
+
+p { margin: 8px 0 }
+hr { border: none; border-top: 1px solid var(--line); margin: 28px 0 }
+
+blockquote {
+  margin: 12px 0; padding: 14px 18px;
+  border-left: 3px solid var(--accent);
+  background: rgba(30,77,92,.04); border-radius: 0 12px 12px 0;
+  color: var(--muted); font-size: 14px;
+}
+blockquote p { margin: 4px 0 }
+code {
+  background: #eee8dc; padding: 2px 6px; border-radius: 4px;
+  font-size: 13px; font-family: "SF Mono","Fira Code",monospace;
+}
+strong { font-weight: 700 }
+ol, ul { margin: 8px 0 8px 24px }
+li { margin: 4px 0 }
+
+/* tables */
+.tbl-scroll { overflow-x: auto; margin: 14px 0 }
+table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+  white-space: nowrap;
+}
+th, td {
+  padding: 7px 10px; text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+th { background: #f6f3ec; color: var(--muted); font-weight: 700; position: sticky; top: 0 }
+tr:hover td { background: rgba(30,77,92,.03) }
+
+/* images */
+.img-wrap { margin: 16px 0; text-align: center }
+.img-wrap img {
+  max-width: 100%; border-radius: 10px;
+  border: 1px solid var(--line); box-shadow: 0 4px 16px rgba(0,0,0,.06);
+}
+.img-cap { font-size: 12px; color: var(--muted); margin-top: 6px }
+
+/* footer */
+.footer {
+  margin-top: 52px; padding-top: 24px;
+  border-top: 1px solid var(--line);
+  text-align: center; color: var(--muted); font-size: 13px;
+}
+@media(max-width:600px) {
+  .shell { padding: 20px 14px 48px }
+  table { font-size: 11px }
+  th, td { padding: 5px 6px }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <a class="back" href="../../index.html">← 返回首页</a>
+  <nav class="nav"><a href="./trial_10weeks.html">📑 主文件</a><a href="./part_c_econ.html">📊 经济</a><a href="./part_c_external.html">🌐 外部</a><a href="./part_c_gameplay.html">🎮 玩法</a><a href="./part_c_pay.html">💰 付费</a><a href="./part_c_user.html" class="active">👤 用户</a></nav>
+  
+  <h1 id="part-c专题内容方块-用户画像">Part C：专题内容方块 — 用户画像</h1>
+<blockquote><p>按周次聚合同一主题在不同周报中的原文、原图与 mkk 评语。</p></blockquote>
+<hr>
+<h2 id="c12-留存深潜">C12. 留存深潜</h2>
+<p><strong>追踪范围</strong>：W1（一次性分析） | <strong>当前状态</strong>：W1 后未再出现</p>
+<hr>
+<h3 id="w1-原文20240718-0724-首周">W1 原文（2024.07.18-07.24 首周）</h3>
+<blockquote><p>规模和活跃度持续增长。日新进稳定100w+，日活由首日60w涨至356w，<strong>新进次留59%、三留51%、七留42%</strong>，日均在线128min；</p><p>付费深度较浅，日均ARPU ¥1.1，付费率8%；去除1元党后，付费率3%，ARPPU ¥43</p></blockquote>
+<div class="img-wrap"><img src="images/w01_retention_overview.png" alt="W1 活跃与留存数据"><div class="img-cap">W1 活跃与留存数据</div></div>
+<blockquote><p>得益于良好的留存表现，首日新进用户的LTV7 ¥8，较首日增长4.4倍，高于竞品首日</p></blockquote>
+<div class="img-wrap"><img src="images/w01_ltv7.png" alt="W1 LTV7 数据"><div class="img-cap">W1 LTV7 数据</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/BnXYwQZtLivImJktjtDcZMR3nob?fromScene=spaceOverview" target="_blank" rel="noopener">首周周报</a></p>
+<hr>
+<h3 id="📌-mkk-评语">📌 mkk 评语</h3>
+<p>早期留存数据非常健康——七留 42% 优于同期竞品，LTV7 达 ¥8（首日 4.4 倍），说明产品核心体验的吸引力很强。</p>
+<p>但需要注意的是，首周的留存数据受"新鲜感红利"加持，后续周报再未披露留存细节（可能是因为数据开始走低不想重复暴露）。如果结合 W3 七留已跌至 34%(-8pp) 的信息，留存衰减的速度并不慢。这也解释了为什么后续活跃持续流失——不是没有新用户进来，而是留不住。</p>
+<hr>
+<hr>
+<h2 id="c13-设备分布-回流活跃分析">C13. 设备分布 & 回流活跃分析</h2>
+<p><strong>追踪范围</strong>：W15 → W85 | <strong>当前状态</strong>：持续补充中（以回流/活跃专题为主）</p>
+<hr>
+<h3 id="w15-原文20241021-1027">W15 原文（2024.10.21-10.27）</h3>
+<blockquote><p>近15日登录设备，大部分苹果设备内存4、6、8GB；iPad:iPhone设备数量约为1:2.85</p><p>苹果设备（手机+iPad）内存分布如下：3GB设备占比约17%，贡献8%流水；4GB设备占比32%，贡献24%流水；6GB设备占比30%，贡献35%流水；8GB设备占比19%，贡献32%流水</p></blockquote>
+<div class="img-wrap"><img src="images/w15_apple_memory_dist.png" alt="W15 苹果设备内存分布"><div class="img-cap">W15 苹果设备内存分布</div></div>
+<div class="img-wrap"><img src="images/w15_apple_ipad_iphone.png" alt="W15 iPad vs iPhone"><div class="img-cap">W15 iPad vs iPhone</div></div>
+<div class="img-wrap"><img src="images/w15_apple_revenue_arpu.png" alt="W15 苹果设备流水ARPU"><div class="img-cap">W15 苹果设备流水ARPU</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/H5XmwWr5hiiQzXkdlQIcOeTJnze?fromScene=spaceOverview" target="_blank" rel="noopener">第十五周周报</a></p>
+<hr>
+<h3 id="📌-mkk-评语">📌 mkk 评语</h3>
+<p>设备配置是付费能力的强代理变量。3GB 设备占 17% 仅贡献 8% 流水；8GB 设备占 19% 贡献 32% 流水——高配设备用户付费能力是低配的 4 倍。iPad:iPhone ≈ 1:2.85。可以作为精准运营的分层依据。</p>
+<hr>
+<h3 id="w47-冷更影响65">W47 冷更影响（6.5）</h3>
+<blockquote><p>6.5日小镇第二次技术冷更，第一次是去年11.28。冷更前一周平均登录比为97%，更新当日登录比降至 86%，更新第5日回升至 96%。与1128冷更相对比，本次冷更的登录比恢复速度较快，第6日已恢复至原来水平</p></blockquote>
+<div class="img-wrap"><img src="images/w47_008.png" alt="W47 图"><div class="img-cap">W47 图</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/OVZnw2t04iNCsykszmMcmTKWn5h?fromScene=spaceOverview" target="_blank" rel="noopener">第四十七周周报</a></p>
+<p>📌 mkk: 冷更当日丢失11%的登录用户（97%→86%），但6天内完全恢复。相比首次冷更恢复更快，说明玩家对冷更流程已有心理预期。冷更带来的最大风险不是长期流失而是短期数据波动。</p>
+<h3 id="w53-版本回流分析">W53 版本回流分析</h3>
+<blockquote><p>周年庆版本前5日回流 75w，回流玩家平均在线时长（5天总计）108min。老流失玩家回归人数较多，其中 13w 玩家为开服流失玩家，17w 玩家为奇灵夜-新春版本之间流失玩家</p></blockquote>
+<div class="img-wrap"><img src="images/w53_007.png" alt="W53 图7"><div class="img-cap">W53 图7</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/Vbh1wrKK5iROrYkLLh2cXT8onAg?fromScene=spaceOverview" target="_blank" rel="noopener">第五十三周周报</a></p>
+<p>📌 mkk: 75w回流中30w（13+17）来自深度流失用户，说明周年庆+小马IP的组合拳能够触达已经离开很久的用户。但回流人均在线仅108min/5天（约22min/天），远低于活跃用户日均69min，回流用户的留存转化才是真正的挑战。</p>
+<h3 id="w54-回流玩法偏好">W54 回流玩法偏好</h3>
+<blockquote><p>对比各玩法，周年庆回流玩家主要还是受抽卡券福利刺激（参与率 80%）和小马宝莉抽卡（参与率 65%）</p></blockquote>
+<div class="img-wrap"><img src="images/w54_004.png" alt="W54 图4"><div class="img-cap">W54 图4</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/EFjaw75V9iSrPGkb2pDcGiKnnyf?fromScene=spaceOverview" target="_blank" rel="noopener">第五十四周周报</a></p>
+<p>📌 mkk: 回流用户80%参与抽卡券、65%参与小马抽卡——回流动机高度集中在"免费福利"和"IP吸引力"。一旦福利期结束+IP热度消退，回流用户留存将面临严峻考验。需要思考如何在福利窗口期内将回流用户引导到日常玩法循环中。</p>
+<h3 id="w54-小号排查">W54 小号排查</h3>
+<blockquote><p>小号判断标准：规定拥有3个账号以上，登录每日登录时长30分钟以下且未付费的账号为小号。周年庆版本上线后一周，DAU上涨 35w，其中小号 3.5w，影响不大</p></blockquote>
+<div class="img-wrap"><img src="images/w54_008.png" alt="W54 图8"><div class="img-cap">W54 图8</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/EFjaw75V9iSrPGkb2pDcGiKnnyf?fromScene=spaceOverview" target="_blank" rel="noopener">第五十四周周报</a></p>
+<p>📌 mkk: 小号占DAU增量的10%（3.5/35w），对整体数据的污染可控。不过小号判断标准（3个账号以上+<30min+未付费）偏严格，实际多开数可能更高。</p>
+<hr>
+<h3 id="w58-暑期回流活跃全景分析">W58 暑期回流/活跃全景分析</h3>
+<blockquote><p>整体活跃数据：暑期（6.30-8.24）活跃620w用户，相比于平时版本（稚趣园5.10-6.29）上涨54%。</p><p>活跃增长拆分：暑期活跃增长的51%来源于玩家回流，42%来源于新增增长，7%来源于留存率提升贡献。</p><p>周/日活跃数据：暑期平均周活跃241w（+50%），DAU 131w（+70%），日均时长68min（+34%）。</p><p>活跃留存率对比平时：暑期回流和留存玩家的活跃留存率明显高于平时，表明用户黏性更高。</p><p>分群留存率对比：暑期留存玩家 > 回流玩家 >= 新增玩家。</p><p>回流玩家-流失版本分布：27%来源于去年开服→沙滩季的流失玩家，32%为奇灵夜→春节流失的玩家，40%是近两个版本刚流失的玩家。</p></blockquote>
+<div class="img-wrap"><img src="images/w58_005.png" alt="W58 暑期回流活跃全景"><div class="img-cap">W58 暑期回流活跃全景</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/Ua7FwPrJFiuZn3kqep3cB4kjnYc?fromScene=spaceOverview" target="_blank" rel="noopener">第五十八周周报</a></p>
+<p>📌 mkk: 暑期增长的结构非常清晰——回流(51%)是第一驱动力，新增(42%)是第二驱动力，留存提升(7%)几乎可忽略。这意味着小镇的增长引擎是"拉老用户回来"而非"让现有用户留更久"。回流来源中40%是近两版本流失——他们最容易被拉回也最容易再流失，是最需要关注的群体。</p>
+<hr>
+<h3 id="w58-暑期留存率分层">W58 暑期留存率分层</h3>
+<blockquote><p>暑期回流和留存玩家的活跃留存率明显高于平时，表明用户黏性更高。分群留存率对比：暑期留存玩家 > 回流玩家 >= 新增玩家。</p></blockquote>
+<div class="img-wrap"><img src="images/w58_007.png" alt="W58 图7"><div class="img-cap">W58 图7</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/Ua7FwPrJFiuZn3kqep3cB4kjnYc?fromScene=spaceOverview" target="_blank" rel="noopener">第五十八周周报</a></p>
+<p>📌 mkk: 暑期的"内容密度+假期时间"双重buff下，留存率全面提升。但分层差异清晰：留存玩家最稳，回流次之，新增最弱——说明新增用户的首周体验仍有优化空间。</p>
+<hr>
+<h3 id="w59-暑期付费分群深度分析">W59 暑期付费分群深度分析</h3>
+<blockquote><p>暑期留存用户是付费主力，活跃人数仅176w人，是三个分群中最少的；但贡献了暑期75%的流水，付费率30.1%，付费ARPU￥214。</p><p>付费率：留存玩家卡池付费率28.5%，其他中小额付费项付费率均在17%左右。</p><p>付费ARPU：留存玩家卡池付费ARPU达到￥192。</p><p>流水占比：53%的流水来源于留存用户对卡池的贡献。</p></blockquote>
+<div class="img-wrap"><img src="images/w59_008.png" alt="W59 图"><div class="img-cap">W59 图</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/OmRXwQpnFiS3rJk5DLXcl50Ynqd?fromScene=spaceOverview" target="_blank" rel="noopener">第五十九周周报</a></p>
+<p>📌 mkk: 176w留存用户贡献75%流水——这是典型的"鲸鱼效应"。ARPU¥214和卡池ARPU¥192都是极高水平，说明留存用户的消费深度远超其他群体。但依赖度过高是风险：如果这批核心用户流失，流水影响会是灾难性的。</p>
+<hr>
+<hr>
+<h3 id="w71-甄嬛回流拉动">W71 甄嬛回流拉动</h3>
+<blockquote><p>甄嬛上线前4日，拉动27.8w用户回流。</p></blockquote>
+<div class="img-wrap"><img src="images/w71_005.png" alt="W71 图5"><div class="img-cap">W71 图5</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/OiT6wBFCGieNfnkG64ScmXxSn4b?fromScene=spaceOverview" target="_blank" rel="noopener">第七十一周周报</a></p>
+<p>📌 mkk: 甄嬛联动的回流拉动力(27.8w/4天)与小狗联动(后续版更分析中回流+21w/周)属于同一量级。IP联动是目前最有效的回流手段，但甄嬛的问题在于"回流了但没怎么付费"（详见付费板块）。</p>
+<hr>
+<h3 id="w82-春节活跃大幅上涨">W82 春节活跃大幅上涨</h3>
+<blockquote><p>今年在1.31大卡池+BP上线后，日活大幅上涨74w->114w（+60%），随后在一周的舆情中稍有衰减至95w，但在2.10二次补偿后，日活回升至112w。</p><p>去年（25年同期，按照与春节的日期差做图）由于大卡池和BP分开上线，则为2次小幅的活跃上涨。</p><p>周回流43w。</p></blockquote>
+<div class="img-wrap"><img src="images/w82_003.png" alt="W82 图3"><div class="img-cap">W82 图3</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/Cv7mwNbNSiz4m6k7ixNcDQY2n5e?fromScene=spaceOverview" target="_blank" rel="noopener">第八十二周周报</a></p>
+<p>📌 mkk: 大卡池+BP同时上线策略制造了更强的单次活跃脉冲(+60%)，但也意味着后续没有第二波拉升内容。去年分开上线虽然单次幅度小但形成了两个活跃波峰。舆情导致的衰减(-17%)和补偿后的回升(+18%)说明社区情绪对活跃有直接影响。43w的周回流是甄嬛(27.8w/4天)和元旦(19.3w/3天)之后的最高水平。</p>
+<hr>
+<h3 id="w85-春节活跃趋势对比">W85 春节活跃趋势对比</h3>
+<blockquote><p>小镇26年春节期间日活上涨33%（小镇25年为28%，香肠26年为29%）</p><p>小镇26年节后日活回落，日活-17%（小镇25年为-10%，香肠26年 -15%）</p></blockquote>
+<div class="img-wrap"><img src="images/w85_005.png" alt="W85 图5"><div class="img-cap">W85 图5</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/Wd3owCbiVi62ZXkbYQHctl2an4O?fromScene=spaceOverview" target="_blank" rel="noopener">第八十五周周报</a></p>
+<p>📌 mkk: 小镇春节拉升力度(+33%)略优于香肠(+29%)和自身去年(+28%)，但节后回落(-17%)也是三者中最严重的——说明春节内容对"泛用户"的吸引力更强（拉得起），但留不住（回落快）。相比去年-10%的回落，今年-17%可能与"大卡池+BP同上叠加通票补偿"导致内容一次性消耗过快有关。</p>
+<hr>
+  <footer class="footer">心动小镇国服数据周报合集 W1-W85 · mkk</footer>
+</div>
+<script>
+// highlight current section in sec-nav on scroll
+(function() {
+  const nav = document.querySelector('.sec-nav');
+  if (!nav) return;
+  const links = Array.from(nav.querySelectorAll('a[href^="#"]'));
+  const ids = links.map(a => a.getAttribute('href').slice(1));
+  function update() {
+    let cur = ids[0];
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= 80) cur = id;
+    }
+    links.forEach(a => a.classList.toggle('cur', a.getAttribute('href') === '#' + cur));
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Part C：经济系统</title>
+<style>
+:root {
+  --bg: #f3f1eb; --panel: rgba(255,255,255,.92); --text: #1f2933;
+  --muted: #6b7280; --line: rgba(31,41,51,.12); --accent: #1e4d5c;
+  --accent-soft: #dce9ec; --warn: #b45309;
+}
+* { box-sizing: border-box; margin: 0; padding: 0 }
+body {
+  font-family: "Avenir Next","PingFang SC","Noto Sans SC",system-ui,sans-serif;
+  color: var(--text); line-height: 1.75;
+  background: linear-gradient(180deg,#f7f4ee,#f1ede5);
+  min-height: 100vh;
+}
+a { color: var(--accent); text-decoration: none }
+a:hover { text-decoration: underline }
+.shell { max-width: 960px; margin: 0 auto; padding: 36px 24px 80px }
+
+/* back button */
+.back {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 8px 14px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent);
+  font-size: 13px; font-weight: 600; margin-bottom: 16px;
+  transition: background .16s;
+}
+.back:hover { background: #cde0e5; text-decoration: none }
+
+/* file nav */
+.nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px }
+.nav a {
+  padding: 8px 14px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent);
+  font-size: 13px; font-weight: 600; transition: background .16s;
+}
+.nav a:hover { background: #cde0e5; text-decoration: none }
+.nav a.active { background: var(--accent); color: #fff }
+
+/* section nav (sticky) */
+.sec-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(243,241,235,.95); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 0; margin: 0 -24px 24px; padding-left: 24px; padding-right: 24px;
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.sec-nav a {
+  padding: 6px 14px; border-radius: 12px;
+  background: var(--panel); border: 1px solid var(--line);
+  font-size: 13px; color: var(--text); font-weight: 500;
+  transition: all .16s;
+}
+.sec-nav a:hover { background: var(--accent-soft); border-color: var(--accent); text-decoration: none }
+.sec-nav a.cur { background: var(--accent); color: #fff; border-color: var(--accent) }
+
+/* headings */
+h1 { font-family: "Iowan Old Style","Noto Serif SC","Songti SC",serif;
+     font-size: clamp(26px,4vw,36px); margin: 0 0 8px; line-height: 1.2 }
+h2 { font-family: "Iowan Old Style","Noto Serif SC","Songti SC",serif;
+     font-size: 22px; margin: 40px 0 14px; padding-bottom: 8px;
+     border-bottom: 1px solid var(--line) }
+h3 { font-size: 17px; margin: 28px 0 8px; color: var(--accent) }
+h4 { font-size: 15px; margin: 20px 0 6px; color: var(--text) }
+
+p { margin: 8px 0 }
+hr { border: none; border-top: 1px solid var(--line); margin: 28px 0 }
+
+blockquote {
+  margin: 12px 0; padding: 14px 18px;
+  border-left: 3px solid var(--accent);
+  background: rgba(30,77,92,.04); border-radius: 0 12px 12px 0;
+  color: var(--muted); font-size: 14px;
+}
+blockquote p { margin: 4px 0 }
+code {
+  background: #eee8dc; padding: 2px 6px; border-radius: 4px;
+  font-size: 13px; font-family: "SF Mono","Fira Code",monospace;
+}
+strong { font-weight: 700 }
+ol, ul { margin: 8px 0 8px 24px }
+li { margin: 4px 0 }
+
+/* tables */
+.tbl-scroll { overflow-x: auto; margin: 14px 0 }
+table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+  white-space: nowrap;
+}
+th, td {
+  padding: 7px 10px; text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+th { background: #f6f3ec; color: var(--muted); font-weight: 700; position: sticky; top: 0 }
+tr:hover td { background: rgba(30,77,92,.03) }
+
+/* images */
+.img-wrap { margin: 16px 0; text-align: center }
+.img-wrap img {
+  max-width: 100%; border-radius: 10px;
+  border: 1px solid var(--line); box-shadow: 0 4px 16px rgba(0,0,0,.06);
+}
+.img-cap { font-size: 12px; color: var(--muted); margin-top: 6px }
+
+/* footer */
+.footer {
+  margin-top: 52px; padding-top: 24px;
+  border-top: 1px solid var(--line);
+  text-align: center; color: var(--muted); font-size: 13px;
+}
+@media(max-width:600px) {
+  .shell { padding: 20px 14px 48px }
+  table { font-size: 11px }
+  th, td { padding: 5px 6px }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <a class="back" href="../../index.html">← 返回首页</a>
+  <nav class="nav"><a href="./trial_10weeks.html">📑 主文件</a><a href="./part_c_econ.html" class="active">📊 经济</a><a href="./part_c_external.html">🌐 外部</a><a href="./part_c_gameplay.html">🎮 玩法</a><a href="./part_c_pay.html">💰 付费</a><a href="./part_c_user.html">👤 用户</a></nav>
+  
+  <h1 id="part-c专题内容方块-经济系统">Part C：专题内容方块 — 经济系统</h1>
+<blockquote><p>按周次聚合同一主题在不同周报中的原文、原图与 mkk 评语。</p></blockquote>
+<hr>
+<h2 id="c6-货币产销比追踪">C6. 货币产销比追踪</h2>
+<p><strong>追踪范围</strong>：W5 → W9, W22 | <strong>当前状态</strong>：W22 蓝钻存量补充</p>
+<hr>
+<h3 id="w5-原文20240812-0818">W5 原文（2024.08.12-08.18）</h3>
+<blockquote><p>金币产销比稳定在90％左右，人均每日获得3.2万（+1%），消耗3.1万（+5%）;</p><p>满愿星的产销比从100%增长到130%，人均每日获取48.6（-8%）个，消耗63.2（+6%）个</p><p>蓝钻的产销比从46％增长到64％，人均每日产出80（-37%），消耗249（-7%）</p></blockquote>
+<div class="img-wrap"><img src="images/w05_currency_ratio.png" alt="W5 货币产销比"><div class="img-cap">W5 货币产销比</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/BSJQwpY1niJWL4kGgFbcNaD9nF2?fromScene=spaceOverview" target="_blank" rel="noopener">第五周周报</a></p>
+<hr>
+<h3 id="w6-原文20240819-0825">W6 原文（2024.08.19-08.25）</h3>
+<blockquote><p>金币产销比稳定在90％左右，人均每日获得3.75万（+15%），消耗3.5万（+13%）;</p><p>满愿星的产销比仍保持130%不变，人均每日获取47.2个（-3%），消耗61.1个（-3%）；</p><p>蓝钻的产销比从64％下降到57％，人均每日产出103.3（+28%）（受满月礼邮件发放影响），消耗243.5（-2%）</p></blockquote>
+<div class="img-wrap"><img src="images/w06_currency_ratio.png" alt="W6 货币产销比"><div class="img-cap">W6 货币产销比</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/BkYjwI52Fi1Aw1kv0OHcaUdYnZe?fromScene=spaceOverview" target="_blank" rel="noopener">第六周周报</a></p>
+<hr>
+<h3 id="w7-原文20240826-0901">W7 原文（2024.08.26-09.01）</h3>
+<blockquote><p>受活跃下降影响，各货币总体产出消耗下降2成以上；人均产销比则都有提升</p><p>金币产销比88％（+1%），人均产出3.7万（+1%），消耗3.6万（+4%）;</p><p>满愿星产销比139%（+8%），人均产出43个（-9%），消耗60个（-2%）；</p><p>蓝钻产销比331％（+48%），人均每日产出72（-30%，前周发了邮件奖励），消耗230（-6%）</p></blockquote>
+<div class="img-wrap"><img src="images/w07_currency_ratio.png" alt="W7 货币产销比"><div class="img-cap">W7 货币产销比</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/JapDwJZeCiP11NkvwU8cEOAbnqf?fromScene=spaceOverview" target="_blank" rel="noopener">第七周周报</a></p>
+<hr>
+<h3 id="w9-原文20240909-0915">W9 原文（2024.09.09-09.15）</h3>
+<blockquote><p>相较上周，金币与满愿星产出消耗较平稳，蓝钻整体产销下降近10%；人均产销比则都有提升</p><p>金币产销比101％（+4%），人均产出4.7万（+13%），消耗4.7万（+19%）;</p><p>满愿星产销比154%（+11%），人均产出46个（+12%），消耗71个（+22%）；</p><p>蓝钻产销比392％（-19%），人均每日产出46个（-7%），消耗166.9（-13%）</p></blockquote>
+<div class="img-wrap"><img src="images/w09_currency_ratio.png" alt="W9 货币产销比"><div class="img-cap">W9 货币产销比</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/HVP8wrPuUiaDFEkiWRpc3EuUnuf?fromScene=spaceOverview" target="_blank" rel="noopener">第九周周报</a></p>
+<hr>
+<h3 id="📌-mkk-评语">📌 mkk 评语</h3>
+<p>金币经济基本健康（产销比 88-100%），蓝钻持续贬值（57% → 392%，产出远超消耗），满愿星有囤积风险（130%）。蓝钻的问题后来被月光卡池（W20-W21）部分回应——用免费货币做消耗出口。W22 补充数据显示，月光卡池 + 小狗卡池双重消耗将蓝钻总量从 9.8 亿压缩至 5.4 亿(-45%)。</p>
+<hr>
+<h3 id="w22-原文20241209-1215-蓝钻存量补充">W22 原文（2024.12.09-12.15）— 蓝钻存量补充</h3>
+<blockquote><p>蓝钻数据补充：参与卡池的一半玩家蓝钻得到消耗，另一半未参与卡池的玩家蓝钻未被消耗；活跃用户总量 9.8 亿 → 5.4 亿</p></blockquote>
+<div class="img-wrap"><img src="images/w22_012.png" alt="W22 图12"><div class="img-cap">W22 图12</div></div>
+<div class="img-wrap"><img src="images/w22_013.png" alt="W22 图13"><div class="img-cap">W22 图13</div></div>
+<div class="img-wrap"><img src="images/w22_014.png" alt="W22 图14"><div class="img-cap">W22 图14</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/F1NNw028KixRwUkN4xjcLfSLnbb?fromScene=spaceOverview" target="_blank" rel="noopener">第二十二周周报</a></p>
+<hr>
+<hr>
+<h2 id="c7-资产存量-专项货币分析">C7. 资产存量 & 专项货币分析</h2>
+<p><strong>追踪范围</strong>：W6 → W85 | <strong>当前状态</strong>：断续跟踪中</p>
+<hr>
+<h3 id="w6-原文20240819-0825">W6 原文（2024.08.19-08.25）</h3>
+<blockquote><p>数据取自DB</p><p>选取历史金币总产量>10w的玩家数，分析其金币存量与在线时长关系。整体上平均在线时长呈下降状态</p><p>金币存量>50w的玩家的平均在线时长下降幅度较高（约-20%），10-50w的玩家在线时长下降幅度约14%，低于10w的玩家在线时长下降幅度较低（约-9%）</p></blockquote>
+<div class="img-wrap"><img src="images/w06_gold_stock_behavior.png" alt="W6 金币存量与在线时长"><div class="img-cap">W6 金币存量与在线时长</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/BkYjwI52Fi1Aw1kv0OHcaUdYnZe?fromScene=spaceOverview" target="_blank" rel="noopener">第六周周报</a></p>
+<hr>
+<h3 id="📌-mkk-评语">📌 mkk 评语</h3>
+<p>高资产玩家可能因"没什么可追求"而流失更快。金币 >50w 的重度囤积玩家在线时长降幅最大(-20%)，10-50w 玩家降幅约 14%，低存量玩家仅降 9%。经济系统的消耗出口不足会反噬活跃度。</p>
+<hr>
+<h3 id="c6-货币产销比">C6 货币产销比</h3>
+<h4 id="w32-潮流代币产销">W32 潮流代币产销</h4>
+<blockquote><p>潮流商店每日参与率 55%（参与包括买卖，分母为日活），每日参与人数 52w。产销情况良好，没有过多的存量。代币生产：约 77% 的潮流代币生产来自于售卖货物，20% 来源于BP任务。共约 120w 玩家参与了售卖潮流季物品，获得代币 448 亿（其中 63% 来自于新春食物，28% 来自于雪雕）。代币消耗：共 132w 玩家参与了潮流季购买物品，消费代币489亿（其中 47% 是新春限定，24% 是购买沙滩季返场物品，20% 购买服饰）。</p></blockquote>
+<div class="img-wrap"><img src="images/w32_018.png" alt="W32 图"><div class="img-cap">W32 图</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/RJcawmdWTikD6Ykj7zDcukQQnCU?fromScene=spaceOverview" target="_blank" rel="noopener">第三十二周周报</a></p>
+<p>📌 mkk: 消耗(489亿)>生产(448亿)说明存量正在被消耗，产销健康。新春食物(63%)是代币生产的绝对主力，而消费端新春限定(47%)和沙滩季返场(24%)是主要出口——"用新春食物换沙滩季物品"构成了核心循环。生产端过度依赖单一品类是隐患，新春食物下架后代币来源可能断崖。</p>
+<h4 id="w38-蓝钻产销">W38 蓝钻产销</h4>
+<blockquote><p>3.20周卡和蓝钻卡池同步上线。3.20-4.06，月周卡、周礼包和直购蓝钻总流水 ¥730w；月卡占比 40%，周卡 18%，直购+周礼包 42%。本期绵绵假日蓝钻卡池参与率 60%，远高于吉祥娃娃（春节）和秘林探险蓝钻卡池。蓝钻的消耗/原存量比 136%，高于前两个卡池，表明本次蓝钻产销流通速度比之前更快。总消耗蓝钻 6.5 亿，人均消耗 467 个，低于之前的蓝钻卡池。同存量分层的玩家，本期卡池的人均消耗明显高于前两个卡池。本期蓝钻卡池人均消耗蓝钻数量少主要是因为没蓝钻或低蓝钻存量用户占比更高，其中有 47% 的玩家原存量不足 100 个。</p></blockquote>
+<div class="img-wrap"><img src="images/w38_008.png" alt="W38 蓝钻卡池与月周卡表现"><div class="img-cap">W38 蓝钻卡池与月周卡表现</div></div>
+<div class="img-wrap"><img src="images/w38_009.png" alt="W38 蓝钻存量与消耗分层"><div class="img-cap">W38 蓝钻存量与消耗分层</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/FXvBwJKXbiwzhnkWYTHctNaBnpf?fromScene=spaceOverview" target="_blank" rel="noopener">第三十八周周报</a></p>
+<p>📌 mkk: 核心发现是"同存量消耗更高+整体存量更低"——周卡提供了低价蓝钻供给，加速了流通（136%消耗/存量比），但也意味着玩家蓝钻储备正在被快速消耗。47%玩家存量不足100个，如果后续蓝钻获取渠道不变，下一个蓝钻卡池的参与度可能受限于"没蓝钻可花"。周卡的引入短期刺激了消费，但长期可能压缩蓝钻的稀缺性。</p>
+<hr>
+<hr>
+<h3 id="w48-蓝钻产销分析">W48 蓝钻产销分析</h3>
+<blockquote><p>蓝钻产销：本期蓝钻卡池上线前，卡池玩家的蓝钻存量达到 4.5亿远高于往期，人均存量 469 个。直购蓝钻：本期直购蓝钻流水不高，仅 189w</p></blockquote>
+<div class="img-wrap"><img src="images/w48_009.png" alt="W48 图"><div class="img-cap">W48 图</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/HM0IwSWWXiUSqVkUcUtcQMvtn3g?fromScene=spaceOverview" target="_blank" rel="noopener">第四十八周周报</a></p>
+<p>📌 mkk: 蓝钻存量4.5亿+人均469是一个重要经济信号：玩家囤积了大量蓝钻，意味着蓝钻的产出速度长期大于消耗速度。当期蓝钻卡池消耗5.2亿（>存量），说明确实在去库存，但直购仅189w意味着玩家并没有因库存不足而付费购买——蓝钻的实际付费转化效率可能需要重新评估。如果蓝钻持续通胀，会削弱蓝钻卡池的变现能力。</p>
+<hr>
+<h3 id="w65-中秋资产投放活跃货币购买">W65 中秋资产投放(活跃货币购买)</h3>
+<blockquote><p>本期中秋相关资产的投放方式是活跃货币金币/满愿星购买，购买率一般。</p></blockquote>
+<div class="img-wrap"><img src="images/w65_005.png" alt="W65 图5"><div class="img-cap">W65 图5</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/HMjOwaBCAi1JtTk8xEmcCaKGnhe?fromScene=spaceOverview" target="_blank" rel="noopener">第六十五周周报</a></p>
+<p>📌 mkk: 活跃货币购买方式的转化率偏低，可能因为金币/满愿星对玩家来说有"机会成本"——用来买中秋限定意味着放弃日常消费。相比之下，专属代币（如万圣节糖果）的参与率更高，因为没有替代用途。</p>
+<hr>
+<h3 id="w65-黄油小熊返钻流向分析">W65 黄油小熊返钻流向分析</h3>
+<blockquote><p>黄油小熊共返钻332w，占该玩家分群期间总获得心钻的6%（其余为充值等方式获得）；期间心钻产销平衡，没有囤积；87%的心钻流水消耗在卡池中。</p></blockquote>
+<div class="img-wrap"><img src="images/w65_019.png" alt="W65 图19"><div class="img-cap">W65 图19</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/HMjOwaBCAi1JtTk8xEmcCaKGnhe?fromScene=spaceOverview" target="_blank" rel="noopener">第六十五周周报</a></p>
+<p>📌 mkk: 返钻占比仅6%，对整体心钻经济冲击极小。87%流向卡池说明"返钻→卡池消费"的路径非常通畅——进阶BP返钻本质上是一种"延迟折扣"，玩家先付钱买进阶，返的钻又花回卡池。净效果是提高了用户的总消费深度而非减少收入。</p>
+<hr>
+<hr>
+<h3 id="w85-抽卡券产销情况">W85 抽卡券产销情况</h3>
+<blockquote><p>春节期间(1.31 - 3.01) 抽卡券产销情况如下：产销比达到98.8%，玩家春节期间获得的抽卡券基本消耗完全。目前存量和春节前基本持平，因此对后续卡池/商业化活动应该影响较小。</p><p>分卡池消耗情况：消耗抽卡券的主力还是森铃咒语大卡池，占比83%。</p></blockquote>
+<div class="img-wrap"><img src="images/w85_010.png" alt="W85 图10"><div class="img-cap">W85 图10</div></div>
+<p>📎 原文：<a href="https://xd.feishu.cn/wiki/Wd3owCbiVi62ZXkbYQHctl2an4O?fromScene=spaceOverview" target="_blank" rel="noopener">第八十五周周报</a></p>
+<p>📌 mkk: 98.8%的产销比是非常健康的信号——春节期间送出的抽卡券几乎全部被消化，不会像蓝钻那样形成持续贬值的货币泡沫。森铃大卡池吸收了83%的消耗，再次证明大卡池是最有效的消耗出口。更重要的是"存量与春节前持平"，意味着后续卡池的付费不会被春节剩余券稀释——这与W83-84喜羊羊通票影响形成对比。</p>
+<hr>
+  <footer class="footer">心动小镇国服数据周报合集 W1-W85 · mkk</footer>
+</div>
+<script>
+// highlight current section in sec-nav on scroll
+(function() {
+  const nav = document.querySelector('.sec-nav');
+  if (!nav) return;
+  const links = Array.from(nav.querySelectorAll('a[href^="#"]'));
+  const ids = links.map(a => a.getAttribute('href').slice(1));
+  function update() {
+    let cur = ids[0];
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= 80) cur = id;
+    }
+    links.forEach(a => a.classList.toggle('cur', a.getAttribute('href') === '#' + cur));
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+</body>
+</html>
