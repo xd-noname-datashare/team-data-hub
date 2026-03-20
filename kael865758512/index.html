@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心动小镇国服：成年核心用户满意度风险评估</title>
+    <style>
+        :root { --bg: #f8f9fa; --card: #fff; --text: #1a1a2e; --muted: #6c757d; --accent: #2563eb; --red: #dc2626; --green: #16a34a; --yellow: #ca8a04; --border: #e5e7eb; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+        .container { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .meta { color: var(--muted); font-size: 13px; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+        h2 { font-size: 22px; font-weight: 700; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+        h3 { font-size: 17px; font-weight: 600; margin: 28px 0 12px; }
+        p { margin-bottom: 14px; }
+        .card { background: var(--card); border-radius: 10px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .conclusion { border-left: 4px solid var(--red); padding-left: 20px; background: #fef2f2; border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 24px; }
+        .conclusion strong { color: var(--red); }
+        .so-what { border-left: 4px solid var(--accent); padding: 16px 20px; background: #eff6ff; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 14px; }
+        .warning { border-left: 4px solid var(--yellow); padding: 14px 18px; background: #fffbeb; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+        th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #f1f5f9; font-weight: 600; white-space: nowrap; position: sticky; top: 0; }
+        tr:hover { background: #f8fafc; }
+        .highlight-row { background: #fef3c7 !important; font-weight: 600; }
+        .highlight-row:hover { background: #fde68a !important; }
+        .status-red { color: var(--red); font-weight: 600; }
+        .status-green { color: var(--green); font-weight: 600; }
+        .status-yellow { color: var(--yellow); font-weight: 600; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+        .badge-red { background: #fee2e2; color: var(--red); }
+        .badge-green { background: #dcfce7; color: var(--green); }
+        .badge-yellow { background: #fef9c3; color: var(--yellow); }
+        ul, ol { margin: 12px 0 12px 24px; }
+        li { margin-bottom: 6px; }
+        .toc { background: var(--card); border-radius: 10px; padding: 20px 24px; margin-bottom: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .toc h3 { margin-top: 0; }
+        .toc a { color: var(--accent); text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+        .toc ul { list-style: none; margin-left: 0; }
+        .toc li { padding: 4px 0; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        blockquote { border-left: 3px solid var(--border); padding-left: 16px; color: var(--muted); margin: 12px 0; font-size: 14px; }
+        .stars { color: #f59e0b; letter-spacing: 1px; }
+        @media (max-width: 640px) { .container { padding: 16px 12px 48px; } h1 { font-size: 22px; } table { font-size: 12px; } th, td { padding: 6px 6px; } }
+    </style>
+</head>
+<body>
+<div class="container">
+
+<h1>心动小镇国服：成年核心用户满意度风险评估</h1>
+<p class="meta">数据范围：7 期国服满意度问卷（2505~2602，约 105 万份有效样本）+ 数仓行为/付费数据（2025-08 ~ 2026-02）<br>QC 规则：Speeder (&lt;60s) + 极端总分 (max/min) 统一剔除 &nbsp;|&nbsp; 生成时间：2026-03-16</p>
+
+<div class="toc">
+<h3>目录</h3>
+<ul>
+<li><a href="#conclusion">结论</a></li>
+<li><a href="#core">核心发现</a></li>
+<li><a href="#ch1">第一章：这群人有多重要</a></li>
+<li><a href="#ch2">第二章：他们的满意度持续偏低，2602 显著加深</a></li>
+<li><a href="#ch3">第三章：他们为什么不满意</a></li>
+<li><a href="#ch4">第四章：但他们的行为没有衰退</a></li>
+<li><a href="#ch5">第五章：他们也没有在流失</a></li>
+<li><a href="#ch6">第六章：综合判断与建议</a></li>
+<li><a href="#appendix">附录</a></li>
+</ul>
+</div>
+
+<!-- ==================== 结论 ==================== -->
+<h2 id="conclusion">结论</h2>
+<div class="conclusion">
+<strong>在问卷可观测样本内贡献四成当期付费、五成累计付费的 23-40 岁用户，满意度持续 7 期偏低且在 2602 显著恶化。</strong> 玩法和社交体验是长期低分项（gap 持续在 -0.5 左右），付费维度本来温和但在 2602 集中恶化（从 -0.2 到 -0.58）。在当前可观测窗口内，尚未看到这群人的行为衰退或短期流失抬升，但不满在持续积累。建议排查 2602 冰雪季版本变化（不限于付费），并在 2603 问卷中定向监测 23-40 岁 gap 是否继续恶化。
+</div>
+
+<!-- ==================== 核心发现 ==================== -->
+<h2 id="core">核心发现</h2>
+<div class="card">
+<ol>
+<li><strong>23-40 岁 = 问卷样本中 16% 的人头，40% 的当期付费，51% 的累计付费。</strong> 7 期一致（累计付费占比 44-56%），不随版本波动，是结构性特征。</li>
+<li><strong>满意度 7 期持续偏低，2602 显著加深。</strong> 23-25 岁 gap 前 6 期在 -0.5~-0.7 间波动，2602 扩大到 -0.94；26-30 岁同步扩大到 -0.83。</li>
+<li><strong>玩法和社交是长期低分项，付费是 2602 集中恶化项。</strong> 爱好玩法（-0.78）和社交（-0.76）的绝对 gap 远大于付费（-0.58），且前 6 期就已持续在 -0.5 左右。付费维度在 2602 变化幅度最大（从 -0.2 到 -0.58，放大 3 倍）。</li>
+<li><strong>低满意度用户 = 重度用户 = 高付费。</strong> 23-25 岁低满意度人数比高满意度少 40%，但 30d 总付费多 15%。不满来自高期望，不是低热情。</li>
+<li><strong>满意度在中度不满水平下，6 个月内不预测流失。</strong> 22 万人追踪，低/高满意度存活曲线完全重合。但 2602 的不满程度（gap -0.94）远超 2508，非线性效应待验证。</li>
+</ol>
+<p style="margin-top:16px">→ 现阶段风险主要体现为态度先恶化、行为暂未同步转弱。<strong>优先级最高的行动是搞清楚 2602 冰雪季版本到底对成年用户做了什么。</strong></p>
+</div>
+
+<!-- ==================== 第一章 ==================== -->
+<h2 id="ch1">第一章：这群人有多重要</h2>
+
+<h3>1.1 付费权重：问卷样本中不到五分之一的人头，贡献超过一半的付费</h3>
+<div class="table-wrap">
+<table>
+<tr><th>年龄段</th><th>人数</th><th>占比</th><th>30d 总付费</th><th>付费占比</th><th>累计总付费</th><th>累计占比</th><th>累计人均</th></tr>
+<tr><td>11岁及以下</td><td>9,064</td><td>7.7%</td><td>¥24.0万</td><td>2.2%</td><td>¥104.5万</td><td>1.6%</td><td>¥115</td></tr>
+<tr><td>12-14岁</td><td>23,794</td><td>20.2%</td><td>¥82.0万</td><td>7.5%</td><td>¥313.0万</td><td>4.7%</td><td>¥132</td></tr>
+<tr><td>15-17岁</td><td>24,937</td><td>21.2%</td><td>¥144.8万</td><td>13.3%</td><td>¥642.3万</td><td>9.7%</td><td>¥258</td></tr>
+<tr><td>18-22岁</td><td>38,531</td><td>32.7%</td><td>¥375.3万</td><td>34.5%</td><td>¥2,046.1万</td><td>30.8%</td><td>¥531</td></tr>
+<tr class="highlight-row"><td>23-25岁</td><td>10,222</td><td>8.7%</td><td>¥189.0万</td><td>17.4%</td><td>¥1,326.4万</td><td>20.0%</td><td>¥1,298</td></tr>
+<tr class="highlight-row"><td>26-30岁</td><td>5,868</td><td>5.0%</td><td>¥151.2万</td><td>13.9%</td><td>¥1,227.7万</td><td>18.5%</td><td>¥2,092</td></tr>
+<tr class="highlight-row"><td>31-40岁</td><td>3,207</td><td>2.7%</td><td>¥97.6万</td><td>9.0%</td><td>¥821.7万</td><td>12.4%</td><td>¥2,562</td></tr>
+<tr><td>41岁及以上</td><td>2,244</td><td>1.9%</td><td>¥22.8万</td><td>2.1%</td><td>¥163.2万</td><td>2.5%</td><td>¥727</td></tr>
+<tr style="font-weight:700;border-top:2px solid #333"><td>全体</td><td>117,867</td><td>100%</td><td>¥1,086.5万</td><td>100%</td><td>¥6,644.9万</td><td>100%</td><td>¥564</td></tr>
+</table>
+</div>
+<p><strong>23-40 岁合计：19,297 人（16.4%）→ 30d 付费 ¥437.8 万（40.3%）→ 累计 ¥3,375.8 万（50.8%）。</strong></p>
+
+<h3>1.2 这个比例不是偶然：7 期一致</h3>
+<div class="table-wrap">
+<table>
+<tr><th>期次</th><th>23-40 人头%</th><th>23-40 累计付费%</th><th>23-40 人均累计</th><th>全体人均累计</th></tr>
+<tr><td>2505 奶茶鼠</td><td>23.9%</td><td><strong>55.7%</strong></td><td>¥2,809</td><td>¥1,204</td></tr>
+<tr><td>2506 端午</td><td>24.4%</td><td><strong>54.9%</strong></td><td>¥2,739</td><td>¥1,218</td></tr>
+<tr><td>2507 周年</td><td>15.0%</td><td><strong>44.8%</strong></td><td>¥2,050</td><td>¥687</td></tr>
+<tr><td>2508 绘画</td><td>15.0%</td><td><strong>44.4%</strong></td><td>¥2,006</td><td>¥680</td></tr>
+<tr><td>2509 中秋</td><td>17.9%</td><td><strong>47.2%</strong></td><td>¥2,211</td><td>¥841</td></tr>
+<tr><td>2512 甄嬛</td><td>25.6%</td><td><strong>54.1%</strong></td><td>¥2,369</td><td>¥1,121</td></tr>
+<tr><td>2602 冰雪</td><td>19.5%</td><td><strong>51.0%</strong></td><td>¥2,281</td><td>¥875</td></tr>
+</table>
+</div>
+
+<h3>1.3 问卷代表的是谁</h3>
+<div class="table-wrap">
+<table>
+<tr><th>付费档位</th><th>活跃用户</th><th>问卷用户</th><th>覆盖率</th></tr>
+<tr><td>超R (&gt;2000)</td><td>76,336</td><td>6,712</td><td>8.8%</td></tr>
+<tr><td>大R (500-2000)</td><td>148,680</td><td>11,705</td><td>7.9%</td></tr>
+<tr><td>中R (100-500)</td><td>262,461</td><td>20,318</td><td>7.7%</td></tr>
+<tr><td>小R (0-100)</td><td>644,621</td><td>36,685</td><td>5.7%</td></tr>
+<tr><td>无充值</td><td>1,107,041</td><td>42,445</td><td>3.8%</td></tr>
+<tr style="font-weight:700;border-top:2px solid #333"><td>合计</td><td>2,242,306</td><td>117,867</td><td>5.3%</td></tr>
+</table>
+</div>
+<div class="so-what"><strong>So What：</strong>在问卷可观测样本内，这群人的付费权重远超人头占比。后续看到他们的不满信号时，不能用"只是少数人抱怨"来解读。</div>
+
+<!-- ==================== 第二章 ==================== -->
+<h2 id="ch2">第二章：他们的满意度持续偏低，2602 显著加深</h2>
+
+<h3>2.1 整体满意度 × 年龄 × 7 期</h3>
+<div class="table-wrap">
+<table>
+<tr><th>年龄段</th><th>2505</th><th>2506</th><th>2507</th><th>2508</th><th>2509</th><th>2512</th><th>2602</th></tr>
+<tr><td>11岁及以下</td><td>8.66</td><td>8.49</td><td>9.15</td><td>8.73</td><td>8.67</td><td>8.77</td><td>9.03</td></tr>
+<tr><td>12-14岁</td><td>8.49</td><td>8.48</td><td>8.90</td><td>8.49</td><td>8.33</td><td>8.51</td><td>8.64</td></tr>
+<tr><td>15-17岁</td><td>7.91</td><td>7.88</td><td>8.46</td><td>7.96</td><td>7.79</td><td>7.94</td><td>8.01</td></tr>
+<tr><td>18-22岁</td><td>7.49</td><td>7.57</td><td>8.24</td><td>7.69</td><td>7.45</td><td>7.56</td><td><strong>7.50</strong></td></tr>
+<tr class="highlight-row"><td>23-25岁</td><td>7.07</td><td>7.14</td><td>7.88</td><td>7.33</td><td>7.02</td><td>7.17</td><td class="status-red">6.95</td></tr>
+<tr class="highlight-row"><td>26-30岁</td><td>7.17</td><td>7.16</td><td>7.89</td><td>7.38</td><td>7.04</td><td>7.22</td><td class="status-red">7.06</td></tr>
+<tr><td>31-40岁</td><td>7.53</td><td>7.38</td><td>8.23</td><td>7.61</td><td>7.54</td><td>7.60</td><td>7.56</td></tr>
+<tr style="font-weight:700;border-top:2px solid #333"><td>全体</td><td>7.71</td><td>7.69</td><td>8.41</td><td>7.91</td><td>7.69</td><td>7.78</td><td>7.89</td></tr>
+</table>
+</div>
+
+<h3>2.2 Gap（各年龄段 vs 全体差距）：2602 出现方向分裂</h3>
+<div class="table-wrap">
+<table>
+<tr><th>年龄段</th><th>2505</th><th>2506</th><th>2507</th><th>2508</th><th>2509</th><th>2512</th><th>2602</th><th>趋势</th></tr>
+<tr><td>11岁及以下</td><td>+0.95</td><td>+0.80</td><td>+0.74</td><td>+0.82</td><td>+0.98</td><td>+0.99</td><td class="status-green">+1.14</td><td>持续扩大</td></tr>
+<tr><td>12-14岁</td><td>+0.78</td><td>+0.78</td><td>+0.49</td><td>+0.58</td><td>+0.64</td><td>+0.74</td><td>+0.75</td><td>稳定</td></tr>
+<tr><td>15-17岁</td><td>+0.20</td><td>+0.18</td><td>+0.05</td><td>+0.05</td><td>+0.10</td><td>+0.17</td><td>+0.12</td><td>接近全体</td></tr>
+<tr><td>18-22岁</td><td>-0.23</td><td>-0.12</td><td>-0.17</td><td>-0.22</td><td>-0.24</td><td>-0.21</td><td class="status-yellow">-0.38</td><td>2602 加速</td></tr>
+<tr class="highlight-row"><td>23-25岁</td><td>-0.64</td><td>-0.55</td><td>-0.53</td><td>-0.58</td><td>-0.67</td><td>-0.61</td><td class="status-red">-0.94</td><td><span class="badge badge-red">显著加深</span></td></tr>
+<tr class="highlight-row"><td>26-30岁</td><td>-0.55</td><td>-0.53</td><td>-0.53</td><td>-0.53</td><td>-0.65</td><td>-0.56</td><td class="status-red">-0.83</td><td><span class="badge badge-red">同步加深</span></td></tr>
+<tr><td>31-40岁</td><td>-0.19</td><td>-0.32</td><td>-0.19</td><td>-0.30</td><td>-0.15</td><td>-0.17</td><td>-0.33</td><td>恶化</td></tr>
+<tr><td>41岁及以上</td><td>-0.78</td><td>-0.60</td><td>-0.57</td><td>-0.86</td><td>-0.79</td><td>-0.42</td><td>-0.38</td><td>反而收窄</td></tr>
+</table>
+</div>
+<p>2602 的全体分是 7.89——在 7 期中排第三高。全体满意度在回升，23-30 岁却在加速下沉。<strong>不是"大家都变差了"，是成年段和低龄段走向了相反的方向。</strong></p>
+
+<h3>2.3 是同一批人在变不满意，不是新用户拉低</h3>
+<p><strong>证据 1：重复用户 vs 首次用户（2602）</strong></p>
+<div class="table-wrap">
+<table>
+<tr><th>年龄段</th><th>重复用户满意度</th><th>首次用户满意度</th><th>差距</th><th>重复 n</th><th>首次 n</th></tr>
+<tr><td>11岁及以下</td><td>8.73</td><td>9.18</td><td>-0.45</td><td>3,113</td><td>5,981</td></tr>
+<tr><td>18-22岁</td><td class="status-red">7.12</td><td>7.85</td><td><strong>-0.73</strong></td><td>18,432</td><td>20,140</td></tr>
+<tr class="highlight-row"><td>23-25岁</td><td class="status-red">6.57</td><td>7.38</td><td><strong>-0.82</strong></td><td>5,478</td><td>4,755</td></tr>
+<tr class="highlight-row"><td>26-30岁</td><td class="status-red">6.66</td><td>7.61</td><td><strong>-0.95</strong></td><td>3,412</td><td>2,459</td></tr>
+<tr><td>31-40岁</td><td>7.18</td><td>8.10</td><td>-0.93</td><td>1,873</td><td>1,338</td></tr>
+<tr style="font-weight:700;border-top:2px solid #333"><td>全体</td><td>7.48</td><td>8.25</td><td>-0.77</td><td>55,478</td><td>62,555</td></tr>
+</table>
+</div>
+
+<p><strong>证据 2：同一个人 9 个月的变化（2505→2602 追踪，9,211 人）</strong></p>
+<div class="table-wrap">
+<table>
+<tr><th>年龄段(2505时)</th><th>2505 均值</th><th>2602 均值</th><th>净值变化</th><th>追踪人数</th></tr>
+<tr><td>11岁及以下</td><td>8.63</td><td>8.47</td><td>-0.16</td><td>546</td></tr>
+<tr><td>12-14岁</td><td>8.48</td><td>7.88</td><td>-0.60</td><td>1,397</td></tr>
+<tr><td>15-17岁</td><td>7.82</td><td>7.24</td><td>-0.58</td><td>1,630</td></tr>
+<tr><td>18-22岁</td><td>7.36</td><td>6.68</td><td class="status-red">-0.68</td><td>3,003</td></tr>
+<tr class="highlight-row"><td>23-25岁</td><td>6.88</td><td>6.11</td><td class="status-red">-0.76</td><td>1,173</td></tr>
+<tr class="highlight-row"><td>26-30岁</td><td>6.94</td><td>6.18</td><td class="status-red">-0.77</td><td>801</td></tr>
+<tr class="highlight-row"><td>31-40岁</td><td>7.40</td><td>6.58</td><td class="status-red">-0.82</td><td>450</td></tr>
+<tr style="font-weight:700;border-top:2px solid #333"><td>全体</td><td>7.59</td><td>6.94</td><td>-0.64</td><td>9,211</td></tr>
+</table>
+</div>
+<p><strong>同一个人</strong>在 9 个月内打分下降了 0.6-0.8 分。能被追踪到的是极端忠诚子集，已流失的不满意用户不在其中。<strong>-0.64 ~ -0.82 的跌幅是下界估计。</strong></p>
+
+<h3>2.4 续玩意愿的信号更强烈</h3>
+<div class="table-wrap">
+<table>
+<tr><th>年龄段</th><th>2505</th><th>2506</th><th>2508</th><th>2509</th><th>2512</th><th>2602</th></tr>
+<tr><td>11岁及以下</td><td>+1.29</td><td>+0.94</td><td>+1.01</td><td>+1.23</td><td>+1.20</td><td>+1.29</td></tr>
+<tr class="highlight-row"><td>18-22岁</td><td>-0.29</td><td>-0.15</td><td>-0.28</td><td>-0.32</td><td>-0.26</td><td class="status-red">-0.45</td></tr>
+<tr class="highlight-row"><td>23-25岁</td><td>-0.78</td><td>-0.58</td><td>-0.73</td><td>-0.89</td><td>-0.75</td><td class="status-red">-1.02</td></tr>
+<tr class="highlight-row"><td>26-30岁</td><td>-0.71</td><td>-0.56</td><td>-0.70</td><td>-0.81</td><td>-0.72</td><td class="status-red">-0.88</td></tr>
+</table>
+</div>
+<div class="so-what"><strong>So What：</strong>满意度下降不是一期波动，是 7 期验证的结构性问题，且在 2602 加速。如果 2603 继续恶化，说明趋势不可逆，需要在产品层面介入。</div>
+
+<!-- ==================== 第三章 ==================== -->
+<h2 id="ch3">第三章：他们为什么不满意</h2>
+
+<h3>3.1 三个维度的完整画面</h3>
+<div class="table-wrap">
+<table>
+<tr><th>维度</th><th>2505</th><th>2506</th><th>2507</th><th>2508</th><th>2509</th><th>2512</th><th>2602</th><th>前6期均值</th><th>2602跳幅</th></tr>
+<tr><td><strong>爱好玩法</strong></td><td>-0.56</td><td>-0.48</td><td>-0.44</td><td>-0.48</td><td>-0.60</td><td>-0.54</td><td class="status-red">-0.78</td><td>-0.52</td><td>-0.24</td></tr>
+<tr><td><strong>社交体验</strong></td><td>-0.56</td><td>-0.44</td><td>-0.46</td><td>-0.51</td><td>-0.58</td><td>-0.50</td><td class="status-red">-0.76</td><td>-0.51</td><td>-0.26</td></tr>
+<tr><td>付费体验</td><td>-0.21</td><td>-0.13</td><td>-0.13</td><td>-0.03</td><td>-0.23</td><td>-0.20</td><td class="status-red">-0.58</td><td>-0.16</td><td><strong>-0.38</strong></td></tr>
+</table>
+</div>
+<p>两个层次的信号：</p>
+<ol>
+<li><strong>长期低分项是爱好玩法和社交体验</strong>——前 6 期 gap 就已在 -0.5 左右</li>
+<li><strong>付费是 2602 变化幅度最大的维度</strong>——前 6 期仅 -0.16，2602 扩大到 -0.58，放大 3.6 倍</li>
+</ol>
+
+<h3>3.2 流失原因多选</h3>
+<div class="table-wrap">
+<table>
+<tr><th>年龄段</th><th>2505</th><th>2506</th><th>2508</th><th>2509</th><th>2512</th><th>2602</th></tr>
+<tr><td>11岁以下</td><td>52.7%</td><td>46.4%</td><td>37.6%</td><td>49.1%</td><td>43.9%</td><td>39.4%</td></tr>
+<tr><td>15-17岁</td><td>53.6%</td><td>46.9%</td><td>45.1%</td><td>59.5%</td><td>51.0%</td><td>50.3%</td></tr>
+<tr class="highlight-row"><td>23-25岁</td><td>64.2%</td><td>54.5%</td><td>49.6%</td><td>64.1%</td><td>55.2%</td><td>60.7%</td></tr>
+<tr class="highlight-row"><td>26-30岁</td><td>62.3%</td><td>54.8%</td><td>50.5%</td><td>66.3%</td><td>58.9%</td><td>65.0%</td></tr>
+<tr style="font-weight:700;border-top:2px solid #333"><td>全体</td><td>58.7%</td><td>50.5%</td><td>46.3%</td><td>61.1%</td><td>52.9%</td><td>54.4%</td></tr>
+</table>
+</div>
+
+<h3>3.3 付费集中恶化的两种解读</h3>
+<div class="card">
+<p><strong>A. 付费设计确实出了问题</strong>（冰雪季改了定价/商品/节奏）→ 修付费能直接缓解</p>
+<p><strong>B. 付费是一般性不满的放大器</strong>——当玩法和社交的长期不满积累到一定程度，付费感知会率先崩溃</p>
+<p>如果是 B，光修付费治标不治本。目前的数据无法区分 A 和 B。</p>
+</div>
+<div class="so-what"><strong>So What：</strong>排查方向不应只盯付费——2602 冰雪季对成年用户的玩法体验、社交设计、以及付费策略分别做了什么变化，都需要交叉核实。</div>
+
+<!-- ==================== 第四章 ==================== -->
+<h2 id="ch4">第四章：但他们的行为没有衰退</h2>
+<div class="warning"><strong>选择偏差说明：</strong>本章分析的是"2026 年 2 月仍在填问卷"的用户，他们在 2 月必然处于活跃状态。本章回答的问题是"仍在玩的不满意用户的行为强度如何"，而非整体是否在衰退。</div>
+
+<h3>4.1 月活率：23-40 岁全程领先</h3>
+<div class="table-wrap">
+<table>
+<tr><th>年龄段</th><th>总人数</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th><th>01</th><th>02*</th></tr>
+<tr><td>11岁及以下</td><td>9,064</td><td>84%</td><td>78%</td><td>80%</td><td>76%</td><td>79%</td><td>89%</td><td>100%</td></tr>
+<tr><td>15-17岁</td><td>24,937</td><td>82%</td><td>75%</td><td>76%</td><td>73%</td><td>76%</td><td>88%</td><td>100%</td></tr>
+<tr class="highlight-row"><td>23-25岁</td><td>10,222</td><td>80%</td><td>79%</td><td>80%</td><td>81%</td><td>85%</td><td>93%</td><td>100%</td></tr>
+<tr class="highlight-row"><td>26-30岁</td><td>5,868</td><td>84%</td><td>83%</td><td>83%</td><td>85%</td><td>88%</td><td>95%</td><td>100%</td></tr>
+<tr class="highlight-row"><td>31-40岁</td><td>3,207</td><td>87%</td><td>85%</td><td>86%</td><td>87%</td><td>90%</td><td>95%</td><td>100%</td></tr>
+<tr style="font-weight:700;border-top:2px solid #333"><td>全体</td><td>117,867</td><td>81%</td><td>76%</td><td>77%</td><td>76%</td><td>79%</td><td>90%</td><td>100%</td></tr>
+</table>
+</div>
+
+<h3>4.2 登录深度（月均天数）</h3>
+<div class="table-wrap">
+<table>
+<tr><th>年龄段</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th><th>01</th><th>02</th></tr>
+<tr><td>11岁及以下</td><td>15.8</td><td>14.5</td><td>15.5</td><td>14.3</td><td>14.8</td><td>16.0</td><td>20.7</td></tr>
+<tr><td>15-17岁</td><td>17.1</td><td>14.1</td><td>15.7</td><td>14.7</td><td>15.1</td><td>16.3</td><td>21.8</td></tr>
+<tr class="highlight-row"><td>23-25岁</td><td>18.9</td><td>21.5</td><td>22.4</td><td>21.8</td><td>22.3</td><td>22.4</td><td>23.8</td></tr>
+<tr class="highlight-row"><td>26-30岁</td><td>19.7</td><td>23.1</td><td>24.0</td><td>23.3</td><td>24.1</td><td>23.7</td><td>24.3</td></tr>
+<tr class="highlight-row"><td>31-40岁</td><td>19.9</td><td>23.2</td><td>24.4</td><td>23.3</td><td>24.2</td><td>23.9</td><td>24.3</td></tr>
+</table>
+</div>
+
+<h3>4.3 满意度最低的人，反而付费最多</h3>
+<div class="table-wrap">
+<table>
+<tr><th>年龄段</th><th colspan="3">低满意度(1-5)</th><th colspan="3">高满意度(8-10)</th><th>人均付费比</th></tr>
+<tr><th></th><th>n</th><th>30d 总付费</th><th>人均</th><th>n</th><th>30d 总付费</th><th>人均</th><th>低/高</th></tr>
+<tr class="highlight-row"><td>23-25岁</td><td>3,050</td><td>¥78.7万</td><td>¥258</td><td>4,993</td><td>¥68.2万</td><td>¥137</td><td><strong>1.88x</strong></td></tr>
+<tr class="highlight-row"><td>26-30岁</td><td>1,633</td><td>¥60.8万</td><td>¥372</td><td>3,012</td><td>¥56.2万</td><td>¥187</td><td><strong>1.99x</strong></td></tr>
+<tr class="highlight-row"><td>31-40岁</td><td>690</td><td>¥30.9万</td><td>¥448</td><td>1,894</td><td>¥46.0万</td><td>¥243</td><td><strong>1.84x</strong></td></tr>
+</table>
+</div>
+<div class="so-what"><strong>So What：</strong>不满意的人不是在"用脚投票"——他们不满意恰恰因为投入深、标准高。当前的不满是"还愿意抱怨"的阶段，如果有一天他们不抱怨了直接走，问题会大得多。</div>
+
+<!-- ==================== 第五章 ==================== -->
+<h2 id="ch5">第五章：他们也没有在流失</h2>
+
+<h3>5.1-5.2 三条存活曲线完全重合（2508 队列，220k 人，6 个月追踪）</h3>
+<div class="table-wrap">
+<table>
+<tr><th>满意度</th><th>n</th><th>2025-08</th><th>09</th><th>10</th><th>11</th><th>12</th><th>2026-01</th><th>02</th></tr>
+<tr><td>低(1-5)</td><td>35,951</td><td>100%</td><td>88.7%</td><td>79.4%</td><td>67.6%</td><td>64.1%</td><td>65.3%</td><td>67.5%</td></tr>
+<tr><td>中(6-7)</td><td>43,694</td><td>100%</td><td>89.0%</td><td>79.6%</td><td>67.4%</td><td>63.5%</td><td>65.0%</td><td>67.3%</td></tr>
+<tr><td>高(8-10)</td><td>140,938</td><td>100%</td><td>88.0%</td><td>79.8%</td><td>66.8%</td><td>62.9%</td><td>64.5%</td><td>67.4%</td></tr>
+<tr style="font-weight:700;border-top:2px solid #333"><td>低-高 gap</td><td></td><td>0</td><td>+0.7p</td><td>-0.3p</td><td>+0.8p</td><td>+1.2p</td><td>+0.8p</td><td>+0.0p</td></tr>
+</table>
+</div>
+<p><strong>低满意度 6 个月存活率 67.5%，高满意度 67.4%——差 0.1pp。</strong></p>
+<div class="warning"><strong>重要前提：</strong>2508 队列的 gap 仅 -0.58（中度不满）。2602 的 gap 已达 -0.94，是 1.6 倍。极端不满是否会突破"沉没成本锁定"，待验证。</div>
+
+<h3>5.4 走的是谁：低价值用户的自然淘汰</h3>
+<div class="table-wrap">
+<table>
+<tr><th>付费档位</th><th>流失率</th></tr>
+<tr><td>超R (&gt;2000)</td><td class="status-green">5.2%</td></tr>
+<tr><td>大R (500-2000)</td><td class="status-green">8.9%</td></tr>
+<tr><td>中R (100-500)</td><td>14.9%</td></tr>
+<tr><td>小R (0-100)</td><td class="status-yellow">29.2%</td></tr>
+<tr><td>无充值</td><td class="status-red">39.2%</td></tr>
+</table>
+</div>
+<div class="so-what"><strong>So What：</strong>当前流失模式是健康的自然淘汰。但一旦高价值用户开始走，衰退会很突然——他们是直到走之前都高度活跃的人。</div>
+
+<!-- ==================== 第六章 ==================== -->
+<h2 id="ch6">第六章：综合判断与建议</h2>
+
+<h3>6.1 三层证据拼图</h3>
+<div class="table-wrap">
+<table>
+<tr><th>层面</th><th>发现</th><th>状态</th></tr>
+<tr><td>态度</td><td>23-40 岁满意度 7 期偏低，2602 显著加深；玩法/社交长期低分，付费集中恶化</td><td><span class="badge badge-red">恶化中</span></td></tr>
+<tr><td>行为</td><td>同一群人月活率最高、登录最勤、付费最多（但仅反映存活者）</td><td><span class="badge badge-green">稳固</span></td></tr>
+<tr><td>流失</td><td>中度不满下满意度不预测流失，走的是轻度用户；极端不满待验证</td><td><span class="badge badge-yellow">暂安全</span></td></tr>
+</table>
+</div>
+
+<h3>6.2 建议行动</h3>
+<div class="table-wrap">
+<table>
+<tr><th>优先级</th><th>行动</th><th>目的</th><th>时间</th></tr>
+<tr class="highlight-row"><td><span class="badge badge-red">高</span></td><td>排查 2602 冰雪季版本变化（付费策略 + 玩法内容 + 社交功能）</td><td>定位 gap 显著加深的具体触发点</td><td>立即</td></tr>
+<tr class="highlight-row"><td><span class="badge badge-red">高</span></td><td>拆解付费 subject 字段，看 23-40 岁的付费集中在哪些商品</td><td>理解"付费不满"具体不满什么</td><td>本周</td></tr>
+<tr><td><span class="badge badge-yellow">中</span></td><td>2603 问卷定向监测 23-40 岁各维度 gap</td><td>判断是一次性事件还是趋势加速</td><td>下期问卷</td></tr>
+<tr><td><span class="badge badge-yellow">中</span></td><td>用 2507 队列做 12 个月流失追踪</td><td>验证满意度在更长时间是否预测流失</td><td>有空时</td></tr>
+<tr><td><span class="badge badge-yellow">中</span></td><td>交叉游龄 × 满意度</td><td>区分"性价比不满"和"内容耗尽"</td><td>有空时</td></tr>
+</table>
+</div>
+
+<h3>6.3 确信度评级</h3>
+<div class="table-wrap">
+<table>
+<tr><th>#</th><th>结论</th><th>确信度</th></tr>
+<tr><td>1</td><td>23-40 岁满意度持续偏低，2602 显著加深</td><td><span class="stars">★★★★★</span></td></tr>
+<tr><td>2</td><td>是同一批老用户在变不满意</td><td><span class="stars">★★★★★</span></td></tr>
+<tr><td>3</td><td>玩法/社交是长期低分项，付费是 2602 集中恶化维度</td><td><span class="stars">★★★★★</span></td></tr>
+<tr><td>4</td><td>23-40 岁贡献约四成当期付费、五成累计付费</td><td><span class="stars">★★★★★</span></td></tr>
+<tr><td>5</td><td>低满意度用户 = 重度用户 = 高付费</td><td><span class="stars">★★★★★</span></td></tr>
+<tr><td>6</td><td>满意度在中度不满水平下不预测流失</td><td><span class="stars">★★★★☆</span></td></tr>
+<tr><td>7</td><td>当前流失集中在低价值用户</td><td><span class="stars">★★★★★</span></td></tr>
+<tr><td>8</td><td>2602 显著加深可能有版本期特异因素</td><td><span class="stars">★★★☆☆</span></td></tr>
+<tr><td>9</td><td>长期不满积累会导致核心用户突然流失</td><td><span class="stars">★★★☆☆</span></td></tr>
+</table>
+</div>
+
+<!-- ==================== 附录 ==================== -->
+<h2 id="appendix">附录</h2>
+
+<h3>A. 方法论</h3>
+<div class="table-wrap">
+<table>
+<tr><th>期次</th><th>原始量</th><th>清洗后</th><th>剔除率</th></tr>
+<tr><td>2505 奶茶鼠</td><td>141,308</td><td>90,679</td><td>35.8%</td></tr>
+<tr><td>2506 端午</td><td>111,497</td><td>79,160</td><td>29.0%</td></tr>
+<tr><td>2507 周年</td><td>351,538</td><td>334,793</td><td>4.8%</td></tr>
+<tr><td>2508 绘画</td><td>298,081</td><td>220,824</td><td>25.9%</td></tr>
+<tr><td>2509 中秋</td><td>201,429</td><td>142,757</td><td>29.1%</td></tr>
+<tr><td>2512 甄嬛</td><td>93,723</td><td>68,693</td><td>26.7%</td></tr>
+<tr><td>2602 冰雪</td><td>121,960</td><td>118,038</td><td>3.2%</td></tr>
+</table>
+</div>
+
+<h3>B. 已知局限</h3>
+<ol>
+<li><strong>幸存者偏差</strong>：问卷队列 = 还在玩且愿意填的人，已流失用户不可见</li>
+<li><strong>年龄仅问卷自报</strong>：无法分析非问卷用户的年龄分布</li>
+<li><strong>login_di 历史限制</strong>：分区最早到 2025-08</li>
+<li><strong>流失追踪窗口</strong>：6 个月可能不够捕捉长期效应</li>
+<li><strong>付费数据</strong>：2025-08/09 快照付费字段未补全</li>
+<li><strong>2602 留存动力题选项重组</strong>：新增选项分流导致旧选项跨期不可直接比</li>
+</ol>
+
+<h3>C. 数据源</h3>
+<div class="table-wrap">
+<table>
+<tr><th>数据</th><th>来源</th></tr>
+<tr><td>7 期问卷原始数据</td><td>projects/heartbeat_town/2026-03-03_survey/raw/</td></tr>
+<tr><td>数仓登录</td><td>dwd_xdt_obt_login_di（2025-08 ~ 2026-02）</td></tr>
+<tr><td>数仓注册时间</td><td>dwd_xdt_obt_tapdb_user_first_login_di</td></tr>
+<tr><td>数仓付费</td><td>dws_xdt_obt_users_metrics_all（2026-02-28 快照）</td></tr>
+</table>
+</div>
+
+<p style="text-align:center; color:var(--muted); margin-top:48px; font-size:13px;">— 报告结束 —</p>
+
+</div>
+</body>
+</html>
