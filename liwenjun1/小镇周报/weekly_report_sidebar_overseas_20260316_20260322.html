@@ -140,8 +140,239 @@
       <h2>周基础数据</h2>
       <div class="content-card">
         <div class="module-conclusion"><ul><li>活跃：周活 <span class="num">240</span>w<span class="chg down">(-9%)</span>，日均DAU <span class="num">138</span>w<span class="chg down">(-8%)</span>，周新增继续降低至<span class="num">38</span>w<span class="chg down">(-17%)</span></li><li>流水：周流水 <span class="num">3366</span>w￥<span class="chg up">(+12%)</span>，周ARPU <span class="num">121</span><span class="chg up">(+4%)</span>；<span class="num">3</span>/<span class="num">21</span> 梦光影BP上线为主要驱动，BP占周流水<span class="num">26.9</span>%（上周<span class="num">6.1</span>%）</li></ul></div>
-        <div class="chart-box"><h3>日活跃趋势/w</h3><canvas id="chartDAU" height="200"></canvas></div>
-        <div class="chart-box"><h3>日流水趋势（万元）</h3><canvas id="chartRev" height="320"></canvas></div>
+        <style>
+.tl-tab-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+.tl-tab-btn { padding: 7px 22px; font-size: 13px; font-weight: 700; border: 2px solid #d1d5db; background: #f9fafb; color: #6b7280; cursor: pointer; border-radius: 6px; transition: all .15s; }
+.tl-tab-btn.active { color: #fff; background: #2859a5; border-color: #2859a5; }
+.tl-tab-btn:hover:not(.active) { color: #2859a5; border-color: #93b4e0; background: #eef3fb; }
+.tl-tab-pane { display: none; }
+.tl-tab-pane.active { display: block; }
+.tl-chart-wrap { position: relative; width: 95%; }
+.tl-chart-wrap canvas { width: 100% !important; }
+.tl-timeline-container {
+  position: relative;
+  border-top: 1px solid #d1d5db;
+  margin-top: 4px;
+  margin-bottom: 24px;
+  width: 95%;
+}
+.tl-track-row {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #e5e7eb;
+  min-height: 26px;
+}
+.tl-track-label {
+  width: 80px; min-width: 80px; flex-shrink: 0;
+  font-weight: 700; color: #2859a5; padding: 4px 6px;
+  display: flex; align-items: center; font-size: 11px;
+  background: #f8f9fb;
+}
+.tl-track-area {
+  position: relative; flex: 1; overflow: visible;
+}
+.tl-event-tag {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  font-size: 10px; font-weight: 700; color: #1e40af;
+  white-space: nowrap; padding: 1px 4px;
+  background: rgba(255,255,255,0.85); border-radius: 3px;
+  pointer-events: none; line-height: 1.3;
+  border: 1px solid #dbeafe;
+}
+</style>
+<div class="tl-tab-bar">
+  <button class="tl-tab-btn active" data-target="tl-pane-dau">周活跃</button>
+  <button class="tl-tab-btn" data-target="tl-pane-rev">付费流水</button>
+</div>
+<div id="tl-pane-dau" class="tl-tab-pane active">
+  <div class="tl-chart-wrap"><canvas id="tlChartDAU" height="220"></canvas></div>
+</div>
+<div id="tl-pane-rev" class="tl-tab-pane">
+  <div class="tl-chart-wrap"><canvas id="tlChartRev" height="220"></canvas></div>
+</div>
+<div class="tl-timeline-container" id="tlTimelineContainer">
+  <div class="tl-track-row" data-track="节假日"><div class="tl-track-label">节假日</div><div class="tl-track-area"></div></div>
+<div class="tl-track-row" data-track="玩法&amp;功能"><div class="tl-track-label">玩法&amp;功能</div><div class="tl-track-area"></div></div>
+<div class="tl-track-row" data-track="BP上线"><div class="tl-track-label">BP上线</div><div class="tl-track-area"></div></div>
+<div class="tl-track-row" data-track="商业化"><div class="tl-track-label">商业化</div><div class="tl-track-area"></div></div>
+</div>
+<script>
+(function() {
+  function _tlInit() {
+    document.querySelectorAll('.tl-tab-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.tl-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.querySelectorAll('.tl-tab-pane').forEach(function(p) { p.classList.remove('active'); p.style.display = 'none'; });
+        btn.classList.add('active');
+        var pane = document.getElementById(btn.dataset.target);
+        pane.classList.add('active');
+        pane.style.display = 'block';
+        var canvas = pane.querySelector('canvas');
+        if (canvas && canvas.__tlchart) canvas.__tlchart.resize();
+      });
+    });
+
+  var tlDauLabels = ["", "", "01/10", "", "", "", "", "", "", "01/17", "", "", "", "", "", "", "01/24", "", "", "", "", "", "", "01/31", "", "", "", "", "", "", "02/07", "", "", "", "", "", "", "02/14", "", "", "", "", "", "", "02/21", "", "", "", "", "", "", "02/28", "", "", "", "", "", "", "03/07", "", "", "", "", "", "", "03/14", "", "", "", "", "", "", "03/21", ""];
+  var tlDauData = [88.4, 114.1, 128.8, 148.7, 156.4, 164.0, 173.7, 181.5, 189.6, 208.6, 223.1, 220.9, 225.2, 227.3, 203.4, 210.5, 223.8, 229.7, 221.5, 216.0, 213.5, 204.8, 207.5, 218.0, 221.7, 211.7, 207.5, 204.3, 195.1, 197.6, 208.9, 212.9, 203.9, 200.1, 197.5, 193.8, 193.9, 209.6, 211.3, 214.8, 210.2, 203.7, 199.7, 196.5, 202.1, 201.3, 193.2, 187.2, 183.4, 179.0, 176.9, 183.0, 182.9, 173.7, 169.7, 168.1, 154.6, 158.9, 166.3, 168.2, 157.4, 152.7, 150.1, 145.9, 144.8, 153.0, 149.9, 142.7, 139.2, 136.5, 133.3, 135.0, 140.1, 142.1];
+  var tlRevLabels = ["", "", "01/10", "", "", "", "", "", "", "01/17", "", "", "", "", "", "", "01/24", "", "", "", "", "", "", "01/31", "", "", "", "", "", "", "02/07", "", "", "", "", "", "", "02/14", "", "", "", "", "", "", "02/21", "", "", "", "", "", "", "02/28", "", "", "", "", "", "", "03/07", "", "", "", "", "", "", "03/14", "", "", "", "", "", "", "03/21", ""];
+  var tlRevData = [313.0, 388.8, 376.2, 392.2, 365.0, 322.1, 303.3, 300.1, 280.5, 368.3, 370.1, 342.3, 334.6, 316.2, 519.1, 391.1, 440.5, 412.0, 349.0, 333.3, 328.6, 312.7, 357.1, 1236.3, 870.1, 527.8, 441.2, 428.7, 450.5, 507.6, 3593.2, 1967.9, 1122.9, 917.5, 771.0, 670.7, 681.6, 4141.3, 2225.1, 1595.2, 1445.2, 1000.7, 837.8, 800.4, 845.2, 725.5, 655.5, 622.0, 674.9, 637.4, 698.3, 881.5, 932.2, 682.9, 597.4, 514.4, 534.5, 537.6, 629.0, 540.6, 435.7, 454.8, 407.2, 391.1, 410.1, 500.2, 412.6, 357.0, 333.5, 308.6, 313.6, 333.1, 1096.8, 625.8];
+  var tlDatesRaw = ["2026-01-08", "2026-01-09", "2026-01-10", "2026-01-11", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-18", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-25", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-01-31", "2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-07", "2026-02-08", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-14", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-21", "2026-03-22"];
+  var tlSatFlags = [false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false];
+  var tlBands = [{"label": "开服期", "start": "2026-01-08", "end": "2026-01-30", "color": "rgba(220,235,255,0.4)"}, {"label": "冰雪季", "start": "2026-01-31", "end": "2026-03-20", "color": "rgba(230,220,250,0.35)"}, {"label": "梦光影", "start": "2026-03-21", "end": "2026-12-31", "color": "rgba(255,245,210,0.4)"}];
+  var tlTracksData = {"节假日": [{"date": "2026-02-14", "label": "情人节"}, {"date": "2026-02-21", "label": "小马宝莉"}, {"date": "2026-02-28", "label": "海灯活动"}, {"date": "2026-03-21", "label": "梦光影庆典"}], "玩法&功能": [{"date": "2026-01-10", "label": "雪天气/爱好/建造"}, {"date": "2026-01-17", "label": "彩虹天/绘画"}, {"date": "2026-01-31", "label": "滑冰/音乐会"}, {"date": "2026-02-14", "label": "研究室/极光"}, {"date": "2026-03-07", "label": "派对:躲猫猫/跑酷"}], "BP上线": [{"date": "2026-01-31", "label": "冰雪季BP"}, {"date": "2026-03-21", "label": "梦光影BP"}], "商业化": [{"date": "2026-01-08", "label": "大卡池:极地圣歌"}, {"date": "2026-01-31", "label": "大卡池:树屋田园"}, {"date": "2026-03-10", "label": "潮流回忆手账"}]};
+
+  function tlDateToNum(d) { return parseInt(d.replace(/-/g, ''), 10); }
+
+  var tlBandPlugin = {
+    id: 'tlVersionBands',
+    beforeDraw: function(chart) {
+      var ctx = chart.ctx;
+      var xScale = chart.scales.x;
+      var area = chart.chartArea;
+      if (!area) return;
+      var datesArr = chart.options.plugins.tlVersionBands ? chart.options.plugins.tlVersionBands.dates : tlDatesRaw;
+      tlBands.forEach(function(b) {
+        var startNum = tlDateToNum(b.start);
+        var endNum = tlDateToNum(b.end);
+        var x1 = null, x2 = null;
+        for (var i = 0; i < datesArr.length; i++) {
+          var dn = tlDateToNum(datesArr[i]);
+          if (x1 === null && dn >= startNum) x1 = xScale.getPixelForValue(i);
+          if (dn <= endNum) x2 = xScale.getPixelForValue(i);
+        }
+        if (x1 === null) x1 = area.left;
+        if (x2 === null) x2 = area.right;
+        ctx.save();
+        ctx.fillStyle = b.color;
+        ctx.fillRect(x1, area.top, x2 - x1, area.bottom - area.top);
+        ctx.restore();
+        var cx = (x1 + x2) / 2;
+        ctx.save();
+        ctx.font = '700 12px "Microsoft YaHei"';
+        ctx.fillStyle = '#111827';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText(b.label, cx, area.top + 3);
+        ctx.restore();
+      });
+    }
+  };
+
+  var tlLabelPlugin = {
+    id: 'tlDataLabels',
+    afterDatasetsDraw: function(chart) {
+      var ctx = chart.ctx;
+      var meta = chart.getDatasetMeta(0);
+      var flags = chart.options.plugins.tlDataLabels ? chart.options.plugins.tlDataLabels.satFlags : tlSatFlags;
+      ctx.save();
+      ctx.font = '700 10px "Microsoft YaHei"';
+      ctx.fillStyle = '#374151';
+      ctx.textAlign = 'center';
+      meta.data.forEach(function(point, i) {
+        if (flags[i]) {
+          var val = chart.data.datasets[0].data[i];
+          if (val != null) ctx.fillText(Math.round(val), point.x, point.y - 8);
+        }
+      });
+      ctx.restore();
+    }
+  };
+
+  function tlMakeChart(canvasId, labels, data, yLabel, color, datesRaw) {
+    var canvas = document.getElementById(canvasId);
+    var chart = new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: yLabel,
+          data: data,
+          borderColor: color,
+          backgroundColor: 'transparent',
+          fill: false,
+          tension: 0.3,
+          pointRadius: 0,
+          pointHoverRadius: 3,
+          pointBackgroundColor: color,
+          pointBorderWidth: 0,
+          borderWidth: 1.5
+        }]
+      },
+      plugins: [tlBandPlugin, tlLabelPlugin],
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 3.5,
+        layout: { padding: { top: 24, bottom: 4, left: 0, right: 0 } },
+        plugins: {
+          legend: { display: false },
+          tlVersionBands: { dates: datesRaw },
+          tlDataLabels: { satFlags: tlSatFlags },
+          tooltip: { bodyFont: { size: 11 } }
+        },
+        scales: {
+          y: { beginAtZero: true, grid: { display: true, color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 10 } } },
+          x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 0, autoSkip: false, callback: function(val, idx) { return tlSatFlags[idx] ? labels[idx] : ''; } } }
+        }
+      }
+    });
+    canvas.__tlchart = chart;
+    return chart;
+  }
+
+  var tlDauChart = tlMakeChart('tlChartDAU', tlDauLabels, tlDauData, 'DAU(万)', '#2859a5', tlDatesRaw);
+  var tlRevChart = tlMakeChart('tlChartRev', tlRevLabels, tlRevData, '流水(万)', '#e6a23c', tlDatesRaw);
+
+  function tlPositionLabels() {
+    var chart = tlDauChart;
+    if (!chart || !chart.chartArea) return;
+    var area = chart.chartArea;
+    var xScale = chart.scales.x;
+    var container = document.getElementById('tlTimelineContainer');
+    container.querySelectorAll('.tl-track-row').forEach(function(row) {
+      var trackName = row.dataset.track;
+      var trackArea = row.querySelector('.tl-track-area');
+      trackArea.innerHTML = '';
+      var areaWidth = area.right - area.left;
+      trackArea.style.marginLeft = (area.left - 80) + 'px';
+      trackArea.style.width = areaWidth + 'px';
+      var events = tlTracksData[trackName] || [];
+      events.forEach(function(ev) {
+        var evNum = tlDateToNum(ev.date);
+        var bestIdx = 0, bestDist = 99999;
+        for (var i = 0; i < tlDatesRaw.length; i++) {
+          var d = Math.abs(tlDateToNum(tlDatesRaw[i]) - evNum);
+          if (d < bestDist) { bestDist = d; bestIdx = i; }
+        }
+        var px = xScale.getPixelForValue(bestIdx) - area.left;
+        var tag = document.createElement('div');
+        tag.className = 'tl-event-tag';
+        tag.textContent = ev.label;
+        tag.style.left = px + 'px';
+        trackArea.appendChild(tag);
+      });
+    });
+  }
+
+    setTimeout(tlPositionLabels, 300);
+    window.addEventListener('resize', function() { setTimeout(tlPositionLabels, 150); });
+  }
+
+  function _tlWaitForChart() {
+    if (typeof Chart !== 'undefined') {
+      _tlInit();
+    } else {
+      setTimeout(_tlWaitForChart, 100);
+    }
+  }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    _tlWaitForChart();
+  } else {
+    document.addEventListener('DOMContentLoaded', _tlWaitForChart);
+  }
+})();
+</script>
         <table class="table-week-dates"><thead><tr>
 <th>日期</th>
 <th>周新增/w</th>
