@@ -140,8 +140,239 @@
       <h2>周基础数据</h2>
       <div class="content-card">
         <div class="module-conclusion"><ul><li>活跃：周活 <span class="num">117.2</span>w<span class="chg down">(-1%)</span>，日均DAU <span class="num">55.8</span>w<span class="chg down">(-3%)</span>，回流 <span class="chg up">+18%</span> 对冲了留存下滑</li><li>流水：周流水 <span class="num">705.2</span>￥w<span class="chg up">(+39%)</span>，周ARPU <span class="num">46.1</span><span class="chg up">(+19%)</span>；<span class="num">3</span>/<span class="num">21</span> 梦光影BP上线为主要驱动</li></ul></div>
-        <div class="chart-box"><h3>日活跃趋势/w</h3><canvas id="chartDAU" height="200"></canvas></div>
-        <div class="chart-box"><h3>日流水趋势（万元）</h3><canvas id="chartRev" height="320"></canvas></div>
+        <style>
+.tl-tab-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+.tl-tab-btn { padding: 7px 22px; font-size: 13px; font-weight: 700; border: 2px solid #d1d5db; background: #f9fafb; color: #6b7280; cursor: pointer; border-radius: 6px; transition: all .15s; }
+.tl-tab-btn.active { color: #fff; background: #2859a5; border-color: #2859a5; }
+.tl-tab-btn:hover:not(.active) { color: #2859a5; border-color: #93b4e0; background: #eef3fb; }
+.tl-tab-pane { display: none; }
+.tl-tab-pane.active { display: block; }
+.tl-chart-wrap { position: relative; width: 95%; }
+.tl-chart-wrap canvas { width: 100% !important; }
+.tl-timeline-container {
+  position: relative;
+  border-top: 1px solid #d1d5db;
+  margin-top: 4px;
+  margin-bottom: 24px;
+  width: 95%;
+}
+.tl-track-row {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #e5e7eb;
+  min-height: 26px;
+}
+.tl-track-label {
+  width: 80px; min-width: 80px; flex-shrink: 0;
+  font-weight: 700; color: #2859a5; padding: 4px 6px;
+  display: flex; align-items: center; font-size: 11px;
+  background: #f8f9fb;
+}
+.tl-track-area {
+  position: relative; flex: 1; overflow: visible;
+}
+.tl-event-tag {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  font-size: 10px; font-weight: 700; color: #1e40af;
+  white-space: nowrap; padding: 1px 4px;
+  background: rgba(255,255,255,0.85); border-radius: 3px;
+  pointer-events: none; line-height: 1.3;
+  border: 1px solid #dbeafe;
+}
+</style>
+<div class="tl-tab-bar">
+  <button class="tl-tab-btn active" data-target="tl-pane-dau">周活跃</button>
+  <button class="tl-tab-btn" data-target="tl-pane-rev">付费流水</button>
+</div>
+<div id="tl-pane-dau" class="tl-tab-pane active">
+  <div class="tl-chart-wrap"><canvas id="tlChartDAU" height="220"></canvas></div>
+</div>
+<div id="tl-pane-rev" class="tl-tab-pane">
+  <div class="tl-chart-wrap"><canvas id="tlChartRev" height="220"></canvas></div>
+</div>
+<div class="tl-timeline-container" id="tlTimelineContainer">
+  <div class="tl-track-row" data-track="节假日"><div class="tl-track-label">节假日</div><div class="tl-track-area"></div></div>
+<div class="tl-track-row" data-track="玩法&amp;功能"><div class="tl-track-label">玩法&amp;功能</div><div class="tl-track-area"></div></div>
+<div class="tl-track-row" data-track="BP上线"><div class="tl-track-label">BP上线</div><div class="tl-track-area"></div></div>
+<div class="tl-track-row" data-track="重要联动"><div class="tl-track-label">重要联动</div><div class="tl-track-area"></div></div>
+</div>
+<script>
+(function() {
+  function _tlInit() {
+    document.querySelectorAll('.tl-tab-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.tl-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.querySelectorAll('.tl-tab-pane').forEach(function(p) { p.classList.remove('active'); p.style.display = 'none'; });
+        btn.classList.add('active');
+        var pane = document.getElementById(btn.dataset.target);
+        pane.classList.add('active');
+        pane.style.display = 'block';
+        var canvas = pane.querySelector('canvas');
+        if (canvas && canvas.__tlchart) canvas.__tlchart.resize();
+      });
+    });
+
+  var tlDauLabels = ["", "", "", "", "", "09/06", "", "", "", "", "", "", "09/13", "", "", "", "", "", "", "09/20", "", "", "", "", "", "", "09/27", "", "", "", "", "", "", "10/04", "", "", "", "", "", "", "10/11", "", "", "", "", "", "", "10/18", "", "", "", "", "", "", "10/25", "", "", "", "", "", "", "11/01", "", "", "", "", "", "", "11/08", "", "", "", "", "", "", "11/15", "", "", "", "", "", "", "11/22", "", "", "", "", "", "", "11/29", "", "", "", "", "", "", "12/06", "", "", "", "", "", "", "12/13", "", "", "", "", "", "", "12/20", "", "", "", "", "", "", "12/27", "", "", "", "", "", "", "01/03", "", "", "", "", "", "", "01/10", "", "", "", "", "", "", "01/17", "", "", "", "", "", "", "01/24", "", "", "", "", "", "", "01/31", "", "", "", "", "", "", "02/07", "", "", "", "", "", "", "02/14", "", "", "", "", "", "", "02/21", "", "", "", "", "", "", "02/28", "", "", "", "", "", "", "03/07", "", "", "", "", "", "", "03/14", "", "", "", "", "", "", "03/21", ""];
+  var tlDauData = [67.8, 62.2, 59.6, 73.2, 80.3, 98.9, 92.9, 65.2, 61.6, 61.6, 61.3, 74.3, 91.4, 86.5, 57.8, 58.4, 55.5, 55.7, 65.8, 94.9, 87.4, 61.7, 62.8, 62.6, 58.4, 67.3, 87.3, 64.2, 63.5, 76.6, 98.4, 96.4, 93.6, 93.7, 94.3, 93.4, 87.2, 79.1, 57.2, 56.4, 65.2, 76.5, 55.2, 53.2, 52.2, 59.8, 66.3, 80.0, 75.2, 52.2, 50.4, 49.5, 49.0, 57.2, 71.9, 67.9, 47.5, 47.1, 49.5, 48.1, 60.3, 73.9, 71.0, 50.6, 49.7, 48.5, 48.0, 57.1, 76.5, 72.0, 51.2, 50.2, 51.4, 50.0, 58.1, 70.8, 68.4, 48.5, 47.4, 46.9, 48.1, 56.5, 85.0, 76.9, 55.4, 53.2, 52.1, 51.3, 60.0, 78.9, 72.9, 51.8, 51.0, 49.5, 48.8, 56.0, 68.7, 64.7, 46.4, 46.0, 47.1, 49.6, 58.4, 72.8, 67.3, 48.5, 47.8, 47.2, 46.4, 56.6, 87.5, 81.1, 57.1, 55.7, 56.7, 59.8, 63.9, 75.8, 76.3, 52.5, 50.7, 63.3, 79.8, 70.8, 70.5, 54.3, 47.9, 46.3, 46.8, 59.3, 72.1, 83.0, 73.5, 52.0, 50.6, 50.0, 48.9, 58.2, 72.3, 69.7, 54.0, 55.2, 53.2, 63.4, 65.1, 78.5, 74.8, 61.8, 61.1, 63.2, 64.8, 73.3, 105.3, 113.4, 104.0, 104.2, 97.8, 94.4, 94.5, 97.9, 95.6, 94.8, 111.5, 105.1, 99.2, 99.6, 113.0, 103.3, 117.8, 109.4, 94.2, 89.6, 86.8, 86.6, 84.5, 84.0, 81.7, 80.6, 79.3, 76.9, 78.8, 77.2, 67.5, 65.4, 58.0, 55.2, 61.8, 74.8, 72.3, 52.1, 50.7, 50.4, 49.8, 59.6, 73.7, 67.5, 47.8, 46.9, 46.5, 45.7, 56.3, 76.2, 71.3];
+  var tlRevLabels = ["", "", "", "", "", "09/06", "", "", "", "", "", "", "09/13", "", "", "", "", "", "", "09/20", "", "", "", "", "", "", "09/27", "", "", "", "", "", "", "10/04", "", "", "", "", "", "", "10/11", "", "", "", "", "", "", "10/18", "", "", "", "", "", "", "10/25", "", "", "", "", "", "", "11/01", "", "", "", "", "", "", "11/08", "", "", "", "", "", "", "11/15", "", "", "", "", "", "", "11/22", "", "", "", "", "", "", "11/29", "", "", "", "", "", "", "12/06", "", "", "", "", "", "", "12/13", "", "", "", "", "", "", "12/20", "", "", "", "", "", "", "12/27", "", "", "", "", "", "", "01/03", "", "", "", "", "", "", "01/10", "", "", "", "", "", "", "01/17", "", "", "", "", "", "", "01/24", "", "", "", "", "", "", "01/31", "", "", "", "", "", "", "02/07", "", "", "", "", "", "", "02/14", "", "", "", "", "", "", "02/21", "", "", "", "", "", "", "02/28", "", "", "", "", "", "", "03/07", "", "", "", "", "", "", "03/14", "", "", "", "", "", "", "03/21", ""];
+  var tlRevData = [61.1, 50.3, 48.2, 550.8, 196.3, 235.8, 143.6, 85.3, 74.4, 80.4, 65.4, 78.8, 147.4, 103.4, 71.5, 67.4, 57.4, 53.5, 66.9, 860.9, 249.1, 130.5, 105.5, 97.8, 88.6, 125.9, 1921.9, 446.0, 285.6, 274.3, 374.8, 233.2, 190.0, 218.4, 188.0, 197.1, 172.3, 158.7, 118.1, 116.2, 160.4, 150.3, 86.7, 75.9, 84.6, 423.3, 167.7, 194.9, 125.5, 83.9, 76.9, 69.2, 61.1, 68.6, 116.3, 79.9, 54.1, 50.9, 54.4, 57.5, 124.4, 138.9, 91.5, 62.0, 58.1, 53.2, 54.9, 68.6, 425.4, 134.9, 88.1, 73.3, 67.1, 66.2, 82.8, 139.6, 124.9, 75.3, 60.8, 60.0, 65.1, 72.6, 506.4, 195.8, 120.8, 109.9, 107.1, 116.9, 153.5, 1085.0, 322.1, 202.7, 150.4, 119.4, 95.8, 92.3, 135.9, 98.7, 72.4, 64.5, 66.5, 66.0, 67.9, 113.5, 79.6, 72.0, 64.5, 56.2, 53.5, 67.9, 214.4, 93.8, 56.1, 49.9, 51.0, 61.5, 59.5, 75.3, 48.9, 30.6, 29.1, 37.5, 53.7, 37.9, 60.3, 40.4, 30.8, 26.5, 28.9, 211.1, 101.2, 115.7, 63.7, 40.2, 36.3, 35.0, 35.4, 40.6, 75.7, 51.2, 38.7, 55.2, 53.7, 179.6, 80.0, 108.8, 76.9, 62.2, 54.8, 65.0, 69.1, 110.9, 1946.8, 799.4, 349.9, 254.9, 175.7, 147.1, 125.5, 147.6, 122.2, 108.6, 160.3, 137.3, 102.9, 97.0, 530.3, 200.1, 327.6, 444.7, 219.3, 169.9, 143.5, 172.4, 135.6, 129.3, 117.1, 114.9, 103.3, 95.8, 125.7, 108.3, 83.6, 75.9, 63.5, 68.3, 70.8, 120.2, 90.6, 61.9, 60.3, 60.1, 58.2, 75.0, 112.2, 79.8, 50.6, 43.6, 41.7, 39.8, 49.6, 356.0, 124.0];
+  var tlDatesRaw = ["2025-09-01", "2025-09-02", "2025-09-03", "2025-09-04", "2025-09-05", "2025-09-06", "2025-09-07", "2025-09-08", "2025-09-09", "2025-09-10", "2025-09-11", "2025-09-12", "2025-09-13", "2025-09-14", "2025-09-15", "2025-09-16", "2025-09-17", "2025-09-18", "2025-09-19", "2025-09-20", "2025-09-21", "2025-09-22", "2025-09-23", "2025-09-24", "2025-09-25", "2025-09-26", "2025-09-27", "2025-09-28", "2025-09-29", "2025-09-30", "2025-10-01", "2025-10-02", "2025-10-03", "2025-10-04", "2025-10-05", "2025-10-06", "2025-10-07", "2025-10-08", "2025-10-09", "2025-10-10", "2025-10-11", "2025-10-12", "2025-10-13", "2025-10-14", "2025-10-15", "2025-10-16", "2025-10-17", "2025-10-18", "2025-10-19", "2025-10-20", "2025-10-21", "2025-10-22", "2025-10-23", "2025-10-24", "2025-10-25", "2025-10-26", "2025-10-27", "2025-10-28", "2025-10-29", "2025-10-30", "2025-10-31", "2025-11-01", "2025-11-02", "2025-11-03", "2025-11-04", "2025-11-05", "2025-11-06", "2025-11-07", "2025-11-08", "2025-11-09", "2025-11-10", "2025-11-11", "2025-11-12", "2025-11-13", "2025-11-14", "2025-11-15", "2025-11-16", "2025-11-17", "2025-11-18", "2025-11-19", "2025-11-20", "2025-11-21", "2025-11-22", "2025-11-23", "2025-11-24", "2025-11-25", "2025-11-26", "2025-11-27", "2025-11-28", "2025-11-29", "2025-11-30", "2025-12-01", "2025-12-02", "2025-12-03", "2025-12-04", "2025-12-05", "2025-12-06", "2025-12-07", "2025-12-08", "2025-12-09", "2025-12-10", "2025-12-11", "2025-12-12", "2025-12-13", "2025-12-14", "2025-12-15", "2025-12-16", "2025-12-17", "2025-12-18", "2025-12-19", "2025-12-20", "2025-12-21", "2025-12-22", "2025-12-23", "2025-12-24", "2025-12-25", "2025-12-26", "2025-12-27", "2025-12-28", "2025-12-29", "2025-12-30", "2025-12-31", "2026-01-01", "2026-01-02", "2026-01-03", "2026-01-04", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-10", "2026-01-11", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-18", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-25", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-01-31", "2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-07", "2026-02-08", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-14", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-21", "2026-03-22"];
+  var tlSatFlags = [false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false];
+  var tlBands = [{"label": "引星河", "start": "2025-08-16", "end": "2025-09-27", "color": "rgba(220,235,255,0.4)"}, {"label": "陇上金秋", "start": "2025-09-27", "end": "2025-11-08", "color": "rgba(255,235,210,0.35)"}, {"label": "沸雪浴场", "start": "2025-11-08", "end": "2026-01-31", "color": "rgba(210,225,250,0.35)"}, {"label": "冰雪季", "start": "2026-01-31", "end": "2026-03-21", "color": "rgba(230,220,250,0.35)"}, {"label": "梦光影", "start": "2026-03-21", "end": "2026-12-31", "color": "rgba(255,245,210,0.4)"}];
+  var tlTracksData = {"节假日": [{"date": "2025-10-01", "label": "国庆"}, {"date": "2026-01-01", "label": "元旦"}, {"date": "2026-01-31", "label": "春节+送抽"}, {"date": "2026-02-14", "label": "情人节"}, {"date": "2026-03-21", "label": "梦光影庆典"}], "玩法&功能": [{"date": "2025-10-30", "label": "研究所+UGC"}, {"date": "2025-12-11", "label": "过山车+UGC"}, {"date": "2026-01-22", "label": "累充+极光天气"}, {"date": "2026-01-31", "label": "滑冰/雪人"}, {"date": "2026-03-05", "label": "商店更新"}], "BP上线": [{"date": "2025-08-16", "label": "引星河BP"}, {"date": "2025-09-27", "label": "陇上金秋BP"}, {"date": "2025-11-08", "label": "沸雪浴场BP"}, {"date": "2026-01-31", "label": "冰雪季BP"}, {"date": "2026-03-21", "label": "梦光影BP"}], "重要联动": [{"date": "2025-09-20", "label": "黄油小熊"}, {"date": "2025-11-22", "label": "甄嬛"}, {"date": "2026-02-14", "label": "喜羊羊"}]};
+
+  function tlDateToNum(d) { return parseInt(d.replace(/-/g, ''), 10); }
+
+  var tlBandPlugin = {
+    id: 'tlVersionBands',
+    beforeDraw: function(chart) {
+      var ctx = chart.ctx;
+      var xScale = chart.scales.x;
+      var area = chart.chartArea;
+      if (!area) return;
+      var datesArr = chart.options.plugins.tlVersionBands ? chart.options.plugins.tlVersionBands.dates : tlDatesRaw;
+      tlBands.forEach(function(b) {
+        var startNum = tlDateToNum(b.start);
+        var endNum = tlDateToNum(b.end);
+        var x1 = null, x2 = null;
+        for (var i = 0; i < datesArr.length; i++) {
+          var dn = tlDateToNum(datesArr[i]);
+          if (x1 === null && dn >= startNum) x1 = xScale.getPixelForValue(i);
+          if (dn <= endNum) x2 = xScale.getPixelForValue(i);
+        }
+        if (x1 === null) x1 = area.left;
+        if (x2 === null) x2 = area.right;
+        ctx.save();
+        ctx.fillStyle = b.color;
+        ctx.fillRect(x1, area.top, x2 - x1, area.bottom - area.top);
+        ctx.restore();
+        var cx = (x1 + x2) / 2;
+        ctx.save();
+        ctx.font = '700 12px "Microsoft YaHei"';
+        ctx.fillStyle = '#111827';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText(b.label, cx, area.top + 3);
+        ctx.restore();
+      });
+    }
+  };
+
+  var tlLabelPlugin = {
+    id: 'tlDataLabels',
+    afterDatasetsDraw: function(chart) {
+      var ctx = chart.ctx;
+      var meta = chart.getDatasetMeta(0);
+      var flags = chart.options.plugins.tlDataLabels ? chart.options.plugins.tlDataLabels.satFlags : tlSatFlags;
+      ctx.save();
+      ctx.font = '700 10px "Microsoft YaHei"';
+      ctx.fillStyle = '#374151';
+      ctx.textAlign = 'center';
+      meta.data.forEach(function(point, i) {
+        if (flags[i]) {
+          var val = chart.data.datasets[0].data[i];
+          if (val != null) ctx.fillText(Math.round(val), point.x, point.y - 8);
+        }
+      });
+      ctx.restore();
+    }
+  };
+
+  function tlMakeChart(canvasId, labels, data, yLabel, color, datesRaw) {
+    var canvas = document.getElementById(canvasId);
+    var chart = new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: yLabel,
+          data: data,
+          borderColor: color,
+          backgroundColor: 'transparent',
+          fill: false,
+          tension: 0.3,
+          pointRadius: 0,
+          pointHoverRadius: 3,
+          pointBackgroundColor: color,
+          pointBorderWidth: 0,
+          borderWidth: 1.5
+        }]
+      },
+      plugins: [tlBandPlugin, tlLabelPlugin],
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 3.5,
+        layout: { padding: { top: 24, bottom: 4, left: 0, right: 0 } },
+        plugins: {
+          legend: { display: false },
+          tlVersionBands: { dates: datesRaw },
+          tlDataLabels: { satFlags: tlSatFlags },
+          tooltip: { bodyFont: { size: 11 } }
+        },
+        scales: {
+          y: { beginAtZero: true, grid: { display: true, color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 10 } } },
+          x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 0, autoSkip: false, callback: function(val, idx) { return tlSatFlags[idx] ? labels[idx] : ''; } } }
+        }
+      }
+    });
+    canvas.__tlchart = chart;
+    return chart;
+  }
+
+  var tlDauChart = tlMakeChart('tlChartDAU', tlDauLabels, tlDauData, 'DAU(万)', '#2859a5', tlDatesRaw);
+  var tlRevChart = tlMakeChart('tlChartRev', tlRevLabels, tlRevData, '流水(万)', '#e6a23c', tlDatesRaw);
+
+  function tlPositionLabels() {
+    var chart = tlDauChart;
+    if (!chart || !chart.chartArea) return;
+    var area = chart.chartArea;
+    var xScale = chart.scales.x;
+    var container = document.getElementById('tlTimelineContainer');
+    container.querySelectorAll('.tl-track-row').forEach(function(row) {
+      var trackName = row.dataset.track;
+      var trackArea = row.querySelector('.tl-track-area');
+      trackArea.innerHTML = '';
+      var areaWidth = area.right - area.left;
+      trackArea.style.marginLeft = (area.left - 80) + 'px';
+      trackArea.style.width = areaWidth + 'px';
+      var events = tlTracksData[trackName] || [];
+      events.forEach(function(ev) {
+        var evNum = tlDateToNum(ev.date);
+        var bestIdx = 0, bestDist = 99999;
+        for (var i = 0; i < tlDatesRaw.length; i++) {
+          var d = Math.abs(tlDateToNum(tlDatesRaw[i]) - evNum);
+          if (d < bestDist) { bestDist = d; bestIdx = i; }
+        }
+        var px = xScale.getPixelForValue(bestIdx) - area.left;
+        var tag = document.createElement('div');
+        tag.className = 'tl-event-tag';
+        tag.textContent = ev.label;
+        tag.style.left = px + 'px';
+        trackArea.appendChild(tag);
+      });
+    });
+  }
+
+    setTimeout(tlPositionLabels, 300);
+    window.addEventListener('resize', function() { setTimeout(tlPositionLabels, 150); });
+  }
+
+  function _tlWaitForChart() {
+    if (typeof Chart !== 'undefined') {
+      _tlInit();
+    } else {
+      setTimeout(_tlWaitForChart, 100);
+    }
+  }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    _tlWaitForChart();
+  } else {
+    document.addEventListener('DOMContentLoaded', _tlWaitForChart);
+  }
+})();
+</script>
         <table class="table-week-dates"><thead><tr>
 <th>日期</th>
 <th>周新增/w</th>

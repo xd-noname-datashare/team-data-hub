@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>心动小镇 海外周报 2026.03.16-2026.03.22</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: "Microsoft YaHei", 微软雅黑, -apple-system, sans-serif; margin: 0; min-height: 100vh; background: #eef1f5; color: #1f2937; }
+    .sidebar { position: fixed; top: 0; left: 0; width: 160px; height: 100vh; overflow-y: auto; background: #1a365d; color: #e2e8f0; padding: 20px 0; z-index: 20; }
+    .sidebar .logo { padding: 0 20px 16px; font-weight: 700; font-size: 15px; border-bottom: 1px solid #2d4a6f; margin-bottom: 12px; color: #fff; }
+    .sidebar nav a { display: block; padding: 10px 20px; color: #94a3b8; text-decoration: none; font-size: 13px; font-weight: 700; transition: background .15s, color .15s; }
+    .sidebar nav a:hover { background: #2d4a6f; color: #f1f5f9; }
+    .sidebar nav a.active { background: #2859a5; color: #fff; }
+    .main { margin-left: 160px; padding: 24px 32px; min-height: 100vh; }
+    .report-header { margin-bottom: 20px; }
+    .report-header h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; color: #111; }
+    .report-header .date-range { font-size: 14px; color: #6b7280; }
+    .summary-card { background: #fff; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,.08); border-left: 4px solid #2859a5; }
+    .summary-card .label { font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .summary-card .content { font-size: 15px; line-height: 1.6; color: #6b7280; font-weight: 700; }
+    .summary-card .content .num { color: inherit; font-weight: inherit; }
+    .section { margin-bottom: 32px; scroll-margin-top: 16px; }
+    .section h2 { font-size: 16px; font-weight: 700; margin: 0 0 16px; color: #111; padding-bottom: 8px; border-bottom: 2px solid #2859a5; }
+    .content-card { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.08); overflow-x: auto; }
+    .module-conclusion { margin: 0 0 12px; }
+    .module-conclusion ul { margin: 0; padding-left: 22px; }
+    .module-conclusion li { font-size: 14px; line-height: 1.6; color: #6b7280; font-weight: 700; }
+    .module-conclusion li.ai-note { font-size: 13px; color: #9ca3af; font-weight: 600; }
+    .module-conclusion .num { color: inherit; font-weight: inherit; }
+    .module-conclusion.is-empty { min-height: 18px; }
+    .data-note { margin: 0 0 10px; padding: 8px 10px; border-radius: 6px; background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; font-size: 12px; }
+    .content-card h3 { font-size: 18px; font-weight: 700; color: #6b7280; margin-bottom: 8px; text-align: center; }
+    .chart-box { width: 100%; min-width: 320px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 16px; position: relative; }
+    .chart-box canvas { display: block; width: 100% !important; max-width: 100%; }
+    #section-basic .chart-box { border: none; }
+    #section-basic .chart-box h3 { margin-bottom: 14px; }
+    #section-activity .chart-box { border: none; }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 12px; }
+    th, td { border: 1px solid #e5e7eb; padding: 8px 10px; text-align: left; white-space: nowrap; }
+    th { background: #2859a5; color: #fff; font-weight: 700; }
+    tr.ratio-row td { background: #e8e8e8; font-weight: 700; }
+    .table-week-dates tr:not(.ratio-row) td:first-child { color: #2859a5; font-weight: 700; }
+    .col-week-label { color: #2859a5; font-weight: 700; }
+    tr.overall-row td { background: #e5e7eb; font-weight: 700; }
+    .chg.up { color: #c92a2a; }
+    .chg.down { color: #0a6b2c; }
+    .pct-bar { background: linear-gradient(to right, #a8e6cf var(--pct), transparent var(--pct)); padding: 2px 6px; border-radius: 2px; }
+    #section-pay .pay-tier-quadrant td.td-pct-bar { position: relative; padding: 0; overflow: hidden; }
+    #section-pay .pay-tier-quadrant td.td-pct-bar .pct-bar { position: absolute; left: 0; top: 0; bottom: 0; width: var(--pct); background: #a8e6cf; border-radius: 0; padding: 0; }
+    #section-pay .pay-tier-quadrant td.td-pct-bar .pct-text { position: relative; z-index: 1; display: block; padding: 8px 10px; }
+    .pay-tier-quadrant thead tr:first-child th, .pay-tier-quadrant thead tr:nth-child(2) th, .pay-tier-quadrant tr.section-header th { text-align: center; }
+    .table-hobby-compact th, .table-hobby-compact td { padding: 6px 8px; }
+    .table-hobby-level thead tr:first-child th { text-align: center; }
+    .table-hobby-level thead th.col-hobby-name { color: #fff; }
+    .table-hobby-level td.col-hobby-name { color: #2859a5; font-weight: 700; }
+    .pay-tier-charts { display: flex; gap: 12px; width: 100%; margin-bottom: 16px; }
+    .pay-tier-charts .chart-box { flex: 1; min-width: 0; margin-bottom: 0; }
+    #section-pay .pay-tier-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 16px; }
+    #section-pay .pay-tier-charts .chart-box { flex: none; min-width: 0 !important; max-width: 100%; width: 100%; box-sizing: border-box; }
+    #section-pay .pay-tier-charts .chart-box canvas { min-width: 0 !important; }
+    .heart-diamond-table-wrap { width: 100%; min-width: 100%; margin-top: 12px; }
+    .table-heart-diamond-tier { table-layout: fixed; width: 100% !important; min-width: 100%; margin-left: auto; margin-right: auto; }
+    .table-heart-diamond-tier .col-date { width: 12%; min-width: 72px; white-space: nowrap; }
+    .table-heart-diamond-tier .col-tier { width: 8%; min-width: 56px; }
+    .table-heart-diamond-tier .col-flow, .table-heart-diamond-tier .col-total { width: 8%; }
+    .table-heart-diamond-tier .col-rate { width: 10%; }
+    #section-pay .table-heart-diamond-tier tr.tier-row { display: none; }
+    #section-pay .table-heart-diamond-tier tr.overall-row.is-toggle td { cursor: pointer; user-select: none; }
+    #section-pay .table-heart-diamond-tier .tier-toggle { display: inline-block; width: 12px; margin-right: 6px; color: #6b7280; transition: transform .15s ease; }
+    #section-pay .table-heart-diamond-tier tr.overall-row.expanded .tier-toggle { transform: rotate(90deg); }
+    .extra-photo-block { margin-bottom: 12px; }
+    .extra-segment { margin-bottom: 18px; }
+    .extra-segment-title { text-align: left !important; font-size: 15px; color: #111; margin: 0 0 10px; }
+    .simple-table-block { margin-bottom: 10px; }
+    .simple-table-block h4 { margin: 6px 0 8px; font-size: 13px; color: #111; }
+    .fold-block { margin-bottom: 12px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; }
+    .fold-title { padding: 10px 12px; font-size: 13px; font-weight: 700; color: #374151; cursor: pointer; user-select: none; border-bottom: 1px solid #e5e7eb; }
+    .fold-arrow { display: inline-block; width: 12px; margin-right: 6px; color: #6b7280; transition: transform .15s ease; }
+    .fold-block.expanded .fold-arrow { transform: rotate(90deg); }
+    .fold-content { display: none; padding: 10px 12px; overflow-x: auto; }
+    .fold-block.expanded .fold-content { display: block; }
+    .table-photo-extra { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .table-photo-extra th, .table-photo-extra td { border: 1px solid #e5e7eb; padding: 6px 8px; white-space: nowrap; }
+    .table-photo-extra th { background: #2859a5; color: #fff; font-weight: 700; }
+    .table-photo-extra.table-compare-m1 { table-layout: fixed; width: 100%; min-width: 100%; }
+    .table-photo-extra.table-compare-m1 th, .table-photo-extra.table-compare-m1 td { white-space: normal; word-break: break-word; text-align: center; }
+    .table-photo-extra.table-compare-m1 thead th, .table-photo-extra.table-compare-m2 thead th, .table-photo-extra.table-compare-m3 thead th { background: #2859a5; color: #fff; font-weight: 700; text-align: center; }
+    .table-photo-extra.table-compare-m1 tbody td, .table-photo-extra.table-compare-m2 tbody td, .table-photo-extra.table-compare-m3 tbody td { font-weight: 400; }
+    .table-photo-extra.table-compare-m1 td.label-cell { text-align: left; width: 120px; color: #2859a5; background: #fff; font-weight: 700; }
+    .table-photo-extra.table-compare-m1 th:first-child { text-align: center; width: 120px; }
+    .table-photo-extra.table-compare-m1 tr.compare-ratio-row td { background: #e8e8e8; font-size: 11.5px; }
+    .table-photo-extra.table-compare-m2, .table-photo-extra.table-compare-m3 { table-layout: fixed; width: 100%; min-width: 100%; }
+    .table-photo-extra.table-compare-m2 th, .table-photo-extra.table-compare-m2 td, .table-photo-extra.table-compare-m3 th, .table-photo-extra.table-compare-m3 td { white-space: normal; word-break: break-word; text-align: center; }
+    .table-photo-extra.table-compare-m2 td.region-cell, .table-photo-extra.table-compare-m3 td.region-cell { text-align: center; font-weight: 700; vertical-align: middle; width: 64px; color: #2859a5; background: #fff; }
+    .table-photo-extra.table-compare-m2 td.label-cell, .table-photo-extra.table-compare-m3 td.label-cell { text-align: center; width: 88px; color: #2859a5; background: #fff; font-weight: 700; }
+    .table-photo-extra.table-compare-m2 th:nth-child(2), .table-photo-extra.table-compare-m3 th:nth-child(2) { text-align: center; width: 88px; }
+    .table-photo-extra.table-compare-m2 tr.compare-region-start td, .table-photo-extra.table-compare-m3 tr.compare-region-start td { border-top: 2px solid #cbd5e1; }
+    .table-photo-extra.table-compare-m2 td.td-pct-bar { position: relative; padding: 0; overflow: hidden; }
+    .table-photo-extra.table-compare-m2 td.td-pct-bar .pct-bar { position: absolute; left: 0; top: 0; bottom: 0; width: var(--pct); background: #a8e6cf; border-radius: 0; padding: 0; }
+    .table-photo-extra.table-compare-m2 td.td-pct-bar .pct-text { position: relative; z-index: 1; display: block; padding: 8px 10px; }
+    .table-photo-extra.table-compare-m3 td.td-pct-bar { position: relative; padding: 0; overflow: hidden; }
+    .table-photo-extra.table-compare-m3 td.td-pct-bar .pct-bar { position: absolute; left: 0; top: 0; bottom: 0; width: var(--pct); background: #a8e6cf; border-radius: 0; padding: 0; }
+    .table-photo-extra.table-compare-m3 td.td-pct-bar .pct-text { position: relative; z-index: 1; display: block; padding: 8px 10px; }
+    .table-photo-extra.table-grouped thead tr:first-child th { text-align: center; }
+    .table-photo-extra.table-grouped { table-layout: fixed; width: 100%; min-width: 100%; }
+    .table-photo-extra.table-grouped th, .table-photo-extra.table-grouped td { white-space: normal; word-break: break-word; }
+    .extra-markdown h3 { margin: 0 0 8px; text-align: left; font-size: 18px; color: #1f2937; }
+    .extra-markdown h4 { margin: 10px 0 6px; text-align: left; font-size: 15px; color: #374151; }
+    .extra-markdown h5 { margin: 8px 0 4px; text-align: left; font-size: 14px; color: #4b5563; }
+    .extra-markdown p { margin: 4px 0; color: #374151; line-height: 1.55; }
+    .extra-markdown .md-list { margin: 4px 0 8px 18px; padding: 0; }
+    .extra-markdown .md-list li { margin: 2px 0; color: #374151; }
+    .extra-markdown .md-quote { margin: 6px 0; padding: 8px 10px; border-left: 3px solid #93c5fd; background: #eff6ff; color: #1e3a5f; }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">心动小镇 海外周报</div>
+    <nav>
+      <a href="#section-basic" class="active" data-section="basic">周基础数据</a>
+      <a href="#section-activity" data-section="activity">活跃度</a>
+      <a href="#section-hobby" data-section="hobby">爱好&amp;玩法</a>
+      <a href="#section-pay" data-section="pay">付费分层表现</a>
+      <a href="#section-build" data-section="build">建造&amp;负载</a>
+      <a href="#section-extra" data-section="extra">梦光影BP 前3日专题</a>
+    </nav>
+  </aside>
+  <main class="main">
+    <header class="report-header">
+      <h1>心动小镇 海外周报</h1>
+      <p class="date-range">本期范围：2026.03.16-2026.03.22</p>
+    </header>
+    <section class="summary-card">
+      <div class="label">本期结论汇总</div>
+      <div class="content">活跃稳定-<span class="num">10</span>%速度回落，活跃天数和时长保持高位</div>
+    </section>
+
+    <section id="section-basic" class="section">
+      <h2>周基础数据</h2>
+      <div class="content-card">
+        <div class="module-conclusion"><ul><li>活跃：周活 <span class="num">264</span>w<span class="chg down">(-10%)</span>，日均DAU <span class="num">150</span>w<span class="chg down">(-9%)</span></li><li>流水：周流水<span class="num">3008</span>w￥</li></ul></div>
+        <div class="chart-box"><h3>日活跃趋势/w</h3><canvas id="chartDAU" height="200"></canvas></div>
+        <div class="chart-box"><h3>日流水趋势（万元）</h3><canvas id="chartRev" height="320"></canvas></div>
+        <table class="table-week-dates"><thead><tr>
+<th>日期</th>
+<th>周新增/w</th>
+<th>周回流/w</th>
+<th>周留存/w</th>
+<th>周留存率</th>
+<th>周活跃/w</th>
+<th>日均活跃/w</th>
+<th>活跃天数</th>
+</tr></thead><tbody>
+<tr>
+<td>02/16-02/22</td>
+<td>85</td>
+<td>30</td>
+<td>246</td>
+<td>68%</td>
+<td>362</td>
+<td>204</td>
+<td>3.9</td>
+</tr>
+<tr>
+<td>02/23-03/01</td>
+<td>61</td>
+<td>24</td>
+<td>236</td>
+<td>73%</td>
+<td>321</td>
+<td>184</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>03/02-03/08</td>
+<td>56</td>
+<td>23</td>
+<td>214</td>
+<td>73%</td>
+<td>293</td>
+<td>166</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>03/09-03/15</td>
+<td>46</td>
+<td>23</td>
+<td>195</td>
+<td>74%</td>
+<td>264</td>
+<td>150</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>03/16-03/22</td>
+<td>38</td>
+<td>24</td>
+<td>178</td>
+<td>74%</td>
+<td>240</td>
+<td>138</td>
+<td>4.0</td>
+</tr>
+<tr class="ratio-row">
+<td>环比</td>
+<td><span class="chg down">-17%</span></td>
+<td><span class="chg up">+4%</span></td>
+<td><span class="chg down">-8%</span></td>
+<td><span class="chg up">+0.4%</span></td>
+<td><span class="chg down">-9%</span></td>
+<td><span class="chg down">-8%</span></td>
+<td><span class="chg up">+0.0</span></td>
+</tr>
+</tbody></table>
+        <table class="table-week-dates"><thead><tr>
+<th>日期</th>
+<th>周流水/w</th>
+<th>周付费/w</th>
+<th>周ARPU</th>
+<th>周付费率</th>
+<th>日均ARPPU</th>
+<th>日均付费率</th>
+<th>日均ARPU</th>
+</tr></thead><tbody>
+<tr>
+<td>02/16-02/22</td>
+<td>7241</td>
+<td>45</td>
+<td>162</td>
+<td>12.4%</td>
+<td>112</td>
+<td>4.5%</td>
+<td>5.0</td>
+</tr>
+<tr>
+<td>02/23-03/01</td>
+<td>5098</td>
+<td>34</td>
+<td>150</td>
+<td>10.6%</td>
+<td>110</td>
+<td>3.6%</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>03/02-03/08</td>
+<td>4032</td>
+<td>30</td>
+<td>134</td>
+<td>10.3%</td>
+<td>100</td>
+<td>3.5%</td>
+<td>3.5</td>
+</tr>
+<tr>
+<td>03/09-03/15</td>
+<td>3008</td>
+<td>26</td>
+<td>116</td>
+<td>9.8%</td>
+<td>89</td>
+<td>3.2%</td>
+<td>2.86</td>
+</tr>
+<tr>
+<td>03/16-03/22</td>
+<td>3366</td>
+<td>28</td>
+<td>121</td>
+<td>11.6%</td>
+<td>87</td>
+<td>4.0%</td>
+<td>3.48</td>
+</tr>
+<tr class="ratio-row">
+<td>环比</td>
+<td><span class="chg up">+12%</span></td>
+<td><span class="chg up">+8%</span></td>
+<td><span class="chg up">+4%</span></td>
+<td><span class="chg up">+1.8%</span></td>
+<td><span class="chg down">-2%</span></td>
+<td><span class="chg up">+0.8%</span></td>
+<td><span class="chg up">+22%</span></td>
+</tr>
+</tbody></table></div>
+    </section>
+    <section id="section-activity" class="section">
+      <h2>活跃度</h2>
+      <div class="content-card"><div class="module-conclusion"><ul><li>整体用户日均时长<span class="num">101</span>min</li></ul></div><div class="chart-box"><h3>日均在线时长（min）</h3><canvas id="chartDuration" height="130"></canvas></div></div>
+    </section>
+    <section id="section-hobby" class="section">
+      <h2>爱好&amp;玩法</h2>
+      <div class="content-card"><div class="module-conclusion"><ul><li>各爱好参与度持平</li></ul></div>
+<table class="table-hobby-compact table-week-dates"><thead>
+<tr>
+<th class="col-first" rowspan="2">日期</th>
+<th colspan="7" style="text-align:center">参与率</th>
+<th colspan="7" style="text-align:center">人均次数</th>
+</tr><tr>
+<th>钓鱼</th>
+<th>烹饪</th>
+<th>种植</th>
+<th>观鸟</th>
+<th>捕虫</th>
+<th>养猫</th>
+<th>养狗</th>
+<th>钓鱼</th>
+<th>烹饪</th>
+<th>种植</th>
+<th>观鸟</th>
+<th>捕虫</th>
+<th>养猫</th>
+<th>养狗</th>
+</tr></thead><tbody>
+<tr>
+<td class="col-first">02/16-02/22</td>
+<td>53%</td>
+<td>49%</td>
+<td>59%</td>
+<td>43%</td>
+<td>51%</td>
+<td>29%</td>
+<td>30%</td>
+<td>14.0</td>
+<td>50.0</td>
+<td>13.0</td>
+<td>24.0</td>
+<td>28.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td class="col-first">02/23-03/01</td>
+<td>53%</td>
+<td>49%</td>
+<td>61%</td>
+<td>43%</td>
+<td>51%</td>
+<td>29%</td>
+<td>29%</td>
+<td>13.0</td>
+<td>46.0</td>
+<td>13.0</td>
+<td>20.0</td>
+<td>24.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td class="col-first">03/02-03/08</td>
+<td>53%</td>
+<td>49%</td>
+<td>61%</td>
+<td>44%</td>
+<td>52%</td>
+<td>30%</td>
+<td>28%</td>
+<td>15.0</td>
+<td>49.0</td>
+<td>12.0</td>
+<td>21.0</td>
+<td>26.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td class="col-first">03/09-03/15</td>
+<td>50%</td>
+<td>49%</td>
+<td>61%</td>
+<td>44%</td>
+<td>51%</td>
+<td>30%</td>
+<td>26%</td>
+<td>13.9</td>
+<td>52.0</td>
+<td>12.0</td>
+<td>21.6</td>
+<td>26.5</td>
+<td>3.0</td>
+<td>2.7</td>
+</tr>
+<tr>
+<td class="col-first">03/16-03/22</td>
+<td>49%</td>
+<td>51%</td>
+<td>62%</td>
+<td>46%</td>
+<td>55%</td>
+<td>31%</td>
+<td>26%</td>
+<td>14.5</td>
+<td>42.3</td>
+<td>12.6</td>
+<td>17.9</td>
+<td>19.8</td>
+<td>3.1</td>
+<td>2.8</td>
+</tr>
+<tr class="ratio-row">
+<td class="col-first">环比</td>
+<td><span class="chg down">-0.7%</span></td>
+<td><span class="chg up">1.9%</span></td>
+<td><span class="chg up">0.7%</span></td>
+<td><span class="chg up">2.6%</span></td>
+<td><span class="chg up">3.5%</span></td>
+<td><span class="chg up">0.5%</span></td>
+<td><span class="chg up">0.6%</span></td>
+<td><span class="chg up">+0.6</span></td>
+<td><span class="chg down">-9.7</span></td>
+<td><span class="chg up">+0.6</span></td>
+<td><span class="chg down">-3.7</span></td>
+<td><span class="chg down">-6.7</span></td>
+<td><span class="chg up">+0.1</span></td>
+<td><span class="chg up">+0.1</span></td>
+</tr>
+</tbody></table>
+<table class="table-hobby-level"><thead>
+<tr>
+<th class="col-hobby-name" rowspan="2">爱好</th>
+<th colspan="2">解锁</th>
+<th colspan="6">等级分布</th>
+</tr>
+<tr>
+<th class="col-unlock-count">解锁人数/w</th>
+<th class="col-unlock-rate">解锁率</th>
+<th>人均等级</th>
+<th>前1‰</th>
+<th>前1%</th>
+<th>前10%</th>
+<th>前50%</th>
+<th>满级</th>
+</tr></thead><tbody>
+<tr>
+<td class="col-hobby-name">钓鱼</td>
+<td class="col-unlock-count">215</td>
+<td class="col-unlock-rate">90%</td>
+<td>4.3</td>
+<td>10.0</td>
+<td>10.0</td>
+<td>10.0</td>
+<td>7.0</td>
+<td>10</td>
+</tr>
+<tr>
+<td class="col-hobby-name">烹饪</td>
+<td class="col-unlock-count">188</td>
+<td class="col-unlock-rate">78%</td>
+<td>3.6</td>
+<td>10.0</td>
+<td>10.0</td>
+<td>10.0</td>
+<td>6.4</td>
+<td>10</td>
+</tr>
+<tr>
+<td class="col-hobby-name">种植</td>
+<td class="col-unlock-count">205</td>
+<td class="col-unlock-rate">85%</td>
+<td>4.2</td>
+<td>10.0</td>
+<td>10.0</td>
+<td>10.0</td>
+<td>7.2</td>
+<td>10</td>
+</tr>
+<tr>
+<td class="col-hobby-name">观鸟</td>
+<td class="col-unlock-count">169</td>
+<td class="col-unlock-rate">70%</td>
+<td>2.3</td>
+<td>10.0</td>
+<td>9.4</td>
+<td>6.7</td>
+<td>4.1</td>
+<td>10</td>
+</tr>
+<tr>
+<td class="col-hobby-name">捕虫</td>
+<td class="col-unlock-count">170</td>
+<td class="col-unlock-rate">71%</td>
+<td>2.8</td>
+<td>10.0</td>
+<td>10.0</td>
+<td>8.0</td>
+<td>4.9</td>
+<td>10</td>
+</tr>
+<tr>
+<td class="col-hobby-name">养猫</td>
+<td class="col-unlock-count">161</td>
+<td class="col-unlock-rate">67%</td>
+<td>2.6</td>
+<td>10.0</td>
+<td>9.4</td>
+<td>7.1</td>
+<td>4.8</td>
+<td>10</td>
+</tr>
+<tr>
+<td class="col-hobby-name">养狗</td>
+<td class="col-unlock-count">158</td>
+<td class="col-unlock-rate">66%</td>
+<td>1.9</td>
+<td>7.9</td>
+<td>6.5</td>
+<td>5.2</td>
+<td>3.5</td>
+<td>10</td>
+</tr>
+</tbody></table></div>
+    </section>
+    <section id="section-pay" class="section">
+      <h2>付费分层表现</h2>
+      <div class="content-card"><div class="module-conclusion"><ul><li>无付费项上新</li></ul></div>
+<table class="pay-tier-quadrant table-week-dates">
+<thead><tr>
+<th rowspan="2">日期</th>
+<th colspan="5">流水占比</th>
+<th colspan="5">付费玩家活跃占比</th>
+</tr><tr>
+<th>整体金额/w</th>
+<th>小R</th>
+<th>中R</th>
+<th>大R</th>
+<th>超R</th>
+<th>整体</th>
+<th>小R</th>
+<th>中R</th>
+<th>大R</th>
+<th>超R</th>
+</tr></thead><tbody>
+<tr>
+<td>02/16-02/22</td>
+<td>7236</td>
+<td>6.5%</td>
+<td>26.9%</td>
+<td>36.7%</td>
+<td>29.9%</td>
+<td>26.6%</td>
+<td>14.6%</td>
+<td>7.5%</td>
+<td>3.4%</td>
+<td>1.0%</td>
+</tr>
+<tr>
+<td>02/23-03/01</td>
+<td>5094</td>
+<td>6.4%</td>
+<td>23.4%</td>
+<td>36.3%</td>
+<td>33.9%</td>
+<td>29.7%</td>
+<td>15.3%</td>
+<td>8.9%</td>
+<td>4.1%</td>
+<td>1.3%</td>
+</tr>
+<tr>
+<td>03/02-03/08</td>
+<td>4028</td>
+<td>6.7%</td>
+<td>23.6%</td>
+<td>36.3%</td>
+<td>33.5%</td>
+<td>31.8%</td>
+<td>15.6%</td>
+<td>9.9%</td>
+<td>4.7%</td>
+<td>1.6%</td>
+</tr>
+<tr>
+<td>03/09-03/15</td>
+<td>3006</td>
+<td>6.8%</td>
+<td>23.8%</td>
+<td>35.7%</td>
+<td>33.7%</td>
+<td>33.8%</td>
+<td>15.9%</td>
+<td>10.8%</td>
+<td>5.2%</td>
+<td>1.9%</td>
+</tr>
+<tr>
+<td>03/16-03/22</td>
+<td>3363</td>
+<td>4.5%</td>
+<td>24.1%</td>
+<td>37.1%</td>
+<td>34.3%</td>
+<td>35.3%</td>
+<td>15.6%</td>
+<td>11.7%</td>
+<td>5.8%</td>
+<td>2.2%</td>
+</tr>
+<tr class="ratio-row">
+<td>环比</td>
+<td><span class="chg up">+357</span></td>
+<td><span class="chg down">-2.3%</span></td>
+<td><span class="chg up">+0.3%</span></td>
+<td><span class="chg up">+1.4%</span></td>
+<td><span class="chg up">+0.6%</span></td>
+<td><span class="chg up">+1.5%</span></td>
+<td><span class="chg down">-0.3%</span></td>
+<td><span class="chg up">+0.9%</span></td>
+<td><span class="chg up">+0.6%</span></td>
+<td><span class="chg up">+0.3%</span></td>
+</tr>
+<tr class="section-header"><th rowspan="2">日期</th><th colspan="5">付费玩家付费率</th><th colspan="5">付费arpu</th></tr>
+<tr>
+<th>整体</th>
+<th>小R</th>
+<th>中R</th>
+<th>大R</th>
+<th>超R</th>
+<th>整体</th>
+<th>小R</th>
+<th>中R</th>
+<th>大R</th>
+<th>超R</th>
+</tr>
+<tr>
+<td>02/16-02/22</td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:46.5%"><span class="pct-text">46.5%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:31.8%"><span class="pct-text">31.8%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:59.4%"><span class="pct-text">59.4%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:71.7%"><span class="pct-text">71.7%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:79.8%"><span class="pct-text">79.8%</span></div></td>
+<td>162.0</td>
+<td>28.0</td>
+<td>120.0</td>
+<td>303.0</td>
+<td>734.0</td>
+</tr>
+<tr>
+<td>02/23-03/01</td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:35.7%"><span class="pct-text">35.7%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:23.2%"><span class="pct-text">23.2%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:43.2%"><span class="pct-text">43.2%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:56.1%"><span class="pct-text">56.1%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:65.9%"><span class="pct-text">65.9%</span></div></td>
+<td>150.0</td>
+<td>29.0</td>
+<td>97.0</td>
+<td>248.0</td>
+<td>608.0</td>
+</tr>
+<tr>
+<td>03/02-03/08</td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:32.3%"><span class="pct-text">32.3%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:20.7%"><span class="pct-text">20.7%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:37.5%"><span class="pct-text">37.5%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:50.4%"><span class="pct-text">50.4%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:60.4%"><span class="pct-text">60.4%</span></div></td>
+<td>134.0</td>
+<td>29.0</td>
+<td>87.0</td>
+<td>210.0</td>
+<td>473.0</td>
+</tr>
+<tr>
+<td>03/09-03/15</td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:29.0%"><span class="pct-text">29.0%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:17.7%"><span class="pct-text">17.7%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:32.7%"><span class="pct-text">32.7%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:45.7%"><span class="pct-text">45.7%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:56.9%"><span class="pct-text">56.9%</span></div></td>
+<td>116.0</td>
+<td>28.0</td>
+<td>77.0</td>
+<td>171.0</td>
+<td>361.0</td>
+</tr>
+<tr>
+<td>03/16-03/22</td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:32.8%"><span class="pct-text">32.8%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:15.3%"><span class="pct-text">15.3%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:37.4%"><span class="pct-text">37.4%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:56.0%"><span class="pct-text">56.0%</span></div></td>
+<td class="td-pct-bar"><div class="pct-bar" style="--pct:72.2%"><span class="pct-text">72.2%</span></div></td>
+<td>120.7</td>
+<td>26.4</td>
+<td>77.2</td>
+<td>159.0</td>
+<td>307.3</td>
+</tr>
+<tr class="ratio-row">
+<td>环比</td>
+<td><span class="chg up">+3.8%</span></td>
+<td><span class="chg down">-2.4%</span></td>
+<td><span class="chg up">+4.7%</span></td>
+<td><span class="chg up">+10.3%</span></td>
+<td><span class="chg up">+15.3%</span></td>
+<td><span class="chg up">+4.7</span></td>
+<td><span class="chg down">-1.6</span></td>
+<td><span class="chg up">+0.2</span></td>
+<td><span class="chg down">-12.0</span></td>
+<td><span class="chg down">-53.7</span></td>
+</tr>
+</tbody></table>
+<p class="pay-tier-footnote" style="font-size:11px;color:var(--gray);margin-top:8px;line-height:1.5">
+人数定义：uid；小R (1, 100] 中R (100,500] 大R (500,2000] 超R(2000,)<br>
+付费人数占比：对应分层本周付费人数/本周活跃人数<br>
+付费arpu：按玩家历史总付费金额归类后，在所属分层(1元、小R、中R、大R、超R)中计算该周该分层平均付费金额。
+</p>
+<div class="pay-tier-charts"><div class="chart-box"><h3>周流水占比</h3><canvas id="chartHeartFlow" height="100"></canvas></div><div class="chart-box"><h3>各商品付费玩家付费率</h3><canvas id="chartHeartPayRate" height="100"></canvas></div></div>
+<div class="heart-diamond-table-wrap"><table class="pay-tier-quadrant table-heart-diamond-tier"><colgroup><col class="col-date"><col class="col-tier">
+<col class="col-flow"><col class="col-flow"><col class="col-flow"><col class="col-flow"><col class="col-total">
+<col class="col-rate"><col class="col-rate"><col class="col-rate"><col class="col-rate"></colgroup>
+<thead><tr>
+<th class="col-date" rowspan="2">日期</th><th rowspan="2">用户分层</th>
+<th colspan="5">流水占比</th><th colspan="4">付费渗透率</th></tr><tr>
+<th>卡池</th><th>月卡</th><th>直售</th><th>BP</th><th class="col-total">合计</th>
+<th>卡池</th><th>月卡</th><th>直售</th><th>BP</th>
+</thead><tbody>
+<tr class="overall-row is-toggle" data-week="02/23-03/01">
+<td class="col-date col-week-label">02/23-03/01</td>
+<td><span class="tier-toggle" aria-hidden="true">▶</span>整体</td>
+<td class="col-flow">75%</td>
+<td class="col-flow">7%</td>
+<td class="col-flow">12%</td>
+<td class="col-flow">7%</td>
+<td class="col-total">5415w</td>
+<td class="col-rate">32%</td>
+<td class="col-rate">18%</td>
+<td class="col-rate">18%</td>
+<td class="col-rate">7%</td>
+</tr>
+<tr class="tier-row" data-week="02/23-03/01">
+<td class="col-date"></td>
+<td>小R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:3.6%"><span>4%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.9%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.0%"><span>1%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.5%"><span>2%</span></div></td>
+<td class="col-total">480w</td>
+<td class="col-rate">18%</td>
+<td class="col-rate">10%</td>
+<td class="col-rate">9%</td>
+<td class="col-rate">6%</td>
+</tr>
+<tr class="tier-row" data-week="02/23-03/01">
+<td class="col-date"></td>
+<td>中R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:17.7%"><span>18%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.7%"><span>3%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.4%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.8%"><span>3%</span></div></td>
+<td class="col-total">1384w</td>
+<td class="col-rate">42%</td>
+<td class="col-rate">22%</td>
+<td class="col-rate">20%</td>
+<td class="col-rate">10%</td>
+</tr>
+<tr class="tier-row" data-week="02/23-03/01">
+<td class="col-date"></td>
+<td>大R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:28.7%"><span>29%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.8%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:3.5%"><span>4%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.1%"><span>1%</span></div></td>
+<td class="col-total">1906w</td>
+<td class="col-rate">53%</td>
+<td class="col-rate">31%</td>
+<td class="col-rate">36%</td>
+<td class="col-rate">7%</td>
+</tr>
+<tr class="tier-row" data-week="02/23-03/01">
+<td class="col-date"></td>
+<td>超R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:24.6%"><span>25%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:0.8%"><span>1%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:4.7%"><span>5%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:0.3%"><span>0%</span></div></td>
+<td class="col-total">1645w</td>
+<td class="col-rate">57%</td>
+<td class="col-rate">45%</td>
+<td class="col-rate">59%</td>
+<td class="col-rate">5%</td>
+</tr>
+<tr class="overall-row is-toggle" data-week="03/02-03/08">
+<td class="col-date col-week-label">03/02-03/08</td>
+<td><span class="tier-toggle" aria-hidden="true">▶</span>整体</td>
+<td class="col-flow">74%</td>
+<td class="col-flow">8%</td>
+<td class="col-flow">11%</td>
+<td class="col-flow">7%</td>
+<td class="col-total">4283w</td>
+<td class="col-rate">28%</td>
+<td class="col-rate">17%</td>
+<td class="col-rate">17%</td>
+<td class="col-rate">6%</td>
+</tr>
+<tr class="tier-row" data-week="03/02-03/08">
+<td class="col-date"></td>
+<td>小R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:3.6%"><span>4%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.8%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.0%"><span>1%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.7%"><span>3%</span></div></td>
+<td class="col-total">391w</td>
+<td class="col-rate">16%</td>
+<td class="col-rate">9%</td>
+<td class="col-rate">8%</td>
+<td class="col-rate">6%</td>
+</tr>
+<tr class="tier-row" data-week="03/02-03/08">
+<td class="col-date"></td>
+<td>中R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:17.2%"><span>17%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:3.0%"><span>3%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.3%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.8%"><span>3%</span></div></td>
+<td class="col-total">1084w</td>
+<td class="col-rate">35%</td>
+<td class="col-rate">19%</td>
+<td class="col-rate">17%</td>
+<td class="col-rate">8%</td>
+</tr>
+<tr class="tier-row" data-week="03/02-03/08">
+<td class="col-date"></td>
+<td>大R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:28.6%"><span>29%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.2%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:3.3%"><span>3%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.1%"><span>1%</span></div></td>
+<td class="col-total">1506w</td>
+<td class="col-rate">46%</td>
+<td class="col-rate">29%</td>
+<td class="col-rate">31%</td>
+<td class="col-rate">6%</td>
+</tr>
+<tr class="tier-row" data-week="03/02-03/08">
+<td class="col-date"></td>
+<td>超R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:24.4%"><span>24%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.1%"><span>1%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:4.7%"><span>5%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:0.3%"><span>0%</span></div></td>
+<td class="col-total">1302w</td>
+<td class="col-rate">51%</td>
+<td class="col-rate">43%</td>
+<td class="col-rate">54%</td>
+<td class="col-rate">4%</td>
+</tr>
+<tr class="overall-row is-toggle" data-week="03/09-03/15">
+<td class="col-date col-week-label">03/09-03/15</td>
+<td><span class="tier-toggle" aria-hidden="true">▶</span>整体</td>
+<td class="col-flow">71%</td>
+<td class="col-flow">11%</td>
+<td class="col-flow">12%</td>
+<td class="col-flow">6%</td>
+<td class="col-total">3181w</td>
+<td class="col-rate">22%</td>
+<td class="col-rate">16%</td>
+<td class="col-rate">15%</td>
+<td class="col-rate">4%</td>
+</tr>
+<tr class="tier-row" data-week="03/09-03/15">
+<td class="col-date"></td>
+<td>小R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:3.5%"><span>4%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.9%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.0%"><span>1%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.5%"><span>2%</span></div></td>
+<td class="col-total">286w</td>
+<td class="col-rate">13%</td>
+<td class="col-rate">8%</td>
+<td class="col-rate">8%</td>
+<td class="col-rate">4%</td>
+</tr>
+<tr class="tier-row" data-week="03/09-03/15">
+<td class="col-date"></td>
+<td>中R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:16.6%"><span>17%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:3.9%"><span>4%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.3%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.4%"><span>2%</span></div></td>
+<td class="col-total">806w</td>
+<td class="col-rate">26%</td>
+<td class="col-rate">19%</td>
+<td class="col-rate">15%</td>
+<td class="col-rate">5%</td>
+</tr>
+<tr class="tier-row" data-week="03/09-03/15">
+<td class="col-date"></td>
+<td>大R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:27.4%"><span>27%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:3.2%"><span>3%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:3.3%"><span>3%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:0.9%"><span>1%</span></div></td>
+<td class="col-total">1108w</td>
+<td class="col-rate">36%</td>
+<td class="col-rate">30%</td>
+<td class="col-rate">27%</td>
+<td class="col-rate">3%</td>
+</tr>
+<tr class="tier-row" data-week="03/09-03/15">
+<td class="col-date"></td>
+<td>超R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:23.9%"><span>24%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.8%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:5.0%"><span>5%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:0.2%"><span>0%</span></div></td>
+<td class="col-total">981w</td>
+<td class="col-rate">40%</td>
+<td class="col-rate">45%</td>
+<td class="col-rate">48%</td>
+<td class="col-rate">2%</td>
+</tr>
+<tr class="overall-row is-toggle" data-week="03/16-03/22">
+<td class="col-date col-week-label">03/16-03/22</td>
+<td><span class="tier-toggle" aria-hidden="true">▶</span>整体</td>
+<td class="col-flow">55%</td>
+<td class="col-flow">9%</td>
+<td class="col-flow">9%</td>
+<td class="col-flow">27%</td>
+<td class="col-total">3377w</td>
+<td class="col-rate">18%</td>
+<td class="col-rate">16%</td>
+<td class="col-rate">13%</td>
+<td class="col-rate">16%</td>
+</tr>
+<tr class="tier-row" data-week="03/16-03/22">
+<td class="col-date"></td>
+<td>小R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.0%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.5%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:0.7%"><span>1%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.4%"><span>1%</span></div></td>
+<td class="col-total">189w</td>
+<td class="col-rate">9%</td>
+<td class="col-rate">7%</td>
+<td class="col-rate">6%</td>
+<td class="col-rate">3%</td>
+</tr>
+<tr class="tier-row" data-week="03/16-03/22">
+<td class="col-date"></td>
+<td>中R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:12.5%"><span>12%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:3.4%"><span>3%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.8%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:7.8%"><span>8%</span></div></td>
+<td class="col-total">862w</td>
+<td class="col-rate">21%</td>
+<td class="col-rate">17%</td>
+<td class="col-rate">12%</td>
+<td class="col-rate">17%</td>
+</tr>
+<tr class="tier-row" data-week="03/16-03/22">
+<td class="col-date"></td>
+<td>大R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:21.5%"><span>22%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.9%"><span>3%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:2.7%"><span>3%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:10.4%"><span>10%</span></div></td>
+<td class="col-total">1263w</td>
+<td class="col-rate">32%</td>
+<td class="col-rate">29%</td>
+<td class="col-rate">24%</td>
+<td class="col-rate">36%</td>
+</tr>
+<tr class="tier-row" data-week="03/16-03/22">
+<td class="col-date"></td>
+<td>超R</td>
+<td class="col-flow"><div class="pct-bar" style="--pct:18.6%"><span>19%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:1.6%"><span>2%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:3.9%"><span>4%</span></div></td>
+<td class="col-flow"><div class="pct-bar" style="--pct:7.3%"><span>7%</span></div></td>
+<td class="col-total">1064w</td>
+<td class="col-rate">35%</td>
+<td class="col-rate">44%</td>
+<td class="col-rate">45%</td>
+<td class="col-rate">59%</td>
+</tr>
+</tbody></table></div></div>
+    </section>
+    <section id="section-build" class="section">
+      <h2>建造&amp;负载</h2>
+      <div class="content-card"><div class="module-conclusion"><ul><li>负载正常速度增长</li></ul></div>
+<div class="chart-box"><h3>满负载玩家数/w</h3><canvas id="chartFullLoad" height="90"></canvas></div>
+<table class="table-week-dates"><thead><tr>
+<th>日期</th>
+<th>建造参与率</th>
+<th>参与次数</th>
+<th>人均建造时长/h</th>
+<th>总玩家数/w</th>
+<th>无数据</th>
+<th>低</th>
+<th>较低</th>
+<th>中</th>
+<th>重</th>
+<th>满</th>
+<th>前10%</th>
+<th>前15%</th>
+<th>前20%</th>
+</tr></thead><tbody>
+<tr>
+<td>02/16-02/22</td>
+<td>55%</td>
+<td>43.0</td>
+<td>2.6</td>
+<td>361.9</td>
+<td>46%</td>
+<td>46%</td>
+<td>7%</td>
+<td>1%</td>
+<td>0%</td>
+<td>0%</td>
+<td>18.9w</td>
+<td>16.5w</td>
+<td>14.7w</td>
+</tr>
+<tr>
+<td>02/23-03/01</td>
+<td>55%</td>
+<td>45.0</td>
+<td>2.6</td>
+<td>320.9</td>
+<td>46%</td>
+<td>43%</td>
+<td>8%</td>
+<td>2%</td>
+<td>1%</td>
+<td>0%</td>
+<td>20.9w</td>
+<td>18.2w</td>
+<td>16.2w</td>
+</tr>
+<tr>
+<td>03/02-03/08</td>
+<td>53%</td>
+<td>44.0</td>
+<td>2.5</td>
+<td>292.7</td>
+<td>47%</td>
+<td>40%</td>
+<td>9%</td>
+<td>2%</td>
+<td>1%</td>
+<td>1%</td>
+<td>22.7w</td>
+<td>19.8w</td>
+<td>17.7w</td>
+</tr>
+<tr>
+<td>03/09-03/15</td>
+<td>53%</td>
+<td>43.0</td>
+<td>2.4</td>
+<td>263.6</td>
+<td>48%</td>
+<td>38%</td>
+<td>10%</td>
+<td>2%</td>
+<td>1%</td>
+<td>1%</td>
+<td>24.1w</td>
+<td>21.1w</td>
+<td>18.8w</td>
+</tr>
+<tr>
+<td>03/16-03/22</td>
+<td>54%</td>
+<td>46.0</td>
+<td>2.4</td>
+<td>240.4</td>
+<td>47%</td>
+<td>37%</td>
+<td>11%</td>
+<td>3%</td>
+<td>2%</td>
+<td>1%</td>
+<td>25.6w</td>
+<td>22.4w</td>
+<td>20.0w</td>
+</tr>
+<tr class="ratio-row">
+<td>环比</td>
+<td><span class="chg up">+1.0%</span></td>
+<td><span class="chg up">+3.0</span></td>
+<td><span class="chg up">+0.0</span></td>
+<td><span class="chg down">-23.2</span></td>
+<td><span class="chg down">-0.8%</span></td>
+<td><span class="chg down">-1.0%</span></td>
+<td><span class="chg up">+0.7%</span></td>
+<td><span class="chg up">+0.4%</span></td>
+<td><span class="chg up">+0.3%</span></td>
+<td><span class="chg up">+0.3%</span></td>
+<td><span class="chg up">+1.5w</span></td>
+<td><span class="chg up">+1.3w</span></td>
+<td><span class="chg up">+1.2w</span></td>
+</tr>
+</tbody></table></div>
+    </section>
+    
+    <section id="section-extra" class="section">
+      <h2>梦光影BP 前3日专题</h2>
+      <div class="content-card"><style>.bp-extra-tables .table-photo-extra { table-layout: fixed; width: 100%; }.bp-extra-tables .table-photo-extra th,.bp-extra-tables .table-photo-extra td { text-align: center; white-space: normal; word-break: break-word; }.bp-extra-tables .table-photo-extra td.label-cell { text-align: left; font-weight: 700; color: #2859a5; }.bp-extra-tables .table-photo-extra td.region-cell { text-align: center; font-weight: 700; color: #2859a5; vertical-align: middle; }</style><div class='extra-markdown bp-extra-tables'><div class="simple-table-block"><h4>海外 前3日 BP 大盘对比</h4><table class="table-photo-extra table-grouped"><thead><tr><th>前3日数据</th><th>BP流水/w</th><th>流水-环比</th><th>普通档/w</th><th>豪华档/w</th><th>付费arpu</th><th>购买率</th></tr></thead><tbody><tr><td style='font-weight:700'>冰雪季</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:100.0%;background:linear-gradient(90deg,#8fb5e8,#d8e7fb);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">1169</span></td><td>-</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:95.8%;background:linear-gradient(90deg,#a8e6cf,#dff6e9);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">6.9</span></td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:100.0%;background:linear-gradient(90deg,#a8e6cf,#dff6e9);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">11.6</span></td><td>63</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:73.8%;background:linear-gradient(90deg,#ff9090,#ffd0d0);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">6.2%</span></td></tr><tr style='font-weight:700;background:#f0f5ff'><td style='font-weight:700'>梦光影</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:78.4%;background:linear-gradient(90deg,#8fb5e8,#d8e7fb);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">916</span></td><td>-22%</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:100.0%;background:linear-gradient(90deg,#a8e6cf,#dff6e9);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">7.2</span></td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:74.1%;background:linear-gradient(90deg,#a8e6cf,#dff6e9);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">8.6</span></td><td>58</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:100.0%;background:linear-gradient(90deg,#ff9090,#ffd0d0);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">8.4%</span></td></tr></tbody></table></div><div class="simple-table-block"><h4>梦光影 BP 渗透漏斗 海外（前3日）</h4><table class="table-photo-extra table-compare-m2"><colgroup><col style="width:16%"><col style="width:19.0%"><col style="width:19.0%"><col style="width:19.0%"><col style="width:19.0%"><col style="width:8%"></colgroup><thead><tr><th>渗透漏斗</th><th colspan="2">冰雪季</th><th colspan="2">梦光影</th><th>环比</th></tr><tr><th></th><th>人数</th><th>比例</th><th>人数</th><th>比例</th><th></th></tr></thead><tbody><tr><td class='label-cell'>活跃玩家</td><td>2,980,159</td><td>100%</td><td>1,881,745</td><td>100%</td><td>-</td></tr><tr><td class='label-cell'>满足条件/活跃玩家</td><td>1,973,250</td><td>66%</td><td>1,388,576</td><td>74%</td><td><span style="color:#dc2626;font-weight:700">+8pp</span></td></tr><tr><td class='label-cell'>每周挑战页签触达</td><td>1,764,017</td><td>59%</td><td>1,287,666</td><td>68%</td><td><span style="color:#dc2626;font-weight:700">+9pp</span></td></tr><tr><td class='label-cell'>庆典活动页签触达</td><td>1,838,163</td><td>62%</td><td>1,184,426</td><td>63%</td><td><span style="color:#dc2626;font-weight:700">+1pp</span></td></tr><tr><td class='label-cell'>领取1级奖励</td><td>1,900,496</td><td>64%</td><td>1,351,766</td><td>72%</td><td><span style="color:#dc2626;font-weight:700">+8pp</span></td></tr><tr><td class='label-cell'>升到2级</td><td>1,679,390</td><td>56%</td><td>1,200,535</td><td>64%</td><td><span style="color:#dc2626;font-weight:700">+7pp</span></td></tr><tr><td class='label-cell'>领取2级奖励</td><td>1,678,477</td><td>56%</td><td>1,223,448</td><td>65%</td><td><span style="color:#dc2626;font-weight:700">+9pp</span></td></tr><tr><td class='label-cell'>升到5级</td><td>1,231,322</td><td>41%</td><td>902,814</td><td>48%</td><td><span style="color:#dc2626;font-weight:700">+7pp</span></td></tr><tr><td class='label-cell'>购买页触达</td><td>1,749,715</td><td>59%</td><td>1,251,647</td><td>67%</td><td><span style="color:#dc2626;font-weight:700">+8pp</span></td></tr><tr><td class='label-cell'>购买页人均触达/次</td><td colspan='2'>2.53</td><td colspan='2'>1.94</td><td><span style="color:#16a34a;font-weight:700">-23%</span></td></tr></tbody></table></div><div class="simple-table-block"><h4>冰雪季 vs 梦光影：档位购买与流水（海外）</h4><table class="table-photo-extra table-compare-m3"><colgroup><col style="width:12%"><col style="width:10%"><col style="width:34.0%"><col style="width:34.0%"><col style="width:10%"></colgroup><thead><tr><th rowspan="2">前3日</th><th rowspan="2">指标</th><th colspan="2">赛季</th><th rowspan="2">环比</th></tr><tr><th>冰雪季</th><th>梦光影</th></tr></thead><tbody><tr><td class='region-cell' rowspan='3'>人数/w</td><td class='label-cell'>BP30</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:53.1%;background:linear-gradient(90deg,#8fb5e8,#d8e7fb);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">6.9</span></td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:55.4%;background:linear-gradient(90deg,#8fb5e8,#d8e7fb);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">7.2</span></td><td><span style="color:#dc2626;font-weight:700">+4%</span></td></tr><tr><td class='label-cell'>BP68</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:89.2%;background:linear-gradient(90deg,#8fb5e8,#d8e7fb);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">11.6</span></td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:66.2%;background:linear-gradient(90deg,#8fb5e8,#d8e7fb);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">8.6</span></td><td><span style="color:#16a34a;font-weight:700">-26%</span></td></tr><tr><td class='label-cell'>总计</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:100.0%;background:linear-gradient(90deg,#8fb5e8,#d8e7fb);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">18.6</span></td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:100.0%;background:linear-gradient(90deg,#8fb5e8,#d8e7fb);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">15.8</span></td><td><span style="color:#16a34a;font-weight:700">-15%</span></td></tr><tr><td class='region-cell' rowspan='3'>购买率</td><td class='label-cell'>BP30</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:23.0%;background:linear-gradient(90deg,#a8e6cf,#dff6e9);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">2.3%</span></td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:39.0%;background:linear-gradient(90deg,#a8e6cf,#dff6e9);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">3.9%</span></td><td><span style="color:#dc2626;font-weight:700">+70%</span></td></tr><tr><td class='label-cell'>BP68</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:39.0%;background:linear-gradient(90deg,#a8e6cf,#dff6e9);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">3.9%</span></td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:46.0%;background:linear-gradient(90deg,#a8e6cf,#dff6e9);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">4.6%</span></td><td><span style="color:#dc2626;font-weight:700">+18%</span></td></tr><tr><td class='label-cell'>总计</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:62.0%;background:linear-gradient(90deg,#a8e6cf,#dff6e9);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">6.2%</span></td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:84.0%;background:linear-gradient(90deg,#a8e6cf,#dff6e9);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">8.4%</span></td><td><span style="color:#dc2626;font-weight:700">+35%</span></td></tr><tr><td class='region-cell' rowspan='3'>流水/w</td><td class='label-cell'>BP30</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:40.5%;background:linear-gradient(90deg,#ff9090,#ffd0d0);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">243</span></td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:41.7%;background:linear-gradient(90deg,#ff9090,#ffd0d0);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">250</span></td><td><span style="color:#dc2626;font-weight:700">+3%</span></td></tr><tr><td class='label-cell'>BP68</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:100.0%;background:linear-gradient(90deg,#ff9090,#ffd0d0);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">895</span></td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:100.0%;background:linear-gradient(90deg,#ff9090,#ffd0d0);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">652</span></td><td><span style="color:#16a34a;font-weight:700">-27%</span></td></tr><tr><td class='label-cell'>总计</td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:100.0%;background:linear-gradient(90deg,#ff9090,#ffd0d0);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">1169</span></td><td style="position:relative;padding:0;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:100.0%;background:linear-gradient(90deg,#ff9090,#ffd0d0);opacity:0.88;"></span><span style="position:relative;z-index:1;display:block;padding:8px 10px;">916</span></td><td><span style="color:#16a34a;font-weight:700">-22%</span></td></tr></tbody></table></div></div></div>
+    </section>
+  </main>
+  <script>
+(function(){
+  var links = document.querySelectorAll('.sidebar nav a[data-section]');
+  function setActive(hash) {
+    var id = (hash || '').replace('#section-', '').trim() || 'basic';
+    for (var i = 0; i < links.length; i++) {
+      links[i].classList.toggle('active', links[i].getAttribute('data-section') === id);
+    }
+  }
+  window.addEventListener('hashchange', function() { setActive(window.location.hash); });
+  setActive(window.location.hash);
+})();
+  </script>
+  <script>
+(function() {
+  var table = document.querySelector('#section-pay .table-heart-diamond-tier');
+  if (!table) return;
+  var overallRows = table.querySelectorAll('tr.overall-row.is-toggle[data-week]');
+  var tierRows = table.querySelectorAll('tr.tier-row[data-week]');
+  function setWeekExpanded(week, expanded) {
+    for (var i = 0; i < overallRows.length; i++) {
+      var row = overallRows[i];
+      if ((row.getAttribute('data-week') || '') === week) {
+        row.classList.toggle('expanded', !!expanded);
+        row.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      }
+    }
+    for (var j = 0; j < tierRows.length; j++) {
+      var tr = tierRows[j];
+      if ((tr.getAttribute('data-week') || '') === week) {
+        tr.style.display = expanded ? 'table-row' : 'none';
+      }
+    }
+  }
+  for (var k = 0; k < overallRows.length; k++) {
+    (function(row) {
+      var week = row.getAttribute('data-week') || '';
+      setWeekExpanded(week, false);
+      row.addEventListener('click', function() {
+        var isExpanded = row.classList.contains('expanded');
+        setWeekExpanded(week, !isExpanded);
+      });
+    })(overallRows[k]);
+  }
+})();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script>
+(function(){
+  var dauLabels = ["1/8", "1/9", "1/10", "1/11", "1/12", "1/13", "1/14", "1/15", "1/16", "1/17", "1/18", "1/19", "1/20", "1/21", "1/22", "1/23", "1/24", "1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23", "2/24", "2/25", "2/26", "2/27", "2/28", "3/1", "3/2", "3/3", "3/4", "3/5", "3/6", "3/7", "3/8", "3/9", "3/10", "3/11", "3/12", "3/13", "3/14", "3/15", "3/16", "3/17", "3/18", "3/19", "3/20", "3/21", "3/22"];
+  var dauData = [88.4, 114.1, 128.8, 148.7, 156.4, 164.0, 173.7, 181.5, 189.6, 208.6, 223.1, 220.9, 225.2, 227.3, 203.4, 210.5, 223.8, 229.7, 221.5, 216.0, 213.5, 204.8, 207.5, 218.0, 221.7, 211.7, 207.5, 204.3, 195.1, 197.6, 208.9, 212.9, 203.9, 200.1, 197.5, 193.8, 193.9, 209.6, 211.3, 214.8, 210.2, 203.7, 199.7, 196.5, 202.1, 201.3, 193.2, 187.2, 183.4, 179.0, 176.9, 183.0, 182.9, 173.7, 169.7, 168.1, 154.6, 158.9, 166.3, 168.2, 157.45, 152.68, 150.07, 145.86, 144.85, 152.98, 149.89, 142.69, 139.16, 136.54, 133.31, 134.96, 140.08, 142.05];
+  var revLabels = ["1/8", "1/9", "1/10", "1/11", "1/12", "1/13", "1/14", "1/15", "1/16", "1/17", "1/18", "1/19", "1/20", "1/21", "1/22", "1/23", "1/24", "1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23", "2/24", "2/25", "2/26", "2/27", "2/28", "3/1", "3/2", "3/3", "3/4", "3/5", "3/6", "3/7", "3/8", "3/9", "3/10", "3/11", "3/12", "3/13", "3/14", "3/15", "3/16", "3/17", "3/18", "3/19", "3/20", "3/21", "3/22"];
+  var revWan = [312.99, 388.75, 376.22, 392.18, 364.99, 322.09, 303.28, 300.06, 280.52, 368.27, 370.08, 342.31, 334.59, 316.17, 519.07, 391.13, 440.49, 412.02, 349.02, 333.3, 328.64, 312.74, 357.13, 1236.27, 870.14, 527.81, 441.18, 428.66, 450.46, 507.65, 3593.16, 1967.86, 1122.87, 917.52, 771.03, 670.7, 681.63, 4141.33, 2225.05, 1595.24, 1445.15, 1000.71, 837.77, 800.41, 845.2, 725.55, 655.53, 621.97, 674.94, 637.41, 698.31, 881.46, 932.21, 682.86, 597.38, 514.4, 534.46, 537.64, 628.95, 540.59, 435.66, 454.84, 407.22, 391.15, 410.13, 500.2, 412.65, 357.04, 333.5, 308.57, 313.55, 333.13, 1096.75, 625.81];
+  var revArpu = [3.54, 3.41, 2.92, 2.64, 2.33, 1.96, 1.75, 1.65, 1.48, 1.77, 1.66, 1.55, 1.49, 1.39, 2.55, 1.86, 1.97, 1.79, 1.58, 1.54, 1.54, 1.53, 1.72, 5.67, 3.92, 2.49, 2.13, 2.1, 2.31, 2.57, 17.2, 9.24, 5.51, 4.59, 3.9, 3.46, 3.52, 19.76, 10.53, 7.43, 6.88, 4.91, 4.2, 4.07, 4.18, 3.6, 3.39, 3.32, 3.68, 3.56, 3.95, 4.82, 5.1, 3.93, 3.52, 3.06, 3.46, 3.38, 3.78, 3.21, 2.77, 2.98, 2.71, 2.68, 2.83, 3.27, 2.75, 2.5, 2.4, 2.26, 2.35, 2.47, 7.83, 4.41];
+  var durLabels = ["01/05-01/11", "01/12-01/18", "01/19-01/25", "01/26-02/01", "02/02-02/08", "02/09-02/15", "02/16-02/22", "02/23-03/01", "03/02-03/08", "03/09-03/15", "03/16-03/22"];
+  var durOverall = [87.0, 104.0, 112.0, 121.0, 121.0, 114.0, 111.0, 106.0, 106.0, 101.0, 100.6];
+  var durNew = [null, 75.0, 78.0, 73.0, 73.0, 63.0, 62.0, 62.0, 62.0, 56.0, 54.1];
+  var durationTickStep = 1;
+  var basicXTickStep = 6;
+  var durationAspectRatio = 2.0;
+  var eventAnnotations = [{"date": "2/14", "label": "日流水/w:4141"}, {"date": "2/7", "label": "日流水/w:3593"}, {"date": "3/21", "label": "梦光影BP\n日流水/w:1097"}];
+  var dauSaturdayIndices = [2, 9, 16, 23, 30, 37, 44, 51, 58, 65, 72];
+  var revSaturdayIndices = [2, 9, 16, 23, 30, 37, 44, 51, 58, 65, 72];
+  var hdLabels = ["02/23-03/01", "03/02-03/08", "03/09-03/15", "03/16-03/22"];
+  var hdPoolPct = [74.6, 73.8, 71.4, 54.6];
+  var hdMonthCardPct = [7.2, 8.1, 10.9, 9.4];
+  var hdDirectSalePct = [11.6, 11.3, 11.6, 9.1];
+  var hdBpPct = [6.6, 6.8, 6.1, 26.9];
+  var hdPoolRate = [31.9, 28.0, 22.3, 18.3];
+  var hdMonthCardRate = [17.9, 16.6, 16.5, 16.0];
+  var hdDirectSaleRate = [18.2, 16.7, 15.0, 13.3];
+  var hdBpRate = [7.4, 6.2, 4.4, 16.3];
+  var payChartWindow = 4;
+  var fullLoadLabels = ["02/02-02/08", "02/09-02/15", "02/16-02/22", "02/23-03/01", "03/02-03/08", "03/09-03/15", "03/16-03/22"];
+  var fullLoadWan = [0.0, 0.4, 1.1, 1.6, 2.0, 2.6, 3.2];
+  var fullLoadTickStep = 1;
+  var fullLoadYStep = 0.5;
+  var chartFontDelta = 0;
+  function fontSize(base) { return Math.max(6, base + chartFontDelta); }
+  var unifiedXAxisTickFontSize = fontSize(11);
+  if (payChartWindow > 0 && hdLabels && hdLabels.length > payChartWindow) {
+    hdLabels = hdLabels.slice(-payChartWindow);
+    hdPoolPct = hdPoolPct.slice(-payChartWindow);
+    hdMonthCardPct = hdMonthCardPct.slice(-payChartWindow);
+    hdDirectSalePct = hdDirectSalePct.slice(-payChartWindow);
+    hdBpPct = hdBpPct.slice(-payChartWindow);
+    hdPoolRate = hdPoolRate.slice(-payChartWindow);
+    hdMonthCardRate = hdMonthCardRate.slice(-payChartWindow);
+    hdDirectSaleRate = hdDirectSaleRate.slice(-payChartWindow);
+    hdBpRate = hdBpRate.slice(-payChartWindow);
+  }
+  var eventAnnotationPlugin = {
+    id: 'eventAnnotations',
+    afterDraw: function(chart) {
+      var events = chart.options.plugins && chart.options.plugins.eventAnnotations;
+      if (!events || !events.length) return;
+      var labels = chart.data.labels || [];
+      var datasets = chart.data.datasets || [];
+      var ctx = chart.ctx;
+      var xScale = chart.scales.x;
+      var yScale = chart.scales.y || chart.scales.y1;
+      if (!xScale || !yScale) return;
+      events.forEach(function(ev) {
+        var idx = labels.indexOf(ev.date);
+        if (idx < 0) return;
+        var x = xScale.getPixelForValue(idx);
+        var y = yScale.bottom;
+        if (datasets[0] && datasets[0].data[idx] != null) {
+          var ds = datasets[0];
+          var yScaleUse = ds.yAxisID ? (chart.scales[ds.yAxisID] || yScale) : yScale;
+          y = yScaleUse.getPixelForValue(ds.data[idx]);
+        }
+        ctx.save();
+        ctx.fillStyle = '#666';
+        ctx.font = 'bold ' + fontSize(11) + 'px "Microsoft YaHei",微软雅黑,sans-serif';
+        ctx.textAlign = 'center';
+        var lines = ev.label.split('\n');
+        if (chart.canvas && chart.canvas.id === 'chartDAU') {
+          lines = lines.filter(function(t) { return (t || '').indexOf('日流水/w') === -1; });
+        }
+        for (var L = 0; L < lines.length; L++) {
+          ctx.fillText(lines[L], x, y - 14 + L * 14);
+        }
+        ctx.restore();
+      });
+    }
+  };
+  if (typeof Chart !== 'undefined') Chart.register(eventAnnotationPlugin);
+  function xScaleCategory(labels) {
+    return {
+      type: 'category',
+      grid: { display: false },
+      ticks: {
+        callback: function(v, i) { return labels[i] != null && i % basicXTickStep === 0 ? labels[i] : ''; },
+        maxRotation: 0,
+        autoSkip: false,
+        font: { size: unifiedXAxisTickFontSize }
+      }
+    };
+  }
+  function xScaleDuration(labels) {
+    return {
+      type: 'category',
+      grid: { display: false },
+      ticks: {
+        callback: function(v, i) { return labels[i] != null && i % durationTickStep === 0 ? labels[i] : ''; },
+        maxRotation: 0,
+        autoSkip: false,
+        font: { size: unifiedXAxisTickFontSize }
+      }
+    };
+  }
+  var durationDataLabelsPlugin = {
+    id: 'durationDataLabels',
+    afterDraw: function(chart) {
+      if (chart.canvas.id !== 'chartDuration') return;
+      if (!chart.options.plugins || !chart.options.plugins.durationDataLabels) return;
+      var ctx = chart.ctx;
+      var datasets = chart.data.datasets || [];
+      for (var d = 0; d < datasets.length; d++) {
+        var meta = chart.getDatasetMeta(d);
+        if (!meta || !meta.data || !meta.data.length) continue;
+        var data = datasets[d].data || [];
+        for (var i = 0; i < meta.data.length; i++) {
+          var point = meta.data[i];
+          if (!point || point.skip) continue;
+          var val = data[i];
+          if (val == null) continue;
+          var text = '' + (Math.round(val) === val ? val : Math.round(val * 10) / 10);
+          ctx.save();
+          ctx.fillStyle = point.options.backgroundColor || point.options.borderColor || '#333';
+          ctx.font = fontSize(13) + 'px "Microsoft YaHei",微软雅黑,sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(text, point.x, point.y - 10);
+          ctx.restore();
+        }
+      }
+    }
+  };
+  if (typeof Chart !== 'undefined') Chart.register(durationDataLabelsPlugin);
+  var lineSmooth = 0.5;
+  var pointSolid = { pointRadius: 3, pointBackgroundColor: undefined, pointBorderColor: undefined, pointBorderWidth: 0 };
+  function pointRadiusSaturday(indices) {
+    return function(ctx) { return indices.indexOf(ctx.dataIndex) !== -1 ? 3 : 0; };
+  }
+  var dauSaturdayLabelPlugin = {
+    id: 'dauSaturdayLabel',
+    afterDatasetsDraw: function(chart) {
+      if (!chart || !chart.canvas || chart.canvas.id !== 'chartDAU') return;
+      var labels = chart.data.labels || [];
+      var data = (chart.data.datasets && chart.data.datasets[0] && chart.data.datasets[0].data) || [];
+      var xScale = chart.scales.x;
+      var yScale = chart.scales.y;
+      if (!xScale || !yScale) return;
+      var eventMap = {};
+      (eventAnnotations || []).forEach(function(ev) { eventMap[ev.date] = ev.label || ''; });
+      var ctx = chart.ctx;
+      ctx.save();
+      ctx.fillStyle = '#666';
+      ctx.font = 'bold ' + fontSize(11) + 'px "Microsoft YaHei",微软雅黑,sans-serif';
+      ctx.textAlign = 'center';
+      (dauSaturdayIndices || []).forEach(function(idx) {
+        if (idx == null || idx < 0 || idx >= labels.length) return;
+        var x = xScale.getPixelForValue(idx);
+        var val = data[idx];
+        if (val == null) return;
+        var y = yScale.getPixelForValue(val);
+        var dateKey = labels[idx];
+        var baseLines = eventMap[dateKey] ? eventMap[dateKey].split('\n').length : 0;
+        var yText = y - 14 + baseLines * 14;
+        ctx.fillText(Math.round(val) + 'w', x, yText);
+      });
+      ctx.restore();
+    }
+  };
+  if (typeof Chart !== 'undefined') Chart.register(dauSaturdayLabelPlugin);
+  if (document.getElementById('chartDAU') && typeof Chart !== 'undefined') {
+    new Chart(document.getElementById('chartDAU'), {
+      type: 'line',
+      data: {
+        labels: dauLabels,
+        datasets: [{
+          label: 'DAU(万)', data: dauData, borderColor: '#2859a5', backgroundColor: 'transparent', fill: false, tension: lineSmooth,
+          pointRadius: pointRadiusSaturday(dauSaturdayIndices), pointBackgroundColor: '#2859a5', pointBorderColor: '#2859a5', pointBorderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: true, aspectRatio: 3,
+        layout: { padding: { bottom: 4 } },
+        plugins: {
+          legend: { display: false },
+          eventAnnotations: eventAnnotations,
+          dauSaturdayLabel: true,
+          tooltip: { bodyFont: { size: fontSize(10) }, callbacks: {
+            label: function(ctx) { return 'DAU(万): ' + (ctx.raw != null ? Math.round(ctx.raw) : ''); }
+          } }
+        },
+        scales: { y: { beginAtZero: true, grid: { display: false }, ticks: { font: { size: fontSize(9) } } }, x: xScaleCategory(dauLabels) }
+      }
+    });
+  }
+  if (document.getElementById('chartRev') && typeof Chart !== 'undefined') {
+    new Chart(document.getElementById('chartRev'), {
+      type: 'line',
+      data: {
+        labels: revLabels,
+        datasets: [
+          { label: '流水(万)', data: revWan, yAxisID: 'y', borderColor: '#e6a23c', backgroundColor: 'transparent', fill: false, tension: lineSmooth, pointRadius: pointRadiusSaturday(revSaturdayIndices), pointBackgroundColor: '#e6a23c', pointBorderColor: '#e6a23c', pointBorderWidth: 0 },
+          { label: 'ARPU(元)', data: revArpu, yAxisID: 'y1', borderColor: '#2859a5', backgroundColor: 'transparent', fill: false, tension: lineSmooth, pointRadius: pointRadiusSaturday(revSaturdayIndices), pointBackgroundColor: '#2859a5', pointBorderColor: '#2859a5', pointBorderWidth: 0 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 2.6,
+        layout: { padding: { top: 22, bottom: 4 } },
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'rect', color: '#666', font: { weight: 'bold', size: fontSize(10) } } },
+          eventAnnotations: eventAnnotations,
+          tooltip: { bodyFont: { size: fontSize(10) }, callbacks: {
+            label: function(ctx) {
+              var raw = ctx.raw;
+              if (raw == null) return ctx.dataset.label + ': ';
+              return ctx.dataset.label + ': ' + Math.round(raw);
+            }
+          } }
+        },
+        scales: {
+          y: { type: 'linear', display: true, position: 'left', beginAtZero: true, grid: { display: false }, ticks: { stepSize: 500, font: { size: fontSize(9) } } },
+          y1: { type: 'linear', display: true, position: 'right', beginAtZero: true, grid: { drawOnChartArea: false }, ticks: { stepSize: 5, font: { size: fontSize(9) } } },
+          x: xScaleCategory(revLabels)
+        }
+      }
+    });
+  }
+  if (document.getElementById('chartDuration') && typeof Chart !== 'undefined') {
+    new Chart(document.getElementById('chartDuration'), {
+      type: 'line',
+      data: {
+        labels: durLabels,
+        datasets: [
+          { label: '整体(min)', data: durOverall, borderColor: '#e6a23c', backgroundColor: 'transparent', fill: false, tension: lineSmooth, pointRadius: 3, pointBackgroundColor: '#e6a23c', pointBorderColor: '#e6a23c', pointBorderWidth: 0 },
+          { label: '新进(min)', data: durNew, borderColor: '#2859a5', backgroundColor: 'transparent', fill: false, tension: lineSmooth, pointRadius: 3, pointBackgroundColor: '#2859a5', pointBorderColor: '#2859a5', pointBorderWidth: 0 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: durationAspectRatio,
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'rect' } },
+          durationDataLabels: true
+        },
+        scales: { y: { beginAtZero: true, grid: { display: false }, ticks: { stepSize: 20 } }, x: xScaleDuration(durLabels) }
+      }
+    });
+  }
+  function xScaleFullLoad(labels) {
+    return { type: 'category', grid: { display: false }, ticks: { callback: function(v, i) { return labels[i] != null && i % fullLoadTickStep === 0 ? labels[i] : ''; }, maxRotation: 45, autoSkip: false, font: { size: unifiedXAxisTickFontSize } } };
+  }
+  var fullLoadDataLabelsPlugin = {
+    id: 'fullLoadDataLabels',
+    afterDraw: function(chart) {
+      if (chart.canvas.id !== 'chartFullLoad') return;
+      var ctx = chart.ctx;
+      var datasets = chart.data.datasets || [];
+      for (var d = 0; d < datasets.length; d++) {
+        var meta = chart.getDatasetMeta(d);
+        if (!meta || !meta.data || !meta.data.length) continue;
+        var data = datasets[d].data || [];
+        for (var i = 0; i < meta.data.length; i++) {
+          var point = meta.data[i];
+          if (!point || point.skip) continue;
+          var val = data[i];
+          if (val == null) continue;
+          var text = (Math.round(val * 10) / 10) + '';
+          ctx.save();
+          ctx.fillStyle = point.options.backgroundColor || point.options.borderColor || '#333';
+          ctx.font = fontSize(12) + 'px "Microsoft YaHei",微软雅黑,sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(text, point.x, point.y - 8);
+          ctx.restore();
+        }
+      }
+    }
+  };
+  if (typeof Chart !== 'undefined') Chart.register(fullLoadDataLabelsPlugin);
+  if (document.getElementById('chartFullLoad') && fullLoadLabels && fullLoadLabels.length > 0 && typeof Chart !== 'undefined') {
+    new Chart(document.getElementById('chartFullLoad'), {
+      type: 'line',
+      data: {
+        labels: fullLoadLabels,
+        datasets: [{ label: '满负载玩家数/w', data: fullLoadWan, borderColor: '#2859a5', backgroundColor: 'transparent', fill: false, tension: 0.4, pointRadius: 3, pointBackgroundColor: '#2859a5', pointBorderColor: '#2859a5', pointBorderWidth: 0 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: true, aspectRatio: 4,
+        layout: { padding: { bottom: 4 } },
+        plugins: { legend: { display: false }, fullLoadDataLabels: true },
+        scales: { y: { beginAtZero: true, grid: { display: false }, ticks: { stepSize: fullLoadYStep, font: { size: fontSize(9) } } }, x: xScaleFullLoad(fullLoadLabels) }
+      }
+    });
+  }
+  var heartFlowPoolLabelPlugin = {
+    id: 'heartFlowPoolLabel',
+    afterDatasetsDraw: function(chart) {
+      if (chart.canvas.id !== 'chartHeartFlow' || !hdLabels || !hdPoolPct.length) return;
+      var ctx = chart.ctx;
+      var yScale = chart.scales.y;
+      var xScale = chart.scales.x;
+      if (!yScale || !xScale) return;
+      ctx.save();
+      ctx.fillStyle = '#222';
+      ctx.font = 'bold ' + fontSize(12) + 'px "Microsoft YaHei",微软雅黑,sans-serif';
+      ctx.textAlign = 'center';
+      for (var i = 0; i < hdPoolPct.length; i++) {
+        var val = hdPoolPct[i];
+        if (val == null || val <= 0) continue;
+        var x = xScale.getPixelForValue(i);
+        var y = yScale.getPixelForValue(val);
+        ctx.fillText(Math.round(val) + '%', x, y + 10);
+      }
+      ctx.restore();
+    }
+  };
+  if (typeof Chart !== 'undefined') Chart.register(heartFlowPoolLabelPlugin);
+  var heartFlowMaxBarThickness = 36;
+  if (document.getElementById('chartHeartFlow') && hdLabels && hdLabels.length > 0 && typeof Chart !== 'undefined') {
+    new Chart(document.getElementById('chartHeartFlow'), {
+      type: 'bar',
+      data: {
+        labels: hdLabels,
+        datasets: [
+          { label: '卡池', data: hdPoolPct, stack: 's1', backgroundColor: '#e6a23c', borderColor: '#000', borderWidth: 1, maxBarThickness: heartFlowMaxBarThickness },
+          { label: '月卡', data: hdMonthCardPct, stack: 's1', backgroundColor: '#2859a5', borderColor: '#000', borderWidth: 1, maxBarThickness: heartFlowMaxBarThickness },
+          { label: '直售', data: hdDirectSalePct, stack: 's1', backgroundColor: '#67c23a', borderColor: '#000', borderWidth: 1, maxBarThickness: heartFlowMaxBarThickness },
+          { label: 'BP', data: hdBpPct, stack: 's1', backgroundColor: '#f56c6c', borderColor: '#000', borderWidth: 1, maxBarThickness: heartFlowMaxBarThickness }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: true, aspectRatio: 1.8,
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'rect' } } },
+        scales: {
+          x: { stacked: true, grid: { display: false }, ticks: { font: { size: unifiedXAxisTickFontSize } } },
+          y: { stacked: true, max: 100, grid: { display: false }, ticks: { stepSize: 25, callback: function(v) { return v + '%'; } } }
+        }
+      }
+    });
+  }
+  if (document.getElementById('chartHeartPayRate') && hdLabels && hdLabels.length > 0 && typeof Chart !== 'undefined') {
+    new Chart(document.getElementById('chartHeartPayRate'), {
+      type: 'bar',
+      data: {
+        labels: hdLabels,
+        datasets: [
+          { label: '卡池', data: hdPoolRate, backgroundColor: '#e6a23c', borderColor: '#000', borderWidth: 1 },
+          { label: '月卡', data: hdMonthCardRate, backgroundColor: '#2859a5', borderColor: '#000', borderWidth: 1 },
+          { label: '直售', data: hdDirectSaleRate, backgroundColor: '#67c23a', borderColor: '#000', borderWidth: 1 },
+          { label: 'BP', data: hdBpRate, backgroundColor: '#f56c6c', borderColor: '#000', borderWidth: 1 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: true, aspectRatio: 1.8,
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'rect' } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: unifiedXAxisTickFontSize } } },
+          y: { beginAtZero: true, grid: { display: false }, ticks: { callback: function(v) { return v + '%'; } } }
+        }
+      }
+    });
+  }
+})();
+
+  </script>
+  <script>
+(function() {
+  function resizeAllCharts() {
+    if (typeof Chart === 'undefined' || !Chart.getChart) return;
+    var ids = ['chartDAU','chartRev','chartDuration','chartFullLoad','chartHeartFlow','chartHeartPayRate','chartTakePhotoOldDaily','chartKnockDaily','chartResearchDaily'];
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (el) {
+        var ch = Chart.getChart(el);
+        if (ch) ch.resize();
+      }
+    }
+  }
+  if (document.readyState === 'complete') resizeAllCharts();
+  else window.addEventListener('load', resizeAllCharts);
+  window.addEventListener('resize', resizeAllCharts);
+})();
+  </script>
+  <script>
+(function() {
+  var unifiedXAxisTickFontSize = 11;
+  var labels = ["2/26", "2/27", "2/28", "3/1", "3/2", "3/3", "3/4", "3/5", "3/6", "3/7", "3/8", "3/9", "3/10", "3/11"];
+  var participate = [56, 56, 59, 58, 56, 55, 52, 52, 53, 62, 58, 54, 52, 51];
+  var avgTimes = [5.451078847442484, 5.212779842672923, 5.967552115476925, 5.525292020495181, 4.833885084576663, 4.848798841934683, 4.062788840361295, 3.9642620272694904, 4.378113388980011, 5.848092382566375, 5.654007678953472, 4.395637355146557, 4.117789043583535, 3.195265867252667];
+  var knockLabels = ["3/5", "3/6", "3/7", "3/8", "3/9", "3/10", "3/11"];
+  var knockParticipate = [11.4, 10.1, 11.2, 8.3, 5.1, 4.6, 3.1];
+  var knockAvgTimes = [1.6408798538870801, 1.621839690116849, 1.7659676223726057, 1.671279930634296, 1.4515764918353526, 1.4292145429600411, 1.3382594417077176];
+  var researchLabels = ["2/26", "2/27", "2/28", "3/1", "3/2", "3/3", "3/4", "3/5", "3/6", "3/7", "3/8", "3/9", "3/10", "3/11"];
+  var researchParticipate = [12, 12, 13, 12, 12, 13, 13, 23, 16, 18, 17, 22, 20, 20];
+  var researchUserW = [9.7173, 9.4349, 9.9412, 9.5797, 8.3937, 8.2403, 7.275, 12.6814, 10.1007, 13.4198, 11.9975, 11.2722, 10.1248, 5.5337];
+  if (typeof Chart !== 'undefined' && document.getElementById('chartTakePhotoOldDaily') && labels && labels.length) {
+    var photoParticipateLabelPlugin = {
+      id: 'photoParticipateLabel',
+      afterDatasetsDraw: function(chart) {
+        if (!chart || !chart.data || !chart.data.datasets || chart.canvas.id !== 'chartTakePhotoOldDaily') return;
+        var dsIdx = 1; // 参与率折线
+        var meta = chart.getDatasetMeta(dsIdx);
+        if (!meta || !meta.data) return;
+        var data = chart.data.datasets[dsIdx].data || [];
+        var ctx = chart.ctx;
+        ctx.save();
+        ctx.fillStyle = '#1f4e8c';
+        ctx.font = 'bold 12px "Microsoft YaHei",微软雅黑,sans-serif';
+        ctx.textAlign = 'center';
+        for (var i = 0; i < meta.data.length; i++) {
+          var p = meta.data[i];
+          var v = data[i];
+          if (!p || v == null) continue;
+          ctx.fillText(Math.round(v) + '%', p.x, p.y - 8);
+        }
+        ctx.restore();
+      }
+    };
+    Chart.register(photoParticipateLabelPlugin);
+    new Chart(document.getElementById('chartTakePhotoOldDaily'), {
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            type: 'bar',
+            label: '人均次数',
+            data: avgTimes,
+            yAxisID: 'y1',
+            backgroundColor: '#e67e22',
+            borderColor: '#000',
+            borderWidth: 1,
+            maxBarThickness: 28
+          },
+          {
+            type: 'line',
+            label: '参与率',
+            data: participate,
+            yAxisID: 'y',
+            borderColor: '#1f4e8c',
+            backgroundColor: '#1f4e8c',
+            tension: 0.35,
+            pointRadius: 2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 3.3,
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'rect' } },
+          photoParticipateLabel: true,
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                if (ctx.dataset.yAxisID === 'y') return '参与率: ' + (ctx.raw == null ? '' : Math.round(Number(ctx.raw)) + '%');
+                return '人均次数: ' + (ctx.raw == null ? '' : Number(ctx.raw).toFixed(2));
+              }
+            }
+          }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: false, font: { size: unifiedXAxisTickFontSize } } },
+          y: { position: 'left', beginAtZero: true, ticks: { callback: function(v) { return Math.round(v) + '%'; } }, grid: { display: false } },
+          y1: { position: 'right', beginAtZero: true, grid: { drawOnChartArea: false } }
+        }
+      }
+    });
+  }
+
+  if (typeof Chart !== 'undefined' && document.getElementById('chartKnockDaily') && knockLabels && knockLabels.length) {
+    var knockParticipateLabelPlugin = {
+      id: 'knockParticipateLabel',
+      afterDatasetsDraw: function(chart) {
+        if (!chart || chart.canvas.id !== 'chartKnockDaily') return;
+        var dsIdx = 1; // 参与率折线
+        var meta = chart.getDatasetMeta(dsIdx);
+        if (!meta || !meta.data) return;
+        var data = chart.data.datasets[dsIdx].data || [];
+        var ctx = chart.ctx;
+        ctx.save();
+        ctx.fillStyle = '#1f4e8c';
+        ctx.font = 'bold 12px "Microsoft YaHei",微软雅黑,sans-serif';
+        ctx.textAlign = 'center';
+        for (var i = 0; i < meta.data.length; i++) {
+          var p = meta.data[i];
+          var v = data[i];
+          if (!p || v == null) continue;
+          ctx.fillText(Number(v).toFixed(1) + '%', p.x, p.y - 8);
+        }
+        ctx.restore();
+      }
+    };
+    Chart.register(knockParticipateLabelPlugin);
+    new Chart(document.getElementById('chartKnockDaily'), {
+      data: {
+        labels: knockLabels,
+        datasets: [
+          {
+            type: 'bar',
+            label: '人均次数',
+            data: knockAvgTimes,
+            yAxisID: 'y1',
+            backgroundColor: '#e67e22',
+            borderColor: '#000',
+            borderWidth: 1,
+            maxBarThickness: 28
+          },
+          {
+            type: 'line',
+            label: '参与率',
+            data: knockParticipate,
+            yAxisID: 'y',
+            borderColor: '#1f4e8c',
+            backgroundColor: '#1f4e8c',
+            tension: 0.35,
+            pointRadius: 2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 3.3,
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'rect' } },
+          knockParticipateLabel: true,
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                if (ctx.dataset.yAxisID === 'y') return '参与率: ' + (ctx.raw == null ? '' : Number(ctx.raw).toFixed(1) + '%');
+                return '人均次数: ' + (ctx.raw == null ? '' : Number(ctx.raw).toFixed(2));
+              }
+            }
+          }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: false, font: { size: unifiedXAxisTickFontSize } } },
+          y: { position: 'left', beginAtZero: true, ticks: { callback: function(v) { return Number(v).toFixed(1) + '%'; } }, grid: { display: false } },
+          y1: { position: 'right', beginAtZero: true, grid: { drawOnChartArea: false } }
+        }
+      }
+    });
+  }
+  if (typeof Chart !== 'undefined' && document.getElementById('chartResearchDaily') && researchLabels && researchLabels.length) {
+    var researchParticipateLabelPlugin = {
+      id: 'researchParticipateLabel',
+      afterDatasetsDraw: function(chart) {
+        if (!chart || chart.canvas.id !== 'chartResearchDaily') return;
+        var dsIdx = 1;
+        var meta = chart.getDatasetMeta(dsIdx);
+        if (!meta || !meta.data) return;
+        var data = chart.data.datasets[dsIdx].data || [];
+        var ctx = chart.ctx;
+        ctx.save();
+        ctx.fillStyle = '#1f4e8c';
+        ctx.font = 'bold 12px "Microsoft YaHei",微软雅黑,sans-serif';
+        ctx.textAlign = 'center';
+        for (var i = 0; i < meta.data.length; i++) {
+          var p = meta.data[i], v = data[i];
+          if (!p || v == null) continue;
+          ctx.fillText(Math.round(v) + '%', p.x, p.y - 8);
+        }
+        ctx.restore();
+      }
+    };
+    Chart.register(researchParticipateLabelPlugin);
+    new Chart(document.getElementById('chartResearchDaily'), {
+      data: {
+        labels: researchLabels,
+        datasets: [
+          { type: 'bar', label: '参与人数/w', data: researchUserW, yAxisID: 'y1', backgroundColor: '#e67e22', borderColor: '#000', borderWidth: 1, maxBarThickness: 28 },
+          { type: 'line', label: '参与率', data: researchParticipate, yAxisID: 'y', borderColor: '#1f4e8c', backgroundColor: '#1f4e8c', tension: 0.35, pointRadius: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: true, aspectRatio: 3.3,
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'rect' } },
+          researchParticipateLabel: true,
+          tooltip: { callbacks: {
+            label: function(ctx) {
+              if (ctx.dataset.yAxisID === 'y') return '参与率: ' + (ctx.raw == null ? '' : Math.round(Number(ctx.raw)) + '%');
+              return '参与人数/w: ' + (ctx.raw == null ? '' : Number(ctx.raw).toFixed(1));
+            }
+          } }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: false, font: { size: unifiedXAxisTickFontSize } } },
+          y: { position: 'left', beginAtZero: true, ticks: { callback: function(v) { return Math.round(v) + '%'; } }, grid: { display: false } },
+          y1: { position: 'right', beginAtZero: true, grid: { drawOnChartArea: false } }
+        }
+      }
+    });
+  }
+
+  var foldTitles = document.querySelectorAll('#section-extra .fold-title[data-target]');
+  for (var i = 0; i < foldTitles.length; i++) {
+    foldTitles[i].addEventListener('click', function() {
+      var parent = this.parentElement;
+      if (!parent) return;
+      parent.classList.toggle('expanded');
+    });
+  }
+})();
+  </script>
+  <script>
+(function() {
+  var MIN_CHART_SIZE = 50;
+  var SHOW_PANEL = /[?&]check=1|#check/.test(window.location.search + window.location.hash);
+  function runAdaptCheck() {
+    var issues = [];
+    var ok = [];
+    if (typeof Chart !== 'undefined' && Chart.getChart) {
+      var ids = ['chartDAU','chartRev','chartDuration','chartFullLoad','chartHeartFlow','chartHeartPayRate','chartTakePhotoOldDaily','chartKnockDaily','chartResearchDaily'];
+      ids.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        var ch = Chart.getChart(el);
+        var w = el.getBoundingClientRect ? el.getBoundingClientRect().width : el.width;
+        var h = el.getBoundingClientRect ? el.getBoundingClientRect().height : el.height;
+        if (w < MIN_CHART_SIZE || h < MIN_CHART_SIZE) {
+          issues.push('图表 ' + id + ' 尺寸异常: ' + Math.round(w) + 'x' + Math.round(h));
+          if (ch) ch.resize();
+        } else {
+          ok.push('图表 ' + id + ': ' + Math.round(w) + 'x' + Math.round(h));
+        }
+      });
+    }
+    var tables = document.querySelectorAll('main table');
+    tables.forEach(function(tbl, i) {
+      var sw = tbl.scrollWidth, cw = tbl.clientWidth;
+      if (sw > cw + 2) issues.push('表格溢出: 需要宽度 ' + sw + 'px，容器 ' + cw + 'px (第' + (i+1) + '个表格)');
+      else ok.push('表格' + (i+1) + ': 无溢出');
+    });
+    if (SHOW_PANEL) {
+      var wrap = document.getElementById('report-adapt-check');
+      if (!wrap) {
+        wrap = document.createElement('div');
+        wrap.id = 'report-adapt-check';
+        wrap.style.cssText = 'position:fixed;bottom:12px;right:12px;max-width:360px;max-height:50vh;overflow:auto;background:#1f2937;color:#e5e7eb;padding:12px;border-radius:8px;font-size:12px;font-family:Microsoft YaHei,sans-serif;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,.3);';
+        document.body.appendChild(wrap);
+      }
+      wrap.innerHTML = '<div style="font-weight:700;margin-bottom:8px;">适配检查 ' + (issues.length ? '<span style="color:#fca5a5;">' + issues.length + ' 项异常</span>' : '<span style="color:#86efac;">通过</span>') + '</div>' +
+        (issues.length ? '<div style="color:#fca5a5;margin-bottom:8px;">' + issues.map(function(x) { return '• ' + x; }).join('<br>') + '</div>' : '') +
+        '<details style="color:#94a3b8;"><summary>详情</summary><div style="margin-top:6px;">' + ok.join('<br>') + '</div></details>';
+    }
+    issues.forEach(function(msg) { console.warn('[周报适配] ' + msg); });
+    return issues.length;
+  }
+  function runAfterCharts() {
+    setTimeout(function() {
+      runAdaptCheck();
+      setTimeout(runAdaptCheck, 300);
+    }, 100);
+  }
+  if (document.readyState === 'complete') runAfterCharts();
+  else window.addEventListener('load', runAfterCharts);
+  window.runReportAdaptCheck = runAdaptCheck;
+})();
+  </script>
+</body>
+</html>
