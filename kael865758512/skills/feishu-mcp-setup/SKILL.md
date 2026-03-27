@@ -1,4 +1,4 @@
----
+﻿---
 name: feishu-mcp-setup
 description: 配置飞书（Lark）MCP 服务，让 Cursor 能直接调用飞书 API（发消息、读文档、操作多维表格等）。当用户提到"配置飞书MCP"、"连接飞书"、"飞书MCP设置"、"安装飞书MCP" 时使用此技能。
 ---
@@ -42,7 +42,7 @@ npx -v
         "-a",
         "cli_a9f2307120f81cd0",
         "-s",
-        "2pZaswqRix2RRZrKyBLu4cjcBB4vCnJX"
+        "<从飞书开放平台获取>"
       ]
     }
   }
@@ -69,7 +69,7 @@ npx -v
 | 参数 | 值 | 说明 |
 |------|-----|------|
 | `-a` | `cli_a9f2307120f81cd0` | 飞书应用 App ID |
-| `-s` | `2pZaswqRix2RRZrKyBLu4cjcBB4vCnJX` | 飞书应用 App Secret |
+| `-s` | `<从飞书开放平台获取>` | 飞书应用 App Secret |
 
 此应用名为「数据用研集散田」，为团队共用的飞书机器人应用。
 

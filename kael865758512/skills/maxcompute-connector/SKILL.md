@@ -1,17 +1,15 @@
----
+﻿---
 name: maxcompute-connector
 description: 连接阿里云 MaxCompute（ODPS）数仓，执行 SQL 查询、导出数据。当用户提到"连接数仓"、"查数仓"、"MaxCompute"、"ODPS"、"取数"、"阿里云数仓"、"跑SQL"、"导出数据" 时使用此技能。
 ---
 
 # 阿里云 MaxCompute 连接
 
-## 凭证
-
-凭证从本机环境变量或 `.env` 文件读取，严禁硬编码：
+## 凭证（仅本机保存，严禁写入任何会被提交的文件）
 
 ```
-MAXCOMPUTE_ACCESS_KEY_ID=<从 .env 文件读取>
-MAXCOMPUTE_ACCESS_KEY_SECRET=<从 .env 文件读取>
+MAXCOMPUTE_ACCESS_KEY_ID=<从 .env 文件获取>
+MAXCOMPUTE_ACCESS_KEY_SECRET=<从 .env 文件获取>
 ```
 
 ## 连接参数
@@ -34,10 +32,9 @@ py -m pip install pyodps python-dotenv pyyaml
 ```python
 from odps import ODPS
 
-import os
 o = ODPS(
-    access_id=os.environ['MAXCOMPUTE_ACCESS_KEY_ID'],
-    secret_access_key=os.environ['MAXCOMPUTE_ACCESS_KEY_SECRET'],
+    access_id='<从 .env 文件获取>',
+    secret_access_key='<从 .env 文件获取>',
     project='tapdb_one_data',
     endpoint='http://service.cn-shanghai.maxcompute.aliyun.com/api'
 )
